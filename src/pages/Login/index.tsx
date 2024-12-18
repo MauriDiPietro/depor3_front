@@ -8,14 +8,16 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useGlobalStore } from "../../stores/global";
+import { UserLogin } from "../../types/user.type";
 
-type LoginType = {
-  email: string;
-  password: string;
-};
+
 
 export const Login: React.FC<{}> = () => {
-  const [loginData, setLoginData] = useState<LoginType>({
+
+  const loginUser = useGlobalStore(state => state.loginUser);
+
+  const [loginData, setLoginData] = useState<UserLogin>({
     email: "",
     password: "",
   });
@@ -27,7 +29,7 @@ export const Login: React.FC<{}> = () => {
   const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     console.log(loginData);
-    
+    loginUser(loginData)
   }
 
   return (

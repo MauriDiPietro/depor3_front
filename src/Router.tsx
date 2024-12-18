@@ -7,9 +7,11 @@ import { Login } from "./pages/Login";
 export const AppRouter: React.FC<{}> = () => {
     return (
         <Routes>
-            <Route path="/" element={<RouterLayout/>} >
+            {/* rutas con navbar */}
+            <Route path="/" element={<RouterLayout/>} > 
                 <Route path="/" element={<Home/>} />
             </Route>
+            {/* rutas con navbar */}
                 <Route path="/login" element={<Login/>} />
         </Routes>
     )
