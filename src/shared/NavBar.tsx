@@ -20,7 +20,7 @@ export const NavBar: React.FC<{}> = () => {
               <Grid item>
                 <Link to="/">
                   <img
-                    src="/public/depor3-logo.png"
+                    src="https://res.cloudinary.com/dsooxiydo/image/upload/v1734522257/marca/gopsg4bkkopyinaxqu5k.png"
                     style={{
                       maxWidth: "100%",
                       height: "auto",
