@@ -1,5 +1,5 @@
 import React from "react";
-import { AppBar, Box, Button, Container, Grid, Stack, Toolbar } from "@mui/material";
+import { AppBar, Box, Container, Grid, Stack, Toolbar } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const NavBar: React.FC<{}> = () => {
