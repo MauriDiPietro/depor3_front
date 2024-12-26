@@ -40,7 +40,7 @@ export const NavBar: React.FC<{}> = () => {
                     mt: { xs: 2, sm: 0 }, // Margen superior solo en pantallas pequeñas
                   }}
                 >
-                  <Link to="/login">
+                  {/* <Link to="/login">
                     <Button
                       variant="contained"
                       sx={{
@@ -61,7 +61,7 @@ export const NavBar: React.FC<{}> = () => {
                     >
                       Registro
                     </Button>
-                  </Link>
+                  </Link> */}
                 </Stack>
               </Grid>
             </Grid>

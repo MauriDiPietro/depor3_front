@@ -7,7 +7,9 @@ type ThemeProp = {
 
 enum themePalette {
     BG = "#12181b",
+    // BG = "#fff9f8",
     PURPLE = "#00F0FF",
+    BLACK = "#050505",
     FONT_GLOBAL = "Montserrat"
 }
 
@@ -18,7 +20,7 @@ const theme = createTheme({
             default: themePalette.BG
         },
         primary: {
-            main: themePalette.PURPLE
+            main: themePalette.BLACK
         }
     },
     typography: {

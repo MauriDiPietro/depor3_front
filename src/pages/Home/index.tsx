@@ -9,7 +9,7 @@ import { NavBar } from "../../shared/NavBar.tsx";
 export const Home: React.FC<{}> = () => {
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <Container maxWidth="xl" sx={{ mt: 5 }}>
         {/* <NewsSlider /> */}
         <NewsGrid />
