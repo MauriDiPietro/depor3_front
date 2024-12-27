@@ -7,6 +7,8 @@ export const NavBar: React.FC<{}> = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
         <Toolbar>
+          {" "}
+          {/* Aumenta la altura del navbar */}
           <Container maxWidth="xl">
             <Grid
               container
@@ -18,17 +20,48 @@ export const NavBar: React.FC<{}> = () => {
             >
               {/* Logotipo */}
               <Grid item>
-                <Link to="/">
-                  <img
-                    src="https://res.cloudinary.com/dsooxiydo/image/upload/v1734522257/marca/gopsg4bkkopyinaxqu5k.png"
-                    style={{
-                      maxWidth: "100%",
-                      height: "auto",
-                      width: "200px", // Ajustable para pantallas pequeñas
-                    }}
-                    alt="Logo"
-                  />
-                </Link>
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  alignItems="center"
+                  sx={{
+                    flexWrap: { xs: "wrap", sm: "nowrap" },
+                  }}
+                >
+                  <Link to="/">
+                    <img
+                      src="https://res.cloudinary.com/dsooxiydo/image/upload/v1734522257/marca/gopsg4bkkopyinaxqu5k.png"
+                      style={{
+                        maxWidth: "100%",
+                        height: "auto",
+                        width: "200px", // Ajustable para pantallas pequeñas
+                      }}
+                      alt=""
+                    />
+                  </Link>
+                </Stack>
+              </Grid>
+
+              {/* GIF Publicitario */}
+              <Grid item sx={{ ml: "auto", mt: "5px" }}>
+                {" "}
+                {/* Esto mueve el GIF a la derecha */}
+                <Box
+                  sx={{
+                    display: { xs: "none", sm: "block" }, // Oculta en pantallas pequeñas
+                  }}
+                >
+                  <a href="https://www.cba.gov.ar/dengue/" target="_blank">
+                    <img
+                      src="https://res.cloudinary.com/dsooxiydo/image/upload/v1735297127/marca/yqz7uedh8fffraxqbjgl.gif"
+                      alt=""
+                      style={{
+                        width: "720px",
+                        height: "90px",
+                      }}
+                    />
+                  </a>
+                </Box>
               </Grid>
 
               {/* Botones */}
@@ -40,28 +73,7 @@ export const NavBar: React.FC<{}> = () => {
                     mt: { xs: 2, sm: 0 }, // Margen superior solo en pantallas pequeñas
                   }}
                 >
-                  {/* <Link to="/login">
-                    <Button
-                      variant="contained"
-                      sx={{
-                        height: { xs: 36, sm: 48 }, // Altura menor en pantallas pequeñas
-                        fontSize: { xs: "0.75rem", sm: "1rem" }, // Texto más pequeño en pantallas pequeñas
-                      }}
-                    >
-                      Login
-                    </Button>
-                  </Link>
-                  <Link to="/register">
-                    <Button
-                      variant="text"
-                      sx={{
-                        height: { xs: 36, sm: 48 }, // Altura menor en pantallas pequeñas
-                        fontSize: { xs: "0.75rem", sm: "1rem" }, // Texto más pequeño en pantallas pequeñas
-                      }}
-                    >
-                      Registro
-                    </Button>
-                  </Link> */}
+                  {/* Aquí irían los botones */}
                 </Stack>
               </Grid>
             </Grid>
@@ -71,4 +83,3 @@ export const NavBar: React.FC<{}> = () => {
     </Box>
   );
 };
-

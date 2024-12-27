@@ -48,7 +48,8 @@ export const NewsGrid = () => {
     <Container sx={{ mt: 9 }} maxWidth="xl">
       <Grid container spacing={3}>
         {news &&
-          news.map((noticia: New, index: any) => (
+          news.filter((noticia: New) => noticia.active)
+          .map((noticia: New, index: any) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
               <Card
                 onClick={() => handleCardClick(noticia._id)}
