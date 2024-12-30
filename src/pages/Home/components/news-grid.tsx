@@ -49,7 +49,13 @@ export const NewsGrid = () => {
       <Grid container spacing={2}>
         {news &&
           news
-            .filter((noticia: New) => noticia.active)
+            .filter((noticia: New) => noticia.active && noticia.category !== "Patio del deportista")
+            .sort((a: New, b: New) => {
+              // Convertir "dd/mm/aaaa" a Date para ordenar
+              const dateA = new Date(a.date.split("/").reverse().join("/"));
+              const dateB = new Date(b.date.split("/").reverse().join("/"));
+              return dateB.getTime() - dateA.getTime(); // Orden descendente
+            })
             .map((noticia: New, index: any) => (
               <Grid
                 item
