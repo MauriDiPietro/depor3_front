@@ -42,7 +42,6 @@ export const Home: React.FC<{}> = () => {
             </Box>
           </Grid>
         </Grid>
-        {/* <NewsSlider /> */}
         <NewsGrid />
       </Container>
     </>
