@@ -42,27 +42,7 @@ export const NavBar: React.FC<{}> = () => {
                 </Stack>
               </Grid>
 
-              {/* GIF Publicitario */}
-              <Grid item sx={{ ml: "auto", mt: "5px" }}>
-                {" "}
-                {/* Esto mueve el GIF a la derecha */}
-                <Box
-                  sx={{
-                    display: { xs: "none", sm: "block" }, // Oculta en pantallas pequeñas
-                  }}
-                >
-                  <a href="https://www.cba.gov.ar/dengue/" target="_blank">
-                    <img
-                      src="https://res.cloudinary.com/dsooxiydo/image/upload/v1735297127/marca/yqz7uedh8fffraxqbjgl.gif"
-                      alt=""
-                      style={{
-                        width: "720px",
-                        height: "90px",
-                      }}
-                    />
-                  </a>
-                </Box>
-              </Grid>
+
 
               {/* Botones */}
               <Grid item>
