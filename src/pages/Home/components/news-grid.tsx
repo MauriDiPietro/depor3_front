@@ -12,6 +12,7 @@ import { New } from "../../../types/new.type";
 import { useGlobalStore } from "../../../stores/global";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { CalendarToday } from "@mui/icons-material";
 
 export const NewsGrid = () => {
   const news = useGlobalStore((state) => state.news);
@@ -49,7 +50,10 @@ export const NewsGrid = () => {
       <Grid container spacing={2}>
         {news &&
           news
-            .filter((noticia: New) => noticia.active && noticia.category !== "Patio del deportista")
+            .filter(
+              (noticia: New) =>
+                noticia.active && noticia.category !== "Patio del deportista"
+            )
             .sort((a: New, b: New) => {
               // Convertir "dd/mm/aaaa" a Date para ordenar
               const dateA = new Date(a.date.split("/").reverse().join("/"));
@@ -80,17 +84,40 @@ export const NewsGrid = () => {
                   <CardContent>
                     <Box
                       sx={{
-                        backgroundColor: "orange",
-                        color: "white",
-                        display: "inline-block",
-                        padding: "2px 8px",
-                        borderRadius: "4px",
-                        fontSize: "0.75rem",
-                        fontWeight: "bold",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
                         mb: 1,
                       }}
                     >
-                      {noticia.category}
+                      <Box
+                        sx={{
+                          backgroundColor: "orange",
+                          color: "white",
+                          padding: "2px 8px",
+                          borderRadius: "4px",
+                          fontSize: "0.75rem",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {noticia.category}
+                      </Box>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "4px",
+                        }}
+                      >
+                        <CalendarToday fontSize="small" color="action" />
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          sx={{ fontSize: "0.875rem", fontWeight: "bold" }}
+                        >
+                          {noticia.date}
+                        </Typography>
+                      </Box>
                     </Box>
                     <Typography
                       variant={index === 0 ? "h4" : "h5"} // Título más grande para la primera noticia
@@ -113,5 +140,4 @@ export const NewsGrid = () => {
       </Grid>
     </Container>
   );
-  
 };

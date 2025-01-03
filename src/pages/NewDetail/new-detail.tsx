@@ -70,6 +70,19 @@ export const NewsDetail = () => {
         />
       </Box>
       <SanitizedHtml htmlContent={newDetail.body} />
+      {newDetail.multimedia.length > 0 &&
+        newDetail.multimedia.map((media, index) => {
+          return (
+            <Box sx={{ mb: 2 }}>
+              <img
+                key={index}
+                src={media}
+                alt={""}
+                style={{ width: "50%", height: "50%", borderRadius: "8px" }}
+              />
+            </Box>
+          );
+        })}
       {/* <Typography variant="body1" component="div">
         {newDetail.body}
       </Typography> */}

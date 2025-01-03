@@ -14,7 +14,7 @@ export const Home: React.FC<{}> = () => {
                 style={{ background: "orange" }}
                 autoFocus
                 controls
-                autoPlay
+                // autoPlay
                 preload="none"
                 src="https://server.laradio.online/proxy/rafael_gerlero?mp=/stream"
               >
