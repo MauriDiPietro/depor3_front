@@ -7,7 +7,7 @@ export const Home: React.FC<{}> = () => {
   return (
     <>
       <Container maxWidth="xl" sx={{ mt: 5 }}>
-        <Grid container spacing={2} sx={{ mt: 7 }}>
+        <Grid container spacing={1} sx={{ mt: 7 }}>
           <Grid item xs={12} md={4}>
             <Box>
               <audio
@@ -23,7 +23,7 @@ export const Home: React.FC<{}> = () => {
               <p>Depor3 Radio FM 89.1 - Río Tercero</p>
             </Box>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={6}>
             <Box>
               <a
                 href="https://www.cba.gov.ar/dengue/"
@@ -34,15 +34,18 @@ export const Home: React.FC<{}> = () => {
                   src="https://res.cloudinary.com/dsooxiydo/image/upload/v1735297127/marca/yqz7uedh8fffraxqbjgl.gif"
                   alt=""
                   style={{
-                    width: "720px",
+                    width: "700px",
                     height: "90px",
                   }}
                 />
               </a>
             </Box>
           </Grid>
-        </Grid>
+          <Grid item xs={12} md={12}>
+
         <NewsGrid />
+          </Grid>
+        </Grid>
       </Container>
     </>
   );

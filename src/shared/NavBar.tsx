@@ -1,14 +1,12 @@
 import React from "react";
-import { AppBar, Box, Container, Grid, Stack, Toolbar } from "@mui/material";
+import { AppBar, Box, Container, Grid, Stack, Toolbar, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const NavBar: React.FC<{}> = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed">
+      <AppBar position="fixed" sx={{height: "70px"}}>
         <Toolbar>
-          {" "}
-          {/* Aumenta la altura del navbar */}
           <Container maxWidth="xl">
             <Grid
               container
@@ -36,13 +34,11 @@ export const NavBar: React.FC<{}> = () => {
                         height: "auto",
                         width: "200px", // Ajustable para pantallas pequeñas
                       }}
-                      alt=""
+                      alt="Logo"
                     />
                   </Link>
                 </Stack>
               </Grid>
-
-
 
               {/* Botones */}
               <Grid item>
@@ -53,7 +49,35 @@ export const NavBar: React.FC<{}> = () => {
                     mt: { xs: 2, sm: 0 }, // Margen superior solo en pantallas pequeñas
                   }}
                 >
-                  {/* Aquí irían los botones */}
+                  {/* Secciones del Navbar */}
+                  {[
+                    { label: "PATIO DEL DEPORTISTA", path: "/patio-del-deportista" },
+                    { label: "ENTREVISTAS", path: "/entrevistas" },
+                    { label: "HISTORIAS DEL GEN DOMINANTE", path: "/historias-gen-dominante" },
+                    { label: "¿Quienes somos?", path: "/about" },
+                  ].map((section, index) => (
+                    <Link
+                      key={index}
+                      to={section.path}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <Typography
+                        variant="body1"
+                        component="div"
+                        sx={{
+                          color: "white",
+                          transition: "0.3s",
+                          "&:hover": {
+                            color: "orange",
+                          },
+                          cursor: "pointer",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {section.label}
+                      </Typography>
+                    </Link>
+                  ))}
                 </Stack>
               </Grid>
             </Grid>
