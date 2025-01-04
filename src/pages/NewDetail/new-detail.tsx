@@ -51,11 +51,11 @@ export const NewsDetail = () => {
   }
 
   return (
-    <Container sx={{ mt: 9 }}>
-      <Typography variant="h3" component="div" gutterBottom>
+    <Container sx={{ mt: { xs: 6, md: 9 } }}>
+      <Typography variant="h3" component="div" gutterBottom sx={{ fontSize: { xs: "1.8rem", md: "2.5rem" } }}>
         {newDetail.title}
       </Typography>
-      <Grid container>
+      <Grid container spacing={2}>
         <Grid item xs={12} md={8}>
           <Grid container spacing={2}>
             <Grid item xs={12} md={4} sx={{ pl: 2 }}>
@@ -147,7 +147,7 @@ export const NewsDetail = () => {
                     key={index}
                     src={media}
                     alt={""}
-                    style={{ width: "50%", height: "50%", borderRadius: "8px" }}
+                    style={{ width: "100%", height: "100%", borderRadius: "8px" }}
                   />
                 </Box>
               );
@@ -161,7 +161,7 @@ export const NewsDetail = () => {
                     key={index}
                     src={media}
                     alt={""}
-                    style={{ width: "50%", height: "50%", borderRadius: "8px" }}
+                    style={{ width: "100%", height: "100%", borderRadius: "8px" }}
                   />
                 </Box>
               );
@@ -175,7 +175,7 @@ export const NewsDetail = () => {
                     key={index}
                     src={media}
                     alt={""}
-                    style={{ width: "50%", height: "50%", borderRadius: "8px" }}
+                    style={{ width: "100%", height: "100%", borderRadius: "8px" }}
                   />
                 </Box>
               );

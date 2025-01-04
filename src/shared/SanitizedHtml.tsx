@@ -17,7 +17,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({ htmlContent }) => 
         dangerouslySetInnerHTML={{ __html: sanitizedContent }}
         style={{
           overflowX: "hidden",
-          
+          textAlign: "left"
         }}
       />
         <style>{`
