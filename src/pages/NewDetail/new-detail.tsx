@@ -52,12 +52,14 @@ export const NewsDetail = () => {
 
   return (
     <Container sx={{ mt: { xs: 6, md: 9 } }}>
-      <Typography variant="h3" component="div" gutterBottom sx={{ fontSize: { xs: "1.8rem", md: "2.5rem" } }}>
+      <Typography variant="h3" component="div" gutterBottom sx={{ fontSize: { xs: "1.8rem", md: "2.5rem" }, textAlign: "left" }}>
         {newDetail.title}
       </Typography>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={8}>
-          <Grid container spacing={2}>
+        <Grid item xs={12} md={newDetail.category !== "Patio del deportista" ? 8 : 12}>
+        {
+          newDetail.category !== "Patio del deportista" && (
+            <Grid container spacing={2}>
             <Grid item xs={12} md={4} sx={{ pl: 2 }}>
               <Typography
                 variant="subtitle1"
@@ -110,6 +112,9 @@ export const NewsDetail = () => {
               </Typography>
             </Grid>
           </Grid>
+          )
+        }
+
           {!newDetail.isOld && (
             <Box sx={{ mb: 2 }}>
               <img
@@ -137,6 +142,15 @@ export const NewsDetail = () => {
               />
             </Box>
           )}
+          {newDetail.isOld && newDetail.multimedia.length > 1 && (
+            <Box sx={{ mb: 2 }}>
+              <img
+                src={newDetail.image}
+                alt={""}
+                style={{ width: "100%", borderRadius: "8px" }}
+              />
+            </Box>
+          )}
           <SanitizedHtml htmlContent={newDetail.body} />
           {newDetail.multimedia.length > 0 &&
             !newDetail.isOld &&
@@ -154,6 +168,7 @@ export const NewsDetail = () => {
             })}
           {newDetail.multimedia.length > 1 &&
             newDetail.isOld &&
+            newDetail.category !== "Patio del deportista" && 
             newDetail.multimedia.slice(0, -1).map((media, index) => {
               return (
                 <Box sx={{ mb: 2 }}>
@@ -166,8 +181,10 @@ export const NewsDetail = () => {
                 </Box>
               );
             })}
+
           {newDetail.multimedia.length === 1 &&
             newDetail.isOld &&
+            newDetail.category !== "Patio del deportista" && 
             newDetail.multimedia.map((media, index) => {
               return (
                 <Box sx={{ mb: 2 }}>
@@ -192,7 +209,9 @@ export const NewsDetail = () => {
             />
           </Card>
         </Grid>
-        <Grid item xs={12} md={4} sx={{ padding: 2 }}>
+        {
+          newDetail.category !== "Patio del deportista" && (
+<Grid item xs={12} md={4} sx={{ padding: 2 }}>
           <Grid container>
             <Grid item xs={12} md={12} sx={{ marginBottom: 2 }}>
               <Card>
@@ -216,6 +235,9 @@ export const NewsDetail = () => {
             </Grid>
           </Grid>
         </Grid>
+          )
+        }
+        
       </Grid>
     </Container>
   );
