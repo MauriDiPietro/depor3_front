@@ -52,68 +52,77 @@ export const NewsDetail = () => {
 
   return (
     <Container sx={{ mt: { xs: 6, md: 9 } }}>
-      <Typography variant="h3" component="div" gutterBottom sx={{ fontSize: { xs: "1.8rem", md: "2.5rem" }, textAlign: "left" }}>
+      <Typography
+        variant="h3"
+        component="div"
+        gutterBottom
+        sx={{ fontSize: { xs: "1.8rem", md: "2.5rem" }, textAlign: "left" }}
+      >
         {newDetail.title}
       </Typography>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={newDetail.category !== "Patio del deportista" ? 8 : 12}>
-        {
-          newDetail.category !== "Patio del deportista" && (
+        <Grid
+          item
+          xs={12}
+          md={newDetail.category !== "Patio del deportista" ? 8 : 12}
+        >
+          {newDetail.category !== "Patio del deportista" && (
             <Grid container spacing={2}>
-            <Grid item xs={12} md={4} sx={{ pl: 2 }}>
-              <Typography
-                variant="subtitle1"
-                color="textSecondary"
-                gutterBottom
-                sx={{
-                  backgroundColor: "orange",
-                  color: "white",
-                  display: "inline-block",
-                  padding: "4px 12px",
-                  borderRadius: "4px",
-                  fontSize: "0.875rem",
-                  fontWeight: "bold",
-                }}
-              >
-                {newDetail.category}
-              </Typography>
+              {newDetail.category && (
+                <Grid item xs={12} md={4} sx={{ pl: 2 }}>
+                  <Typography
+                    variant="subtitle1"
+                    color="textSecondary"
+                    gutterBottom
+                    sx={{
+                      backgroundColor: "orange",
+                      color: "white",
+                      display: "inline-block",
+                      padding: "4px 12px",
+                      borderRadius: "4px",
+                      fontSize: "0.875rem",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {newDetail.category}
+                  </Typography>
+                </Grid>
+              )}
+              <Grid item xs={12} md={4}>
+                <Person fontSize="small" color="action" />
+                <Typography
+                  variant="subtitle1"
+                  color="textSecondary"
+                  gutterBottom
+                  sx={{
+                    color: "white",
+                    display: "inline-block",
+                    padding: "4px 6px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {newDetail.author}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <CalendarToday fontSize="small" color="action" />
+                <Typography
+                  variant="subtitle1"
+                  color="textSecondary"
+                  gutterBottom
+                  sx={{
+                    // backgroundColor: "orange",
+                    color: "white",
+                    display: "inline-block",
+                    padding: "4px 6px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {newDetail.date}
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={4}>
-              <Person fontSize="small" color="action" />
-              <Typography
-                variant="subtitle1"
-                color="textSecondary"
-                gutterBottom
-                sx={{
-                  color: "white",
-                  display: "inline-block",
-                  padding: "4px 6px",
-                  fontWeight: "bold",
-                }}
-              >
-                {newDetail.author}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <CalendarToday fontSize="small" color="action" />
-              <Typography
-                variant="subtitle1"
-                color="textSecondary"
-                gutterBottom
-                sx={{
-                  // backgroundColor: "orange",
-                  color: "white",
-                  display: "inline-block",
-                  padding: "4px 6px",
-                  fontWeight: "bold",
-                }}
-              >
-                {newDetail.date}
-              </Typography>
-            </Grid>
-          </Grid>
-          )
-        }
+          )}
 
           {!newDetail.isOld && (
             <Box sx={{ mb: 2 }}>
@@ -161,7 +170,11 @@ export const NewsDetail = () => {
                     key={index}
                     src={media}
                     alt={""}
-                    style={{ width: "100%", height: "100%", borderRadius: "8px" }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "8px",
+                    }}
                   />
                 </Box>
               );
@@ -200,49 +213,43 @@ export const NewsDetail = () => {
           {/* <Typography variant="body1" component="div">
         {newDetail.body}
       </Typography> */}
-      {
-        !newDetail.isOld && (
-
-          <Card>
-            <CardMedia
-              component="img"
-              // height="300"
-              image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735988672/zbpjwnbpd8hiorvk9rai.jpg"
-              alt=""
-            />
-          </Card>
-        )
-      }
+          {!newDetail.isOld && (
+            <Card>
+              <CardMedia
+                component="img"
+                // height="300"
+                image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735988672/zbpjwnbpd8hiorvk9rai.jpg"
+                alt=""
+              />
+            </Card>
+          )}
         </Grid>
-        {
-          newDetail.category !== "Patio del deportista" && (
-<Grid item xs={12} md={4} sx={{ padding: 2 }}>
-          <Grid container>
-            <Grid item xs={12} md={12} sx={{ marginBottom: 2 }}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  // height="300"
-                  image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735988671/fc16ju4gqnm0cyxtms8u.jpg"
-                  alt=""
-                />
-              </Card>
-            </Grid>
-            <Grid item xs={12} md={12}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  // height="300"
-                  image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735988672/ywiyilcqqdxh3bcy64ws.jpg"
-                  alt=""
-                />
-              </Card>
+        {newDetail.category !== "Patio del deportista" && (
+          <Grid item xs={12} md={4} sx={{ padding: 2 }}>
+            <Grid container>
+              <Grid item xs={12} md={12} sx={{ marginBottom: 2 }}>
+                <Card>
+                  <CardMedia
+                    component="img"
+                    // height="300"
+                    image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735988671/fc16ju4gqnm0cyxtms8u.jpg"
+                    alt=""
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={12}>
+                <Card>
+                  <CardMedia
+                    component="img"
+                    // height="300"
+                    image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735988672/ywiyilcqqdxh3bcy64ws.jpg"
+                    alt=""
+                  />
+                </Card>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-          )
-        }
-        
+        )}
       </Grid>
     </Container>
   );

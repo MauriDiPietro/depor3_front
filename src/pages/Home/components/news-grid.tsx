@@ -88,18 +88,20 @@ export const NewsGrid = () => {
                               mb: 1,
                             }}
                           >
-                            <Box
-                              sx={{
-                                backgroundColor: "orange",
-                                color: "white",
-                                padding: "2px 8px",
-                                borderRadius: "4px",
-                                fontSize: "0.75rem",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              {noticia.category}
-                            </Box>
+                            {noticia.category !== "" && (
+                              <Box
+                                sx={{
+                                  backgroundColor: "orange",
+                                  color: "white",
+                                  padding: "2px 8px",
+                                  borderRadius: "4px",
+                                  fontSize: "0.75rem",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                {noticia.category}
+                              </Box>
+                            )}
                             <Box
                               sx={{
                                 display: "flex",
@@ -111,7 +113,10 @@ export const NewsGrid = () => {
                               <Typography
                                 variant="body2"
                                 color="text.secondary"
-                                sx={{ fontSize: "0.875rem", fontWeight: "bold" }}
+                                sx={{
+                                  fontSize: "0.875rem",
+                                  fontWeight: "bold",
+                                }}
                               >
                                 {noticia.date}
                               </Typography>
@@ -132,7 +137,7 @@ export const NewsGrid = () => {
                         <CardMedia
                           component="img"
                           height="300"
-                          image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735907187/ocpmyjczavpe2olpnqtk.png" 
+                          image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735907187/ocpmyjczavpe2olpnqtk.png"
                           alt=""
                         />
                       </Card>
@@ -143,7 +148,7 @@ export const NewsGrid = () => {
                         <CardMedia
                           component="img"
                           // height="300"
-                          image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735910641/pm0cn0it3g9xp8vkxand.jpg" 
+                          image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735910641/pm0cn0it3g9xp8vkxand.jpg"
                           alt=""
                         />
                       </Card>
@@ -151,13 +156,7 @@ export const NewsGrid = () => {
                   </Grid>
                 ) : (
                   // Para las demás tarjetas
-                  <Grid
-                    item
-                    xs={12}
-                    sm={6}
-                    md={4}
-                    key={index}
-                  >
+                  <Grid item xs={12} sm={6} md={4} key={index}>
                     <Card
                       onClick={() => handleCardClick(noticia._id)}
                       sx={{ cursor: "pointer" }}
@@ -180,18 +179,20 @@ export const NewsGrid = () => {
                             mb: 1,
                           }}
                         >
-                          <Box
-                            sx={{
-                              backgroundColor: "orange",
-                              color: "white",
-                              padding: "2px 8px",
-                              borderRadius: "4px",
-                              fontSize: "0.75rem",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {noticia.category}
-                          </Box>
+                          {noticia.category && (
+                            <Box
+                              sx={{
+                                backgroundColor: "orange",
+                                color: "white",
+                                padding: "2px 8px",
+                                borderRadius: "4px",
+                                fontSize: "0.75rem",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {noticia.category}
+                            </Box>
+                          )}
                           <Box
                             sx={{
                               display: "flex",
