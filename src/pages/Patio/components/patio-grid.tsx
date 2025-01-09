@@ -12,7 +12,6 @@ import { New } from "../../../types/new.type";
 import { useGlobalStore } from "../../../stores/global";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { CalendarToday } from "@mui/icons-material";
 
 export const PatioGrid = () => {
   const news = useGlobalStore((state) => state.news);

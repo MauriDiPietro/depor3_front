@@ -124,16 +124,16 @@ export const NewsDetail = () => {
               />
             </Box>
           )}
-          {newDetail.isOld && newDetail.multimedia.length === 0 && (
+          {/* {newDetail.isOld && (
             <Box sx={{ mb: 2 }}>
               <img
-                src={newDetail.image}
+                src={newDetail.multimedia[0]}
                 alt={""}
                 style={{ width: "100%", borderRadius: "8px" }}
               />
             </Box>
-          )}
-          {newDetail.isOld && newDetail.multimedia.length === 1 && (
+          )} */}
+          {/* {newDetail.isOld && newDetail.multimedia.length === 1 && (
             <Box sx={{ mb: 2 }}>
               <img
                 src={newDetail.image}
@@ -150,7 +150,7 @@ export const NewsDetail = () => {
                 style={{ width: "100%", borderRadius: "8px" }}
               />
             </Box>
-          )}
+          )} */}
           <SanitizedHtml htmlContent={newDetail.body} />
           {newDetail.multimedia.length > 0 &&
             !newDetail.isOld &&
@@ -166,7 +166,7 @@ export const NewsDetail = () => {
                 </Box>
               );
             })}
-          {newDetail.multimedia.length > 1 &&
+          {/* {newDetail.multimedia.length > 1 &&
             newDetail.isOld &&
             newDetail.category !== "Patio del deportista" && 
             newDetail.multimedia.slice(0, -1).map((media, index) => {
@@ -180,9 +180,9 @@ export const NewsDetail = () => {
                   />
                 </Box>
               );
-            })}
+            })} */}
 
-          {newDetail.multimedia.length === 1 &&
+          {/* {newDetail.multimedia.length === 1 &&
             newDetail.isOld &&
             newDetail.category !== "Patio del deportista" && 
             newDetail.multimedia.map((media, index) => {
@@ -196,10 +196,13 @@ export const NewsDetail = () => {
                   />
                 </Box>
               );
-            })}
+            })} */}
           {/* <Typography variant="body1" component="div">
         {newDetail.body}
       </Typography> */}
+      {
+        !newDetail.isOld && (
+
           <Card>
             <CardMedia
               component="img"
@@ -208,6 +211,8 @@ export const NewsDetail = () => {
               alt=""
             />
           </Card>
+        )
+      }
         </Grid>
         {
           newDetail.category !== "Patio del deportista" && (
