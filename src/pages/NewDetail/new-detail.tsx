@@ -123,43 +123,17 @@ export const NewsDetail = () => {
               </Grid>
             </Grid>
           )}
+          {/* En multimedia solo tiene las imagees de publicidades extraidas del post */}
+          {newDetail.isOld && newDetail.multimedia.length === 3 &&(
+            <Box sx={{ mb: 2 }}>
+              <img
+                src={newDetail.image}
+                alt={""}
+                style={{ width: "100%", borderRadius: "8px" }}
+              />
+            </Box>
+          )}
 
-          {!newDetail.isOld && (
-            <Box sx={{ mb: 2 }}>
-              <img
-                src={newDetail.image}
-                alt={""}
-                style={{ width: "100%", borderRadius: "8px" }}
-              />
-            </Box>
-          )}
-          {/* {newDetail.isOld && (
-            <Box sx={{ mb: 2 }}>
-              <img
-                src={newDetail.multimedia[0]}
-                alt={""}
-                style={{ width: "100%", borderRadius: "8px" }}
-              />
-            </Box>
-          )} */}
-          {/* {newDetail.isOld && newDetail.multimedia.length === 1 && (
-            <Box sx={{ mb: 2 }}>
-              <img
-                src={newDetail.image}
-                alt={""}
-                style={{ width: "100%", borderRadius: "8px" }}
-              />
-            </Box>
-          )}
-          {newDetail.isOld && newDetail.multimedia.length > 1 && (
-            <Box sx={{ mb: 2 }}>
-              <img
-                src={newDetail.image}
-                alt={""}
-                style={{ width: "100%", borderRadius: "8px" }}
-              />
-            </Box>
-          )} */}
           <SanitizedHtml htmlContent={newDetail.body} />
           {newDetail.multimedia.length > 0 &&
             !newDetail.isOld &&
@@ -179,40 +153,7 @@ export const NewsDetail = () => {
                 </Box>
               );
             })}
-          {/* {newDetail.multimedia.length > 1 &&
-            newDetail.isOld &&
-            newDetail.category !== "Patio del deportista" && 
-            newDetail.multimedia.slice(0, -1).map((media, index) => {
-              return (
-                <Box sx={{ mb: 2 }}>
-                  <img
-                    key={index}
-                    src={media}
-                    alt={""}
-                    style={{ width: "100%", height: "100%", borderRadius: "8px" }}
-                  />
-                </Box>
-              );
-            })} */}
-
-          {/* {newDetail.multimedia.length === 1 &&
-            newDetail.isOld &&
-            newDetail.category !== "Patio del deportista" && 
-            newDetail.multimedia.map((media, index) => {
-              return (
-                <Box sx={{ mb: 2 }}>
-                  <img
-                    key={index}
-                    src={media}
-                    alt={""}
-                    style={{ width: "100%", height: "100%", borderRadius: "8px" }}
-                  />
-                </Box>
-              );
-            })} */}
-          {/* <Typography variant="body1" component="div">
-        {newDetail.body}
-      </Typography> */}
+     
           {!newDetail.isOld && (
             <Card>
               <CardMedia

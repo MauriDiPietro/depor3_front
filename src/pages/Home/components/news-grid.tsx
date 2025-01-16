@@ -1,5 +1,4 @@
 import {
-  Container,
   Grid,
   Card,
   CardContent,
@@ -7,6 +6,8 @@ import {
   Typography,
   Box,
   CircularProgress,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { New } from "../../../types/new.type";
 import { useGlobalStore } from "../../../stores/global";
@@ -29,6 +30,9 @@ export const NewsGrid = () => {
     navigate(`/news/${id}`);
   };
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   if (loadingNews) {
     return (
       <Box
@@ -46,180 +50,186 @@ export const NewsGrid = () => {
   }
 
   return (
-    <Container sx={{ mt: 2 }} maxWidth="xl">
-      <Grid container spacing={2}>
-        {news &&
-          news
-            .filter(
-              (noticia: New) =>
-                noticia.active && noticia.category !== "Patio del deportista"
-            )
-            .sort((a: New, b: New) => {
-              // Convertir "dd/mm/aaaa" a Date para ordenar
-              const dateA = new Date(a.date.split("/").reverse().join("/"));
-              const dateB = new Date(b.date.split("/").reverse().join("/"));
-              return dateB.getTime() - dateA.getTime(); // Orden descendente
-            })
-            .map((noticia: New, index: any) => (
-              <>
-                {index === 0 ? (
-                  // Para la primera tarjeta
-                  <Grid container item xs={12} spacing={2} key={index}>
-                    <Grid item xs={12} md={9}>
-                      <Card
-                        onClick={() => handleCardClick(noticia._id)}
-                        sx={{ cursor: "pointer" }}
+    // <Container sx={{ mt: 2 }} maxWidth="xl">
+    <Grid container spacing={2} sx={{ overflowX: "hidden" }}>
+    {news &&
+      news
+        .filter(
+          (noticia: New) =>
+            noticia.active && noticia.category !== "Patio del deportista"
+        )
+        .sort((a: New, b: New) => {
+          // Convertir "dd/mm/aaaa" a Date para ordenar
+          const dateA = new Date(a.date.split("/").reverse().join("/"));
+          const dateB = new Date(b.date.split("/").reverse().join("/"));
+          return dateB.getTime() - dateA.getTime(); // Orden descendente
+        })
+        .map((noticia: New, index: any) => (
+          <>
+            {index === 0 ? (
+              <Grid container item xs={12} sm={12} md={12} spacing={2} key={index}>
+                <Grid item xs={12} sm={12} md={8} lg={8}>
+                  <Card
+                    onClick={() => handleCardClick(noticia._id)}
+                    sx={{ cursor: "pointer" }}
+                  >
+                    <CardMedia
+                      component="img"
+                      height="333"
+                      image={
+                        noticia.image ||
+                        "https://res.cloudinary.com/dsooxiydo/image/upload/v1735216082/sgbynryaedq7k6mo5tug.jpg"
+                      }
+                      alt={noticia.title || "Imagen de la noticia"}
+                    />
+                    <CardContent>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          mb: 1,
+                        }}
                       >
-                        <CardMedia
-                          component="img"
-                          height="180" // Imagen más alta para la primera noticia
-                          image={
-                            noticia.image ||
-                            "https://res.cloudinary.com/dsooxiydo/image/upload/v1735216082/sgbynryaedq7k6mo5tug.jpg"
-                          }
-                          alt={noticia.title || ""}
-                        />
-                        <CardContent>
+                        {noticia.category && (
                           <Box
                             sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              mb: 1,
+                              backgroundColor: "orange",
+                              color: "white",
+                              padding: "2px 8px",
+                              borderRadius: "4px",
+                              fontSize: "0.75rem",
+                              fontWeight: "bold",
                             }}
                           >
-                            {noticia.category !== "" && (
-                              <Box
-                                sx={{
-                                  backgroundColor: "orange",
-                                  color: "white",
-                                  padding: "2px 8px",
-                                  borderRadius: "4px",
-                                  fontSize: "0.75rem",
-                                  fontWeight: "bold",
-                                }}
-                              >
-                                {noticia.category}
-                              </Box>
-                            )}
-                            <Box
-                              sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "4px",
-                              }}
-                            >
-                              <CalendarToday fontSize="small" color="action" />
-                              <Typography
-                                variant="body2"
-                                color="text.secondary"
-                                sx={{
-                                  fontSize: "0.875rem",
-                                  fontWeight: "bold",
-                                }}
-                              >
-                                {noticia.date}
-                              </Typography>
-                            </Box>
+                            {noticia.category}
                           </Box>
-                          <Typography variant="h5" component="div" gutterBottom>
-                            {noticia.title}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            {noticia.description}
-                          </Typography>
-                        </CardContent>
-                      </Card>
-                    </Grid>
-                    <Grid item xs={12} md={3}>
-                      {/* PUBLICIDAD */}
-                      <Card>
-                        <CardMedia
-                          component="img"
-                          height="300"
-                          image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735907187/ocpmyjczavpe2olpnqtk.png"
-                          alt=""
-                        />
-                      </Card>
-                    </Grid>
-                    <Grid item xs={12} md={12}>
-                      {/* PUBLICIDAD */}
-                      <Card>
-                        <CardMedia
-                          component="img"
-                          // height="300"
-                          image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735910641/pm0cn0it3g9xp8vkxand.jpg"
-                          alt=""
-                        />
-                      </Card>
-                    </Grid>
-                  </Grid>
-                ) : (
-                  // Para las demás tarjetas
-                  <Grid item xs={12} sm={6} md={4} key={index}>
-                    <Card
-                      onClick={() => handleCardClick(noticia._id)}
-                      sx={{ cursor: "pointer" }}
-                    >
-                      <CardMedia
-                        component="img"
-                        height="140"
-                        image={
-                          noticia.image ||
-                          "https://res.cloudinary.com/dsooxiydo/image/upload/v1735216082/sgbynryaedq7k6mo5tug.jpg"
-                        }
-                        alt={noticia.title || "Imagen de la noticia"}
-                      />
-                      <CardContent>
+                        )}
                         <Box
                           sx={{
                             display: "flex",
-                            justifyContent: "space-between",
                             alignItems: "center",
-                            mb: 1,
+                            gap: "4px",
                           }}
                         >
-                          {noticia.category && (
-                            <Box
-                              sx={{
-                                backgroundColor: "orange",
-                                color: "white",
-                                padding: "2px 8px",
-                                borderRadius: "4px",
-                                fontSize: "0.75rem",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              {noticia.category}
-                            </Box>
-                          )}
-                          <Box
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "4px",
-                            }}
+                          <CalendarToday fontSize="small" color="action" />
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            sx={{ fontSize: "0.875rem", fontWeight: "bold" }}
                           >
-                            <CalendarToday fontSize="small" color="action" />
-                            <Typography
-                              variant="body2"
-                              color="text.secondary"
-                              sx={{ fontSize: "0.875rem", fontWeight: "bold" }}
-                            >
-                              {noticia.date}
-                            </Typography>
-                          </Box>
+                            {noticia.date}
+                          </Typography>
                         </Box>
-                        <Typography variant="h5" component="div" gutterBottom>
-                          {noticia.title}
+                      </Box>
+                      <Typography variant="h5" component="div" gutterBottom>
+                        {noticia.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {noticia.description}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} sm={12} md={4} lg={4}>
+                  {/* PUBLICIDAD */}
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      sx={{
+                        height: isMobile ? "200px" : "auto",
+                        width: "100%",
+                        maxWidth: "100%",
+                        objectFit: "contain",
+                      }}
+                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735907187/ocpmyjczavpe2olpnqtk.png"
+                      alt="Publicidad"
+                    />
+                  </Card>
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12}>
+                  {/* PUBLICIDAD */}
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      sx={{
+                        height: isMobile ? "100px" : "auto",
+                        width: "100%",
+                        maxWidth: "100%",
+                        objectFit: "contain",
+                      }}
+                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735910641/pm0cn0it3g9xp8vkxand.jpg"
+                      alt="Publicidad"
+                    />
+                  </Card>
+                </Grid>
+              </Grid>
+            ) : (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <Card
+                  onClick={() => handleCardClick(noticia._id)}
+                  sx={{ cursor: "pointer" }}
+                >
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={
+                      noticia.image ||
+                      "https://res.cloudinary.com/dsooxiydo/image/upload/v1735216082/sgbynryaedq7k6mo5tug.jpg"
+                    }
+                    alt={noticia.title || "Imagen de la noticia"}
+                  />
+                  <CardContent>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        mb: 1,
+                      }}
+                    >
+                      {noticia.category && (
+                        <Box
+                          sx={{
+                            backgroundColor: "orange",
+                            color: "white",
+                            padding: "2px 8px",
+                            borderRadius: "4px",
+                            fontSize: "0.75rem",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {noticia.category}
+                        </Box>
+                      )}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "4px",
+                        }}
+                      >
+                        <CalendarToday fontSize="small" color="action" />
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          sx={{ fontSize: "0.875rem", fontWeight: "bold" }}
+                        >
+                          {noticia.date}
                         </Typography>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                )}
-              </>
-            ))}
-      </Grid>
-    </Container>
+                      </Box>
+                    </Box>
+                    <Typography variant="h5" component="div" gutterBottom>
+                      {noticia.title}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            )}
+          </>
+        ))}
+  </Grid>
+  
+    // </Container>
   );
 };
