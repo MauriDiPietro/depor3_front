@@ -123,8 +123,8 @@ export const NewsDetail = () => {
               </Grid>
             </Grid>
           )}
-          {/* En multimedia solo tiene las imagees de publicidades extraidas del post */}
-          {newDetail.isOld && newDetail.multimedia.length === 3 &&(
+          {/* si En multimedia solo tiene las imagees de publicidades extraidas del post */}
+          {newDetail.isOld && newDetail.multimedia.length === 3 && (
             <Box sx={{ mb: 2 }}>
               <img
                 src={newDetail.image}
@@ -153,7 +153,7 @@ export const NewsDetail = () => {
                 </Box>
               );
             })}
-     
+
           {!newDetail.isOld && (
             <Card>
               <CardMedia
@@ -168,16 +168,18 @@ export const NewsDetail = () => {
         {newDetail.category !== "Patio del deportista" && (
           <Grid item xs={12} md={4} sx={{ padding: 2 }}>
             <Grid container>
-              <Grid item xs={12} md={12} sx={{ marginBottom: 2 }}>
-                <Card>
-                  <CardMedia
-                    component="img"
-                    // height="300"
-                    image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735988671/fc16ju4gqnm0cyxtms8u.jpg"
-                    alt=""
-                  />
-                </Card>
-              </Grid>
+              {!newDetail.isOld && (
+                <Grid item xs={12} md={12} sx={{ marginBottom: 2 }}>
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      // height="300"
+                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735988671/fc16ju4gqnm0cyxtms8u.jpg"
+                      alt=""
+                    />
+                  </Card>
+                </Grid>
+              )}
               <Grid item xs={12} md={12}>
                 <Card>
                   <CardMedia
