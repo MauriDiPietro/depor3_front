@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Grid } from "@mui/material";
+import { Box, CardContent, Grid, Divider } from "@mui/material";
 import { NewsGrid } from "./components/news-grid";
+import { HistoriasGrid } from "./components/historias-grid";
 
 export const Home: React.FC<{}> = () => {
   return (
@@ -39,8 +40,46 @@ export const Home: React.FC<{}> = () => {
             </a>
           </Box>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
           <NewsGrid />
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+
+        <Divider sx={{borderColor:'divider'}} orientation="horizontal" flexItem/>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+          <CardContent>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "left",
+                mb: 1,
+              }}
+            >
+              <Box
+                sx={{
+                  backgroundColor: "orange",
+                  color: "white",
+                  padding: "2px 8px",
+                  borderRadius: "4px",
+                  fontSize: "1rem",
+                  fontWeight: "bold",
+                }}
+              >
+                Historias del Gen Dominante
+              </Box>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "4px",
+                }}
+              ></Box>
+            </Box>
+          </CardContent>
+          <HistoriasGrid />
         </Grid>
       </Grid>
     </Box>

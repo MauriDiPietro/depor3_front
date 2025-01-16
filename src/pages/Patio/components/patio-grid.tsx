@@ -45,22 +45,64 @@ export const PatioGrid = () => {
   }
 
   return (
-    <Container sx={{ mt: 2 }} maxWidth="xl">
-      <Grid container spacing={2}>
-        {news &&
-          news
-            .filter(
-              (noticia: New) =>
-                noticia.active && noticia.category == "Patio del deportista"
-            )
-            .sort((a: New, b: New) => {
-              // Convertir "dd/mm/aaaa" a Date para ordenar
-              const dateA = new Date(a.date.split("/").reverse().join("/"));
-              const dateB = new Date(b.date.split("/").reverse().join("/"));
-              return dateB.getTime() - dateA.getTime(); // Orden descendente
-            })
-            .map((noticia: New, index: any) => (
-              <>
+    // <Container sx={{ mt: 2 }} maxWidth="xl">
+    //   <Grid container spacing={2}>
+    //     {news &&
+    //       news
+    //         .filter(
+    //           (noticia: New) =>
+    //             noticia.active && noticia.category == "Patio del deportista"
+    //         )
+    //         .sort((a: New, b: New) => {
+    //           // Convertir "dd/mm/aaaa" a Date para ordenar
+    //           const dateA = new Date(a.date.split("/").reverse().join("/"));
+    //           const dateB = new Date(b.date.split("/").reverse().join("/"));
+    //           return dateB.getTime() - dateA.getTime(); // Orden descendente
+    //         })
+    //         .map((noticia: New, index: any) => (
+    //           <>
+    //             <Grid item xs={12} sm={6} md={4} key={index}>
+    //               <Card
+    //                 onClick={() => handleCardClick(noticia._id)}
+    //                 sx={{ cursor: "pointer" }}
+    //               >
+    //                 <CardMedia
+    //                   component="img"
+    //                   height="140"
+    //                   image={
+    //                     noticia.image ||
+    //                     noticia.multimedia[0] ||
+    //                     "https://res.cloudinary.com/dsooxiydo/image/upload/v1735216082/sgbynryaedq7k6mo5tug.jpg"
+    //                   }
+    //                   alt={noticia.title || "Imagen de la noticia"}
+    //                 />
+    //                 <CardContent>
+    //                   <Typography variant="h5" component="div" gutterBottom>
+    //                     {noticia.title}
+    //                   </Typography>
+    //                 </CardContent>
+    //               </Card>
+    //             </Grid>
+    //           </>
+    //         ))}
+    //   </Grid>
+    // </Container>
+      <Grid container spacing={2} sx={{ overflowX: "hidden" }}>
+      {news &&
+        news
+          .filter(
+            (noticia: New) =>
+              noticia.active && noticia.category == "Patio del deportista"
+          )
+          .sort((a: New, b: New) => {
+            // Convertir "dd/mm/aaaa" a Date para ordenar
+            const dateA = new Date(a.date.split("/").reverse().join("/"));
+            const dateB = new Date(b.date.split("/").reverse().join("/"));
+            return dateB.getTime() - dateA.getTime(); // Orden descendente
+          })
+          .map((noticia: New, index: any) => (
+            <>
+              
                 <Grid item xs={12} sm={6} md={4} key={index}>
                   <Card
                     onClick={() => handleCardClick(noticia._id)}
@@ -68,24 +110,55 @@ export const PatioGrid = () => {
                   >
                     <CardMedia
                       component="img"
-                      height="140"
+                      height="350"
                       image={
-                        noticia.image ||
-                        noticia.multimedia[0] ||
+                        noticia.image ? noticia.image : noticia.multimedia[1] ||
                         "https://res.cloudinary.com/dsooxiydo/image/upload/v1735216082/sgbynryaedq7k6mo5tug.jpg"
                       }
-                      alt={noticia.title || "Imagen de la noticia"}
+                      alt={noticia.title || ""}
                     />
                     <CardContent>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          mb: 1,
+                        }}
+                      >
+                        {noticia.category && (
+                          <Box
+                            sx={{
+                              backgroundColor: "orange",
+                              color: "white",
+                              padding: "2px 8px",
+                              borderRadius: "4px",
+                              fontSize: "0.75rem",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {noticia.category}
+                          </Box>
+                        )}
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "4px",
+                          }}
+                        >
+                        </Box>
+                      </Box>
                       <Typography variant="h5" component="div" gutterBottom>
                         {noticia.title}
                       </Typography>
                     </CardContent>
                   </Card>
                 </Grid>
-              </>
-            ))}
-      </Grid>
-    </Container>
+              
+            </>
+          ))}
+    </Grid>
   );
 };
+

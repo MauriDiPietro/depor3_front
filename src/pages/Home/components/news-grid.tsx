@@ -8,11 +8,12 @@ import {
   CircularProgress,
   useTheme,
   useMediaQuery,
+  Pagination,
 } from "@mui/material";
 import { New } from "../../../types/new.type";
 import { useGlobalStore } from "../../../stores/global";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CalendarToday } from "@mui/icons-material";
 
 export const NewsGrid = () => {
@@ -21,6 +22,11 @@ export const NewsGrid = () => {
   const loadingNews = useGlobalStore((state) => state.loadingNews);
 
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 7; // Número de noticias por página
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     getAllNews();
@@ -30,8 +36,9 @@ export const NewsGrid = () => {
     navigate(`/news/${id}`);
   };
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const handlePageChange = (_event, value) => {
+    setCurrentPage(value);
+  };
 
   if (loadingNews) {
     return (
@@ -43,31 +50,45 @@ export const NewsGrid = () => {
           height: "100vh",
         }}
       >
-        <CircularProgress />
+        <CircularProgress color="info"/>
         <p>Cargando...</p>
       </Box>
     );
   }
 
+  // Filtrar y ordenar noticias
+  const filteredNews = news
+    ?.filter(
+      (noticia: New) =>
+        noticia.active && noticia.category !== "Patio del deportista"
+    )
+    .sort((a: New, b: New) => {
+      const dateA = new Date(a.date.split("/").reverse().join("/"));
+      const dateB = new Date(b.date.split("/").reverse().join("/"));
+      return dateB.getTime() - dateA.getTime();
+    });
+
+  const totalPages = Math.ceil(filteredNews.length / itemsPerPage);
+  const currentNews = filteredNews.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
-    // <Container sx={{ mt: 2 }} maxWidth="xl">
-    <Grid container spacing={2} sx={{ overflowX: "hidden" }}>
-    {news &&
-      news
-        .filter(
-          (noticia: New) =>
-            noticia.active && noticia.category !== "Patio del deportista"
-        )
-        .sort((a: New, b: New) => {
-          // Convertir "dd/mm/aaaa" a Date para ordenar
-          const dateA = new Date(a.date.split("/").reverse().join("/"));
-          const dateB = new Date(b.date.split("/").reverse().join("/"));
-          return dateB.getTime() - dateA.getTime(); // Orden descendente
-        })
-        .map((noticia: New, index: any) => (
+    <Box>
+      <Grid container spacing={2} sx={{ overflowX: "hidden" }}>
+        {currentNews.map((noticia: New, index: number) => (
           <>
             {index === 0 ? (
-              <Grid container item xs={12} sm={12} md={12} spacing={2} key={index}>
+              <Grid
+                container
+                item
+                xs={12}
+                sm={12}
+                md={12}
+                spacing={2}
+                key={noticia._id}
+              >
                 <Grid item xs={12} sm={12} md={8} lg={8}>
                   <Card
                     onClick={() => handleCardClick(noticia._id)}
@@ -165,7 +186,7 @@ export const NewsGrid = () => {
                 </Grid>
               </Grid>
             ) : (
-              <Grid item xs={12} sm={6} md={4} key={index}>
+              <Grid item xs={12} sm={6} md={4} key={noticia._id}>
                 <Card
                   onClick={() => handleCardClick(noticia._id)}
                   sx={{ cursor: "pointer" }}
@@ -228,8 +249,17 @@ export const NewsGrid = () => {
             )}
           </>
         ))}
-  </Grid>
-  
-    // </Container>
+      </Grid>
+
+      {/* Paginado */}
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={handlePageChange}
+          color="primary"
+        />
+      </Box>
+    </Box>
   );
 };
