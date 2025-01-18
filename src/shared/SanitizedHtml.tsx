@@ -46,7 +46,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
 
           img {
             width: auto;
-            max-width: 60%;
+            max-width: 100%;
             height: auto;
           }
 
