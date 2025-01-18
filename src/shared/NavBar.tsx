@@ -10,7 +10,7 @@ export const NavBar: React.FC<{}> = () => {
     { label: "PATIO DEL DEPORTISTA", path: "/patio-del-deportista" },
     { label: "ENTREVISTAS", path: "/entrevistas" },
     { label: "HISTORIAS DEL GEN DOMINANTE", path: "/historias-gen-dominante" },
-    { label: "¿Quienes somos?", path: "/about" },
+    { label: "Quienes somos", path: "/about" },
   ];
 
   const toggleDrawer = (open: boolean) => {
