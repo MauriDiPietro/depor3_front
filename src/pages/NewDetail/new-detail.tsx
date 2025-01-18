@@ -52,20 +52,20 @@ export const NewsDetail = () => {
 
   return (
     <Container sx={{ mt: { xs: 6, md: 9 } }}>
-      <Typography
-        variant="h3"
-        component="div"
-        gutterBottom
-        sx={{ fontSize: { xs: "1.8rem", md: "2.5rem" }, textAlign: "left" }}
-      >
-        {newDetail.title}
-      </Typography>
       <Grid container spacing={2}>
         <Grid
           item
           xs={12}
           md={newDetail.category !== "Patio del deportista" ? 8 : 12}
         >
+          <Typography
+            variant="h3"
+            component="div"
+            gutterBottom
+            sx={{ fontSize: { xs: "1.8rem", md: "2.5rem" }, textAlign: "left" }}
+          >
+            {newDetail.title}
+          </Typography>
           {newDetail.category !== "Patio del deportista" && (
             <Grid container spacing={2}>
               {newDetail.category && (
@@ -123,8 +123,9 @@ export const NewsDetail = () => {
               </Grid>
             </Grid>
           )}
-          {/* si En multimedia solo tiene las imagees de publicidades extraidas del post */}
-          {newDetail.isOld && newDetail.multimedia.length === 3 && (
+          {/* si no tiene imagenes secundarias */}
+          {newDetail.isOld && !newDetail.multimedia.length && (
+            // newDetail.category !== "Patio del deportista" &&
             <Box sx={{ mb: 2 }}>
               <img
                 src={newDetail.image}
@@ -134,7 +135,11 @@ export const NewsDetail = () => {
             </Box>
           )}
 
-          <SanitizedHtml htmlContent={newDetail.body} />
+          <SanitizedHtml
+            htmlContent={newDetail.body}
+            category={newDetail.category}
+          />
+                      
           {newDetail.multimedia.length > 0 &&
             !newDetail.isOld &&
             newDetail.multimedia.map((media, index) => {
@@ -153,33 +158,114 @@ export const NewsDetail = () => {
                 </Box>
               );
             })}
-
-          {!newDetail.isOld && (
-            <Card>
-              <CardMedia
-                component="img"
-                // height="300"
-                image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735988672/zbpjwnbpd8hiorvk9rai.jpg"
-                alt=""
-              />
-            </Card>
+          {newDetail.category !== "Patio del deportista" && (
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735988672/zbpjwnbpd8hiorvk9rai.jpg"
+                      alt=""
+                    />
+                  </Card>
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/centro-civico.jpg"
+                      alt=""
+                    />
+                  </Card>
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg"
+                      alt=""
+                    />
+                  </Card>
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/aceros-rio.jpg"
+                      alt=""
+                    />
+                  </Card>
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/garbo.jpg"
+                      alt=""
+                    />
+                  </Card>
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/rino.jpg"
+                      alt=""
+                    />
+                  </Card>
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1737143686/toalson.jpg"
+                      alt=""
+                    />
+                  </Card>
+                </Box>
+              </Grid>
+            </Grid>
           )}
+          {newDetail.category === "Patio del deportista" && (
+  <Grid container spacing={2} sx={{ width: "100%", margin: 0 }}>
+    <Grid item xs={12}>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+        }}
+      >
+        {[
+          "https://res.cloudinary.com/dsooxiydo/image/upload/v1735988672/zbpjwnbpd8hiorvk9rai.jpg",
+          "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/centro-civico.jpg",
+          "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg",
+          "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/aceros-rio.jpg",
+          "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/garbo.jpg",
+          "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/rino.jpg",
+          "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143686/toalson.jpg",
+        ].map((image, index) => (
+          <Card key={index} sx={{ width: "100%" }}>
+            <CardMedia
+              component="img"
+              image={image}
+              alt={`Imagen ${index + 1}`}
+              sx={{
+                width: "100%",
+                height: "auto",
+              }}
+            />
+          </Card>
+        ))}
+      </Box>
+    </Grid>
+  </Grid>
+)}
+
         </Grid>
         {newDetail.category !== "Patio del deportista" && (
           <Grid item xs={12} md={4} sx={{ padding: 2 }}>
             <Grid container>
-              {!newDetail.isOld && (
-                <Grid item xs={12} md={12} sx={{ marginBottom: 2 }}>
-                  <Card>
-                    <CardMedia
-                      component="img"
-                      // height="300"
-                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735988671/fc16ju4gqnm0cyxtms8u.jpg"
-                      alt=""
-                    />
-                  </Card>
-                </Grid>
-              )}
+              <Grid item xs={12} md={12} sx={{ marginBottom: 2 }}>
+                <Card>
+                  <CardMedia
+                    component="img"
+                    // height="300"
+                    image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735988671/fc16ju4gqnm0cyxtms8u.jpg"
+                    alt=""
+                  />
+                </Card>
+              </Grid>
               <Grid item xs={12} md={12}>
                 <Card>
                   <CardMedia
