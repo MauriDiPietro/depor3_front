@@ -86,7 +86,7 @@ import {
                   >
                     <CardMedia
                       component="img"
-                      height="140"
+                      height="200"
                       image={
                         noticia.image ||
                         "https://res.cloudinary.com/dsooxiydo/image/upload/v1735216082/sgbynryaedq7k6mo5tug.jpg"
