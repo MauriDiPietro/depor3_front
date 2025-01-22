@@ -14,13 +14,36 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
   // Sanitize the HTML string
   const sanitizedContent = DOMPurify.sanitize(htmlContent);
 
-  
+  // Función para insertar el componente después del primer párrafo
+  const injectCardAfterFirstParagraph = (htmlString: string) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, "text/html");
+    const firstParagraph = doc.querySelector("p");
+
+    if (firstParagraph) {
+      const cardElement = document.createElement("div");
+      cardElement.innerHTML = `
+        <div>
+          <img class="publi"
+            src="https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg"
+            alt=""
+          />
+        </div>
+      `;
+      firstParagraph.insertAdjacentElement("afterend", cardElement);
+    }
+
+    return doc.body.innerHTML;
+  };
+
+  // Insertar el contenido modificado
+  const modifiedContent = injectCardAfterFirstParagraph(sanitizedContent);
 
   return (
     <Box sx={{ mt: 2 }}>
       <Typography
         component="div"
-        dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+        dangerouslySetInnerHTML={{ __html: modifiedContent }}
         style={{
           overflowX: "hidden",
           textAlign: "left",

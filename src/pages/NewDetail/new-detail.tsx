@@ -176,10 +176,14 @@ export const NewsDetail = () => {
                 </Grid>
 
                 {/* Slider de imágenes */}
-                <Grid item xs={12} sm={12} md={12} lg={12}>
+                <Grid item xs={6} sm={6} md={12} lg={12}>
                   {newDetail.multimedia.length > 0 && !newDetail.isOld && (
                     <Box
-                      sx={{ padding: "0", margin: "0 auto", maxWidth: "800px" }}
+                      sx={{
+                        padding: "0",
+                        margin: "0 auto",
+                        maxWidth: { xs: "400px", md: "800px" },
+                      }}
                     >
                       <Swiper
                         navigation
@@ -188,22 +192,24 @@ export const NewsDetail = () => {
                         spaceBetween={30}
                         slidesPerView={1}
                         style={{
-                          maxWidth: "100%", // Asegura que el slider ocupe todo el ancho del contenedor
+                          width: "100%", // Asegura que el slider ocupe todo el ancho del contenedor
                           overflow: "hidden", // Evita que el contenido desborde
                           // margin: "0", //
                         }}
                       >
                         {newDetail.multimedia.map((url, index) => (
                           <SwiperSlide key={index}>
-                            <img
-                              src={url}
-                              alt={`Multimedia ${index + 1}`}
-                              style={{
-                                width: "50%",
-                                borderRadius: "8px",
-                                objectFit: "cover",
-                              }}
-                            />
+                            <a href={url} target="_blank">
+                              <img
+                                src={url}
+                                alt={`Multimedia ${index + 1}`}
+                                style={{
+                                  width: "100%",
+                                  borderRadius: "8px",
+                                  objectFit: "cover",
+                                }}
+                              />
+                            </a>
                           </SwiperSlide>
                         ))}
                       </Swiper>
