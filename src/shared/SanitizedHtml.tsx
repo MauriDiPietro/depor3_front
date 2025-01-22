@@ -14,6 +14,8 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
   // Sanitize the HTML string
   const sanitizedContent = DOMPurify.sanitize(htmlContent);
 
+  
+
   return (
     <Box sx={{ mt: 2 }}>
       <Typography

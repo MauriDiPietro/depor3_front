@@ -5,14 +5,19 @@ import {
   Box,
   CircularProgress,
   Grid,
-  Card,
-  CardMedia,
+  // Card,
+  // CardMedia,
 } from "@mui/material";
 import { useEffect } from "react";
 import { useGlobalStore } from "../../stores/global";
 import { SanitizedHtml } from "../../shared/SanitizedHtml";
 import { CalendarToday, Person } from "@mui/icons-material";
-import { Publicidades } from "../../shared/Publicidades";
+// import { Publicidades } from "../../shared/Publicidades";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Navigation, Pagination } from "swiper/modules";
 
 export const NewsDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -60,18 +65,20 @@ export const NewsDetail = () => {
               item
               xs={12}
               sm={12}
-              md={newDetail.category !== "Patio del deportista" ? 8 : 12}
-              lg={newDetail.category !== "Patio del deportista" ? 8 : 12}
+              // md={newDetail.category !== "Patio del deportista" ? 8 : 12}
+              // lg={newDetail.category !== "Patio del deportista" ? 8 : 12}
+              md={12}
+              lg={12}
             >
               <Grid container>
-                <Grid item xs={12} md={12} lg={12}>
+                <Grid item xs={12} md={12} lg={12} sx={{ mb: 2 }}>
                   <Typography
-                    variant="h3"
-                    component="div"
+                    variant="h1"
                     gutterBottom
                     sx={{
-                      fontSize: { xs: "1.8rem", md: "2.5rem" },
-                      textAlign: "left",
+                      fontSize: { xs: "1.8rem", md: "2rem" },
+                      textAlign: "center",
+                      fontWeight: "bold",
                     }}
                   >
                     {newDetail.title}
@@ -148,14 +155,63 @@ export const NewsDetail = () => {
                   </Grid>
                 )}
 
-                <Grid item xs={12} md={12} lg={12}>
+                {!newDetail.isOld && (
+                  <Grid item xs={12} md={12} lg={12}>
+                    <Box sx={{ mb: 2 }}>
+                      <img
+                        src={newDetail.image}
+                        alt={""}
+                        style={{ width: "100%", borderRadius: "8px" }}
+                      />
+                    </Box>
+                  </Grid>
+                )}
+
+                <Grid item xs={12} sm={12} md={12} lg={12}>
                   <SanitizedHtml
                     htmlContent={newDetail.body}
                     category={newDetail.category}
+                    // isOld={newDetail.isOld}
                   />
                 </Grid>
 
-                <Grid item xs={12} md={12} lg={12}>
+                {/* Slider de imágenes */}
+                <Grid item xs={12} sm={12} md={12} lg={12}>
+                  {newDetail.multimedia.length > 0 && !newDetail.isOld && (
+                    <Box
+                      sx={{ padding: "0", margin: "0 auto", maxWidth: "800px" }}
+                    >
+                      <Swiper
+                        navigation
+                        pagination={{ clickable: true }}
+                        modules={[Navigation, Pagination]}
+                        spaceBetween={30}
+                        slidesPerView={1}
+                        style={{
+                          maxWidth: "100%", // Asegura que el slider ocupe todo el ancho del contenedor
+                          overflow: "hidden", // Evita que el contenido desborde
+                          // margin: "0", //
+                        }}
+                      >
+                        {newDetail.multimedia.map((url, index) => (
+                          <SwiperSlide key={index}>
+                            <img
+                              src={url}
+                              alt={`Multimedia ${index + 1}`}
+                              style={{
+                                width: "50%",
+                                borderRadius: "8px",
+                                objectFit: "cover",
+                              }}
+                            />
+                          </SwiperSlide>
+                        ))}
+                      </Swiper>
+                    </Box>
+                  )}
+                </Grid>
+
+                {/* <Grid item xs={12} md={12} lg={12}>
                   {newDetail.multimedia.length > 0 &&
                     !newDetail.isOld &&
                     newDetail.multimedia.map((media, index) => {
@@ -174,25 +230,31 @@ export const NewsDetail = () => {
                         </Box>
                       );
                     })}
-                </Grid>
+                </Grid> */}
               </Grid>
             </Grid>
-            {newDetail.category !== "Patio del deportista" && (
-              <Grid item xs={12} md={4} sx={{ padding: 2 }}>
+            {/* {newDetail.category !== "Patio del deportista" && (
+              <Grid item xs={12} md={12} sx={{ padding: 2 }}>
                 <Grid container>
-                  <Grid item xs={12} md={12} sx={{ marginBottom: 2 }}>
-                    <Card>
+                  <Grid item xs={12} md={6} lg={6} sx={{ marginBottom: 2 }}>
+                    <Card >
                       <CardMedia
                         component="img"
+                        style={{
+                          width: "80%",
+                        }}
                         image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735988671/fc16ju4gqnm0cyxtms8u.jpg"
                         alt=""
                       />
                     </Card>
                   </Grid>
-                  <Grid item xs={12} md={12}>
+                  <Grid item xs={12} md={6} lg={6}>
                     <Card>
                       <CardMedia
                         component="img"
+                        style={{
+                          width: "80%",
+                        }}
                         image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735988672/ywiyilcqqdxh3bcy64ws.jpg"
                         alt=""
                       />
@@ -200,11 +262,11 @@ export const NewsDetail = () => {
                   </Grid>
                 </Grid>
               </Grid>
-            )}
+            )} */}
           </Grid>
         </Grid>
       </Grid>
-      <Publicidades />
+      {/* <Publicidades /> */}
     </Container>
   );
 };

@@ -14,7 +14,7 @@ export const Publicidades: React.FC<{}> = () => {
         >
           {[
               "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/centro-civico.jpg",
-              "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg",
+            //   "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg",
               "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/aceros-rio.jpg",
               "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/garbo.jpg",
               "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/rino.jpg",

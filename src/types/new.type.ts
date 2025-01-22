@@ -9,5 +9,5 @@ export type New = {
   multimedia: string[];
   date: string;
   active: boolean;
-  isOld?: boolean;
+  isOld: boolean;
 };

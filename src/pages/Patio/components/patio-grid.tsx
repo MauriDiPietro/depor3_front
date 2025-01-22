@@ -11,6 +11,7 @@ import { New } from "../../../types/new.type";
 import { useGlobalStore } from "../../../stores/global";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { parseDateToSort } from "../../../lib/services/utils/ordenamiento";
 
 export const PatioGrid = () => {
   const news = useGlobalStore((state) => state.news);
@@ -94,9 +95,11 @@ export const PatioGrid = () => {
               noticia.active && noticia.category == "Patio del deportista"
           )
           .sort((a: New, b: New) => {
-            // Convertir "dd/mm/aaaa" a Date para ordenar
-            const dateA = new Date(a.date.split("/").reverse().join("/"));
-            const dateB = new Date(b.date.split("/").reverse().join("/"));
+            const dateA = parseDateToSort(a.date);
+            const dateB = parseDateToSort(b.date);
+
+            if (!dateA || !dateB) return 0; // Manejar fechas nulas
+
             return dateB.getTime() - dateA.getTime(); // Orden descendente
           })
           .map((noticia: New, index: any) => (

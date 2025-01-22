@@ -15,6 +15,7 @@ import { useGlobalStore } from "../../../stores/global";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CalendarToday } from "@mui/icons-material";
+import { parseDateToSort } from "../../../lib/services/utils/ordenamiento";
 
 export const NewsGrid = () => {
   const news = useGlobalStore((state) => state.news);
@@ -63,10 +64,13 @@ export const NewsGrid = () => {
         noticia.active && noticia.category !== "Patio del deportista"
     )
     .sort((a: New, b: New) => {
-      const dateA = new Date(a.date.split("/").reverse().join("/"));
-      const dateB = new Date(b.date.split("/").reverse().join("/"));
-      return dateB.getTime() - dateA.getTime();
-    });
+      const dateA = parseDateToSort(a.date);
+      const dateB = parseDateToSort(b.date);
+
+      if (!dateA || !dateB) return 0; // Manejar fechas nulas
+
+      return dateB.getTime() - dateA.getTime(); // Orden descendente
+    })
 
   const totalPages = Math.ceil(filteredNews.length / itemsPerPage);
   const currentNews = filteredNews.slice(
