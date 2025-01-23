@@ -9,12 +9,14 @@ import {
   useTheme,
   useMediaQuery,
   Pagination,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 import { New } from "../../../types/new.type";
 import { useGlobalStore } from "../../../stores/global";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { CalendarToday } from "@mui/icons-material";
+import { CalendarToday, Search } from "@mui/icons-material";
 import { parseDateToSort } from "../../../lib/services/utils/ordenamiento";
 
 export const NewsGrid = () => {
@@ -28,6 +30,13 @@ export const NewsGrid = () => {
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const [searchText, setSearchText] = useState(""); // Estado para manejar el texto de búsqueda
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(event.target.value);
+    setCurrentPage(1); // Reinicia la página al buscar
+  };
 
   useEffect(() => {
     getAllNews();
@@ -51,7 +60,7 @@ export const NewsGrid = () => {
           height: "100vh",
         }}
       >
-        <CircularProgress color="info"/>
+        <CircularProgress color="info" />
         <p>Cargando...</p>
       </Box>
     );
@@ -61,16 +70,18 @@ export const NewsGrid = () => {
   const filteredNews = news
     ?.filter(
       (noticia: New) =>
-        noticia.active && noticia.category !== "Patio del deportista"
+        noticia.active &&
+        noticia.category !== "Patio del deportista" &&
+        noticia.title.toLowerCase().includes(searchText.toLowerCase()) // Filtrar por texto de búsqueda
     )
     .sort((a: New, b: New) => {
       const dateA = parseDateToSort(a.date);
       const dateB = parseDateToSort(b.date);
 
-      if (!dateA || !dateB) return 0; // Manejar fechas nulas
+      if (!dateA || !dateB) return 0;
 
-      return dateB.getTime() - dateA.getTime(); // Orden descendente
-    })
+      return dateB.getTime() - dateA.getTime();
+    });
 
   const totalPages = Math.ceil(filteredNews.length / itemsPerPage);
   const currentNews = filteredNews.slice(
@@ -155,6 +166,25 @@ export const NewsGrid = () => {
                       </Typography>
                     </CardContent>
                   </Card>
+                  {/* Barra de búsqueda */}
+                  <Box
+                    sx={{ mt: 2, display: "flex", justifyContent: "center" }}
+                  >
+                    <TextField
+                      variant="outlined"
+                      placeholder="Buscar noticias..."
+                      value={searchText}
+                      onChange={handleSearchChange}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <Search />
+                          </InputAdornment>
+                        ),
+                      }}
+                      sx={{ width: isMobile ? "100%" : "100%" }}
+                    />
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={12} md={4} lg={4}>
                   {/* PUBLICIDAD */}
