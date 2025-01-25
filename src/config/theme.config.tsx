@@ -7,7 +7,7 @@ type ThemeProp = {
 
 enum themePalette {
     BG = "#12181b",
-    // BG = "#fff9f8",
+    BG_LIGHT = "#ffffff",
     PURPLE = "#00F0FF",
     BLACK = "#050505",
     FONT_GLOBAL = "Montserrat"
