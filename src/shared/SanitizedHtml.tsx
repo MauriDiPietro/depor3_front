@@ -1,6 +1,7 @@
 import React from "react";
 import DOMPurify from "dompurify";
 import { Box, Typography } from "@mui/material";
+import { Publicidades } from "./Publicidades";
 
 interface SanitizedHtmlProps {
   htmlContent: string;
@@ -69,30 +70,58 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
   // Modificar el contenido para insertar videos de YouTube como iframes
   const contentWithVideos = replaceYouTubeLinksWithIframes(sanitizedContent);
 
-  // Función para insertar el componente después del primer párrafo
-  const injectCardAfterFirstParagraph = (htmlString: string) => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlString, "text/html");
-    const firstParagraph = doc.querySelector("p");
+// Función para insertar el componente después del tercer párrafo
+const injectCardAfterThirdParagraph = (htmlString: string) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, "text/html");
+  
+  // Seleccionar todos los párrafos
+  const paragraphs = doc.querySelectorAll("p");
 
-    if (firstParagraph) {
-      const cardElement = document.createElement("div");
-      cardElement.innerHTML = `
-        <div>
-          <img class="publi"
-            src="https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg"
-            alt=""
-          />
-        </div>
-      `;
-      firstParagraph.insertAdjacentElement("afterend", cardElement);
-    }
+  // Verificar si hay al menos tres párrafos
+  if (paragraphs.length >= 3) {
+    const thirdParagraph = paragraphs[2]; // El tercer párrafo (índice 2)
+    
+    // Crear el componente a insertar
+    const cardElement = document.createElement("div");
+    cardElement.innerHTML = `
+      <div>
+        <img class="publi"
+          src="https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg"
+          alt=""
+        />
+      </div>
+    `;
+    
+    // Insertar después del tercer párrafo
+    thirdParagraph.insertAdjacentElement("afterend", cardElement);
+  }
 
-    return doc.body.innerHTML;
-  };
+  if (paragraphs.length >= 5) {
+    const fiveParagraph = paragraphs[4]; // quinto parrafo
+    
+    // Crear el componente a insertar
+    const cardElement = document.createElement("div");
+    cardElement.innerHTML = `
+      <div>
+        <img class="publi"
+          src="https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/centro-civico.jpg"
+          alt=""
+        />
+      </div>
+    `;
+    
+    // Insertar después del quinto párrafo
+    fiveParagraph.insertAdjacentElement("afterend", cardElement);
+  }
+
+  // Retornar el HTML modificado
+  return doc.body.innerHTML;
+};
+
 
   // Insertar el contenido modificado
-  const modifiedContent = injectCardAfterFirstParagraph(contentWithVideos);
+  const modifiedContent = injectCardAfterThirdParagraph(contentWithVideos);
 
   return (
     <Box sx={{ mt: 2 }}>
@@ -137,6 +166,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
           }
         `}</style>
       )}
+      <Publicidades/>
     </Box>
   );
 };

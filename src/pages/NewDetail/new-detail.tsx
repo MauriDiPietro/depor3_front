@@ -5,19 +5,17 @@ import {
   Box,
   CircularProgress,
   Grid,
-  // Card,
-  // CardMedia,
 } from "@mui/material";
 import { useEffect } from "react";
 import { useGlobalStore } from "../../stores/global";
 import { SanitizedHtml } from "../../shared/SanitizedHtml";
 import { CalendarToday, Person } from "@mui/icons-material";
-// import { Publicidades } from "../../shared/Publicidades";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
+import { PublicidadesDerecha } from "../../shared/Publicidades-derecha";
 
 export const NewsDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -65,10 +63,10 @@ export const NewsDetail = () => {
               item
               xs={12}
               sm={12}
-              // md={newDetail.category !== "Patio del deportista" ? 8 : 12}
-              // lg={newDetail.category !== "Patio del deportista" ? 8 : 12}
-              md={12}
-              lg={12}
+              md={newDetail.category !== "Patio del deportista" ? 8 : 12}
+              lg={newDetail.category !== "Patio del deportista" ? 8 : 12}
+              // md={12}
+              // lg={12}
             >
               <Grid container>
                 <Grid item xs={12} md={12} lg={12} sx={{ mb: 2 }}>
@@ -239,36 +237,11 @@ export const NewsDetail = () => {
                 </Grid> */}
               </Grid>
             </Grid>
-            {/* {newDetail.category !== "Patio del deportista" && (
-              <Grid item xs={12} md={12} sx={{ padding: 2 }}>
-                <Grid container>
-                  <Grid item xs={12} md={6} lg={6} sx={{ marginBottom: 2 }}>
-                    <Card >
-                      <CardMedia
-                        component="img"
-                        style={{
-                          width: "80%",
-                        }}
-                        image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735988671/fc16ju4gqnm0cyxtms8u.jpg"
-                        alt=""
-                      />
-                    </Card>
-                  </Grid>
-                  <Grid item xs={12} md={6} lg={6}>
-                    <Card>
-                      <CardMedia
-                        component="img"
-                        style={{
-                          width: "80%",
-                        }}
-                        image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735988672/ywiyilcqqdxh3bcy64ws.jpg"
-                        alt=""
-                      />
-                    </Card>
-                  </Grid>
-                </Grid>
+            {newDetail.category !== "Patio del deportista" && (
+              <Grid item xs={12} md={4} sx={{ paddingLeft: 2 }}>
+                <PublicidadesDerecha />
               </Grid>
-            )} */}
+            )}
           </Grid>
         </Grid>
       </Grid>
