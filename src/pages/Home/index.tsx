@@ -1,7 +1,7 @@
 import React from "react";
-import { Box, CardContent, Grid, Divider } from "@mui/material";
+import { Box, Grid, Divider } from "@mui/material";
 import { NewsGrid } from "./components/news-grid";
-import { HistoriasGrid } from "./components/historias-grid";
+// import { HistoriasGrid } from "./components/historias-grid";
 
 export const Home: React.FC<{}> = () => {
   return (
@@ -47,7 +47,7 @@ export const Home: React.FC<{}> = () => {
 
         <Divider sx={{borderColor:'divider'}} orientation="horizontal" flexItem/>
         </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={12}>
+        {/* <Grid item xs={12} sm={12} md={12} lg={12}>
           <CardContent>
             <Box
               sx={{
@@ -80,7 +80,7 @@ export const Home: React.FC<{}> = () => {
             </Box>
           </CardContent>
           <HistoriasGrid />
-        </Grid>
+        </Grid> */}
       </Grid>
     </Box>
   );
