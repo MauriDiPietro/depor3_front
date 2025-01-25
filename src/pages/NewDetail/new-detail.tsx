@@ -245,7 +245,6 @@ export const NewsDetail = () => {
           </Grid>
         </Grid>
       </Grid>
-      {/* <Publicidades /> */}
     </Container>
   );
 };

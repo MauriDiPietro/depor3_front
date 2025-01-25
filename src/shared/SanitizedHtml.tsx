@@ -71,53 +71,106 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
   const contentWithVideos = replaceYouTubeLinksWithIframes(sanitizedContent);
 
 // Función para insertar el componente después del tercer párrafo
+// const injectCardAfterThirdParagraph = (htmlString: string) => {
+//   const parser = new DOMParser();
+//   const doc = parser.parseFromString(htmlString, "text/html");
+  
+//   // Seleccionar todos los párrafos
+//   const paragraphs = doc.querySelectorAll("p");
+
+//   // Verificar si hay al menos tres párrafos
+//   if (paragraphs.length >= 3) {
+//     const thirdParagraph = paragraphs[2]; // El tercer párrafo (índice 2)
+    
+//     // Crear el componente a insertar
+//     const cardElement = document.createElement("div");
+//     cardElement.innerHTML = `
+//       <div>
+//         <img class="publi"
+//           src="https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg"
+//           alt=""
+//         />
+//       </div>
+//     `;
+    
+//     // Insertar después del tercer párrafo
+//     thirdParagraph.insertAdjacentElement("afterend", cardElement);
+//   }
+
+//   if (paragraphs.length >= 5) {
+//     const fiveParagraph = paragraphs[4]; // quinto parrafo
+    
+//     // Crear el componente a insertar
+//     const cardElement = document.createElement("div");
+//     cardElement.innerHTML = `
+//       <div>
+//         <img class="publi"
+//           src="https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/centro-civico.jpg"
+//           alt=""
+//         />
+//       </div>
+//     `;
+    
+//     // Insertar después del quinto párrafo
+//     fiveParagraph.insertAdjacentElement("afterend", cardElement);
+//   }
+
+//   // Retornar el HTML modificado
+//   return doc.body.innerHTML;
+// };
+
 const injectCardAfterThirdParagraph = (htmlString: string) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(htmlString, "text/html");
-  
+
+  // URLs de las imágenes
+  const imageUrls = [
+    "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg",
+    "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/centro-civico.jpg",
+  ];
+
+  // Mezclar las URLs aleatoriamente
+  const shuffledImages = [...imageUrls].sort(() => Math.random() - 0.5);
+
   // Seleccionar todos los párrafos
   const paragraphs = doc.querySelectorAll("p");
 
   // Verificar si hay al menos tres párrafos
   if (paragraphs.length >= 3) {
     const thirdParagraph = paragraphs[2]; // El tercer párrafo (índice 2)
-    
-    // Crear el componente a insertar
+
+    // Crear el componente con la primera imagen aleatoria
     const cardElement = document.createElement("div");
     cardElement.innerHTML = `
       <div>
-        <img class="publi"
-          src="https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg"
-          alt=""
-        />
+        <img class="publi" src="${shuffledImages[0]}" alt="Publicidad 1" />
       </div>
     `;
-    
+
     // Insertar después del tercer párrafo
     thirdParagraph.insertAdjacentElement("afterend", cardElement);
   }
 
+  // Verificar si hay al menos cinco párrafos
   if (paragraphs.length >= 5) {
-    const fiveParagraph = paragraphs[4]; // quinto parrafo
-    
-    // Crear el componente a insertar
+    const fifthParagraph = paragraphs[4]; // El quinto párrafo (índice 4)
+
+    // Crear el componente con la segunda imagen aleatoria
     const cardElement = document.createElement("div");
     cardElement.innerHTML = `
       <div>
-        <img class="publi"
-          src="https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/centro-civico.jpg"
-          alt=""
-        />
+        <img class="publi" src="${shuffledImages[1]}" alt="Publicidad 2" />
       </div>
     `;
-    
+
     // Insertar después del quinto párrafo
-    fiveParagraph.insertAdjacentElement("afterend", cardElement);
+    fifthParagraph.insertAdjacentElement("afterend", cardElement);
   }
 
   // Retornar el HTML modificado
   return doc.body.innerHTML;
 };
+
 
 
   // Insertar el contenido modificado
@@ -135,6 +188,9 @@ const injectCardAfterThirdParagraph = (htmlString: string) => {
       />
       {category !== "Patio del deportista" ? (
         <style>{`
+          .publi {
+            padding-bottom: 8px;
+          }
           img {
             max-width: 100%;
             height: auto;
