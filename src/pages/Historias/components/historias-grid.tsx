@@ -30,7 +30,7 @@ import {
     // const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   
     useEffect(() => {
-      getAllNews(1, itemsPerPage);
+      getAllNews(1, itemsPerPage, "", "Historias");
     }, []);
   
     const handleCardClick = (id: string) => {

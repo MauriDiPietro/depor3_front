@@ -21,7 +21,7 @@ export const PatioGrid = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAllNews();
+    getAllNews(1, 20, "", "Patio del deportista");
   }, []);
 
   const handleCardClick = (id: string) => {
