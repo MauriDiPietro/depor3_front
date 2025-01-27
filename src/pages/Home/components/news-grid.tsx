@@ -11,6 +11,7 @@ import {
   Pagination,
   TextField,
   InputAdornment,
+  IconButton,
 } from "@mui/material";
 import { New } from "../../../types/new.type";
 import { useGlobalStore } from "../../../stores/global";
@@ -22,24 +23,31 @@ import { parseDateToSort } from "../../../lib/services/utils/ordenamiento";
 export const NewsGrid = () => {
   const news = useGlobalStore((state) => state.news);
   const getAllNews = useGlobalStore((state) => state.getAllNews);
+  const totalPages = useGlobalStore((state) => state.totalPages);
+  const currentPage = useGlobalStore((state) => state.currentPage);
+  const setCurrentPage = useGlobalStore((state) => state.setCurrentPage);
+
+
   const loadingNews = useGlobalStore((state) => state.loadingNews);
 
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7; // Número de noticias por página
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [searchText, setSearchText] = useState(""); // Estado para manejar el texto de búsqueda
+  const [query, setQuery] = useState<string>(); // Texto para ejecutar la búsqueda
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(event.target.value);
-    setCurrentPage(1); // Reinicia la página al buscar
+  const handleSearchClick = () => {
+    setQuery(searchText); // Actualiza el query para ejecutar la búsqueda
+    setCurrentPage(1); // Reinicia la página a la primera
+    getAllNews(1, itemsPerPage, searchText); // Ejecuta la búsqueda con el texto actual
   };
 
   useEffect(() => {
-    getAllNews();
+    getAllNews(1, itemsPerPage);
   }, []);
 
   const handleCardClick = (id: string) => {
@@ -48,6 +56,7 @@ export const NewsGrid = () => {
 
   const handlePageChange = (_event, value) => {
     setCurrentPage(value);
+    getAllNews(value, itemsPerPage, query);
   };
 
   if (loadingNews) {
@@ -72,7 +81,7 @@ export const NewsGrid = () => {
       (noticia: New) =>
         noticia.active &&
         noticia.category !== "Patio del deportista" &&
-        noticia.title.toLowerCase().includes(searchText.toLowerCase()) // Filtrar por texto de búsqueda
+        query ? noticia.title.toLowerCase().includes(query.toLowerCase()) : true // Filtrar por texto de búsqueda
     )
     .sort((a: New, b: New) => {
       const dateA = parseDateToSort(a.date);
@@ -83,16 +92,10 @@ export const NewsGrid = () => {
       return dateB.getTime() - dateA.getTime();
     });
 
-  const totalPages = Math.ceil(filteredNews.length / itemsPerPage);
-  const currentNews = filteredNews.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
   return (
     <Box>
       <Grid container spacing={2} sx={{ overflowX: "hidden" }}>
-        {currentNews.map((noticia: New, index: number) => (
+        {filteredNews.map((noticia: New, index: number) => (
           <>
             {index === 0 ? (
               <Grid
@@ -174,11 +177,13 @@ export const NewsGrid = () => {
                       variant="outlined"
                       placeholder="Buscar noticias..."
                       value={searchText}
-                      onChange={handleSearchChange}
+                      onChange={(event) => setSearchText(event.target.value)}
                       InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <Search />
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton onClick={handleSearchClick}>
+                              <Search />
+                            </IconButton>
                           </InputAdornment>
                         ),
                       }}
