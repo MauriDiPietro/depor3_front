@@ -20,6 +20,7 @@ import {
     const news = useGlobalStore((state) => state.news);
     const getAllNews = useGlobalStore((state) => state.getAllNews);
     const loadingNews = useGlobalStore((state) => state.loadingNews);
+    const totalPages = useGlobalStore((state) => state.totalPages);
   
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
@@ -29,7 +30,7 @@ import {
     // const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   
     useEffect(() => {
-      getAllNews();
+      getAllNews(1, itemsPerPage);
     }, []);
   
     const handleCardClick = (id: string) => {
@@ -38,6 +39,7 @@ import {
   
     const handlePageChange = (_event, value) => {
       setCurrentPage(value);
+      getAllNews(value, itemsPerPage);
     };
   
     if (loadingNews) {
@@ -68,16 +70,10 @@ import {
         return dateB.getTime() - dateA.getTime();
       });
   
-    const totalPages = Math.ceil(filteredNews.length / itemsPerPage);
-    const currentNews = filteredNews.slice(
-      (currentPage - 1) * itemsPerPage,
-      currentPage * itemsPerPage
-    );
-  
     return (
       <Box>
         <Grid container spacing={2} sx={{ overflowX: "hidden" }}>
-          {currentNews.map((noticia: New, _index: number) => (
+          {filteredNews.map((noticia: New, _index: number) => (
             <>
                 <Grid item xs={12} sm={6} md={4} key={noticia._id}>
                   <Card
