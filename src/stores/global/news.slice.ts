@@ -14,7 +14,7 @@ export interface NewsState {
 
 export interface NewsActions {
   resetCargaDatosState: () => void;
-  getAllNews: (page: number, limit: number, title?: string) => void;
+  getAllNews: (page?: number, limit?: number, title?: string) => void;
   getNewById: (id: string) => void;
   setCurrentPage: (page: number) => void;
 }
@@ -137,7 +137,7 @@ const initialState: NewsState = {
 export const createNewsSlice: StateCreator<NewsSlice> = (set) => ({
   ...initialState,
   resetCargaDatosState: () => set({ ...initialState }),
-  getAllNews: async (page: number, limit: number, title?: string) => {
+  getAllNews: async (page?: number, limit?: number, title?: string) => {
     set({ loadingNews: true });
     try {
       const response = await NewsService.getAllNews(page, limit, title);
