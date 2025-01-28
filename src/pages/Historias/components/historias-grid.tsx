@@ -39,7 +39,7 @@ import {
   
     const handlePageChange = (_event, value) => {
       setCurrentPage(value);
-      getAllNews(value, itemsPerPage);
+      getAllNews(value, itemsPerPage, "", "Historias");
     };
   
     if (loadingNews) {
