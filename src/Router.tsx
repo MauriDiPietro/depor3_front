@@ -16,8 +16,8 @@ export const AppRouter: React.FC<{}> = () => {
         <Route path="/" element={<Home />} />
         {/* Redirecciones */}
         <Route
-          path="/deportistas_gusti-fernandez"
-          element={<Navigate to="/news/679214b3325f64f4f5002ad9" replace />}
+          path="/deportistas_piojo-lopez"
+          element={<Navigate to="/news/67951d9c9130785a0c518e01" replace />}
         />
         <Route path="/news/:id" element={<NewsDetail />} />
         <Route path="/entrevistas" element={<Entrevistas />} />
