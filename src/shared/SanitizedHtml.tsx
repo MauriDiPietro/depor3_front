@@ -209,11 +209,17 @@ const injectCardAfterThirdParagraph = (htmlString: string) => {
             padding-bottom: 5px;
           }
 
+          .publi{
+            max-width: 100%;
+          }
+            
           img {
             width: auto;
-            max-width: 100%;
+            max-width: 60%;
             height: auto;
+            margin: 0 auto;
           }
+
 
           figcaption {
             color: grey;
