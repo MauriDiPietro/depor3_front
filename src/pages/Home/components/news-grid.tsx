@@ -18,7 +18,8 @@ import { useGlobalStore } from "../../../stores/global";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CalendarToday, Search } from "@mui/icons-material";
-import { parseDateToSort } from "../../../lib/services/utils/ordenamiento";
+import { formatDate } from "../../../lib/services/utils/fechas";
+// import { parseDateToSort } from "../../../lib/services/utils/ordenamiento";
 
 export const NewsGrid = () => {
   const news = useGlobalStore((state) => state.news);
@@ -83,14 +84,14 @@ export const NewsGrid = () => {
         noticia.category !== "Patio del deportista" &&
         query ? noticia.title.toLowerCase().includes(query.toLowerCase()) : true // Filtrar por texto de búsqueda
     )
-    .sort((a: New, b: New) => {
-      const dateA = parseDateToSort(a.date);
-      const dateB = parseDateToSort(b.date);
+    // .sort((a: New, b: New) => {
+    //   const dateA = parseDateToSort(a.date);
+    //   const dateB = parseDateToSort(b.date);
 
-      if (!dateA || !dateB) return 0;
+    //   if (!dateA || !dateB) return 0;
 
-      return dateB.getTime() - dateA.getTime();
-    });
+    //   return dateB.getTime() - dateA.getTime();
+    // });
 
   return (
     <Box>
@@ -157,7 +158,7 @@ export const NewsGrid = () => {
                             color="text.secondary"
                             sx={{ fontSize: "0.875rem", fontWeight: "bold" }}
                           >
-                            {noticia.date}
+                            {formatDate(noticia.date)}
                           </Typography>
                         </Box>
                       </Box>
@@ -275,7 +276,7 @@ export const NewsGrid = () => {
                           color="text.secondary"
                           sx={{ fontSize: "0.875rem", fontWeight: "bold" }}
                         >
-                          {noticia.date}
+                          {formatDate(noticia.date)}
                         </Typography>
                       </Box>
                     </Box>

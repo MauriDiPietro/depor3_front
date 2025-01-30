@@ -16,6 +16,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import { PublicidadesDerecha } from "../../shared/Publicidades-derecha";
+import { formatDate } from "../../lib/services/utils/fechas";
 
 export const NewsDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -134,7 +135,7 @@ export const NewsDetail = () => {
                             fontWeight: "bold",
                           }}
                         >
-                          {newDetail.date}
+                          {formatDate(newDetail.date)}
                         </Typography>
                       </Grid>
                     </Grid>

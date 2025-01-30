@@ -15,7 +15,8 @@ import {
   import { useNavigate } from "react-router-dom";
   import { useState } from "react";
   import { CalendarToday } from "@mui/icons-material";
-import { parseDateToSort } from "../../../lib/services/utils/ordenamiento";
+// import { parseDateToSort } from "../../../lib/services/utils/ordenamiento";
+import { formatDate } from "../../../lib/services/utils/fechas";
   
   export const HistoriasGrid = () => {
     const news = useGlobalStore((state) => state.news);
@@ -63,14 +64,14 @@ import { parseDateToSort } from "../../../lib/services/utils/ordenamiento";
         (noticia: New) =>
           noticia.active && noticia.category == "Historias" || noticia.category == "historias"
       )
-      .sort((a: New, b: New) => {
-        const dateA = parseDateToSort(a.date);
-        const dateB = parseDateToSort(b.date);
+      // .sort((a: New, b: New) => {
+      //   const dateA = parseDateToSort(a.date);
+      //   const dateB = parseDateToSort(b.date);
 
-        if (!dateA || !dateB) return 0; // Manejar fechas nulas
+      //   if (!dateA || !dateB) return 0; // Manejar fechas nulas
 
-        return dateB.getTime() - dateA.getTime(); // Orden descendente
-      })
+      //   return dateB.getTime() - dateA.getTime(); // Orden descendente
+      // })
   
     const totalPages = Math.ceil(filteredNews.length / itemsPerPage);
     const currentNews = filteredNews.slice(
@@ -133,7 +134,7 @@ import { parseDateToSort } from "../../../lib/services/utils/ordenamiento";
                             color="text.secondary"
                             sx={{ fontSize: "0.875rem", fontWeight: "bold" }}
                           >
-                            {noticia.date}
+                            {formatDate(noticia.date)}
                           </Typography>
                         </Box>
                       </Box>

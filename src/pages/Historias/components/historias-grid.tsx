@@ -15,6 +15,7 @@ import {
   import { useNavigate } from "react-router-dom";
   import { useEffect, useState } from "react";
   import { CalendarToday } from "@mui/icons-material";
+  import { formatDate } from "../../../lib/services/utils/fechas";
   
   export const HistoriasGrid = () => {
     const news = useGlobalStore((state) => state.news);
@@ -64,11 +65,11 @@ import {
         (noticia: New) =>
           noticia.active && noticia.category == "Historias" || noticia.category == "historias"
       )
-      .sort((a: New, b: New) => {
-        const dateA = new Date(a.date.split("/").reverse().join("/"));
-        const dateB = new Date(b.date.split("/").reverse().join("/"));
-        return dateB.getTime() - dateA.getTime();
-      });
+      // .sort((a: New, b: New) => {
+      //   const dateA = new Date(a.date.split("/").reverse().join("/"));
+      //   const dateB = new Date(b.date.split("/").reverse().join("/"));
+      //   return dateB.getTime() - dateA.getTime();
+      // });
   
     return (
       <Box>
@@ -125,7 +126,7 @@ import {
                             color="text.secondary"
                             sx={{ fontSize: "0.875rem", fontWeight: "bold" }}
                           >
-                            {noticia.date}
+                            {formatDate(noticia.date)}
                           </Typography>
                         </Box>
                       </Box>
