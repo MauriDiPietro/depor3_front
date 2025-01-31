@@ -10,11 +10,9 @@ import { useEffect } from "react";
 import { useGlobalStore } from "../../stores/global";
 import { SanitizedHtml } from "../../shared/SanitizedHtml";
 import { CalendarToday, Person } from "@mui/icons-material";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Navigation, Pagination } from "swiper/modules";
 import { PublicidadesDerecha } from "../../shared/Publicidades-derecha";
 import { formatDate } from "../../lib/services/utils/fechas";
 
@@ -170,12 +168,12 @@ export const NewsDetail = () => {
                   <SanitizedHtml
                     htmlContent={newDetail.body}
                     category={newDetail.category}
-                    // isOld={newDetail.isOld}
+                    newDetail={newDetail}
                   />
                 </Grid>
 
                 {/* Slider de imágenes */}
-                <Grid item xs={6} sm={6} md={12} lg={12}>
+                {/* <Grid item xs={6} sm={6} md={12} lg={12}>
                   {newDetail.multimedia.length > 0 && !newDetail.isOld && (
                     <Box
                       sx={{
@@ -214,7 +212,7 @@ export const NewsDetail = () => {
                       </Swiper>
                     </Box>
                   )}
-                </Grid>
+                </Grid> */}
 
                 {/* <Grid item xs={12} md={12} lg={12}>
                   {newDetail.multimedia.length > 0 &&

@@ -2,15 +2,20 @@ import React from "react";
 import DOMPurify from "dompurify";
 import { Box, Typography } from "@mui/material";
 import { Publicidades } from "./Publicidades";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+
 
 interface SanitizedHtmlProps {
   htmlContent: string;
   category: string;
+  newDetail: any;
 }
 
 export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
   htmlContent,
   category,
+  newDetail
 }) => {
   // Sanitize the HTML string
   const sanitizedContent = DOMPurify.sanitize(htmlContent);
@@ -70,55 +75,6 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
   // Modificar el contenido para insertar videos de YouTube como iframes
   const contentWithVideos = replaceYouTubeLinksWithIframes(sanitizedContent);
 
-  // Función para insertar el componente después del tercer párrafo
-  // const injectCardAfterThirdParagraph = (htmlString: string) => {
-  //   const parser = new DOMParser();
-  //   const doc = parser.parseFromString(htmlString, "text/html");
-
-  //   // Seleccionar todos los párrafos
-  //   const paragraphs = doc.querySelectorAll("p");
-
-  //   // Verificar si hay al menos tres párrafos
-  //   if (paragraphs.length >= 3) {
-  //     const thirdParagraph = paragraphs[2]; // El tercer párrafo (índice 2)
-
-  //     // Crear el componente a insertar
-  //     const cardElement = document.createElement("div");
-  //     cardElement.innerHTML = `
-  //       <div>
-  //         <img class="publi"
-  //           src="https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg"
-  //           alt=""
-  //         />
-  //       </div>
-  //     `;
-
-  //     // Insertar después del tercer párrafo
-  //     thirdParagraph.insertAdjacentElement("afterend", cardElement);
-  //   }
-
-  //   if (paragraphs.length >= 5) {
-  //     const fiveParagraph = paragraphs[4]; // quinto parrafo
-
-  //     // Crear el componente a insertar
-  //     const cardElement = document.createElement("div");
-  //     cardElement.innerHTML = `
-  //       <div>
-  //         <img class="publi"
-  //           src="https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/centro-civico.jpg"
-  //           alt=""
-  //         />
-  //       </div>
-  //     `;
-
-  //     // Insertar después del quinto párrafo
-  //     fiveParagraph.insertAdjacentElement("afterend", cardElement);
-  //   }
-
-  //   // Retornar el HTML modificado
-  //   return doc.body.innerHTML;
-  // };
-
   const injectCardAfterThirdParagraph = (htmlString: string) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, "text/html");
@@ -136,7 +92,22 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
     const paragraphs = doc.querySelectorAll("p");
 
     // Verificar si hay al menos tres párrafos
-    if (paragraphs.length >= 3) {
+    if (paragraphs.length === 3) {
+      const thirdParagraph = paragraphs[2]; // El tercer párrafo (índice 2)
+
+      // Crear el componente con la primera imagen aleatoria
+      const cardElement = document.createElement("div");
+      cardElement.innerHTML = `
+      <div>
+        <img class="publi" src="${shuffledImages[0]}" alt="Publicidad 1" />
+        <img class="publi" src="${shuffledImages[1]}" alt="Publicidad 2" />
+      </div>
+    `;
+
+      // Insertar después del tercer párrafo
+      thirdParagraph.insertAdjacentElement("afterend", cardElement);
+    }
+    if (paragraphs.length > 3) {
       const thirdParagraph = paragraphs[2]; // El tercer párrafo (índice 2)
 
       // Crear el componente con la primera imagen aleatoria
@@ -150,7 +121,6 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
       // Insertar después del tercer párrafo
       thirdParagraph.insertAdjacentElement("afterend", cardElement);
     }
-
     // Verificar si hay al menos cinco párrafos
     if (paragraphs.length >= 5) {
       const fifthParagraph = paragraphs[4]; // El quinto párrafo (índice 4)
@@ -166,6 +136,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
       // Insertar después del quinto párrafo
       fifthParagraph.insertAdjacentElement("afterend", cardElement);
     }
+
 
     // Retornar el HTML modificado
     return doc.body.innerHTML;
@@ -188,7 +159,8 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
       {category !== "Patio del deportista" ? (
         <style>{`
           .publi {
-            padding-bottom: 8px;
+            margin-top: 8px;
+            margin-bottom: 8px;
           }
           img {
             max-width: 100%;
@@ -230,6 +202,47 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
           }
         `}</style>
       )}
+      {/* <Grid item xs={6} sm={6} md={12} lg={12}> */}
+                  {newDetail.multimedia.length > 0 && !newDetail.isOld && (
+                    <Box
+                      sx={{
+                        padding: "0",
+                        margin: "0 auto",
+                        marginBottom: "8px",
+                        maxWidth: { xs: "400px", md: "800px" },
+                      }}
+                    >
+                      <Swiper
+                        navigation
+                        pagination={{ clickable: true }}
+                        modules={[Navigation, Pagination]}
+                        spaceBetween={30}
+                        slidesPerView={1}
+                        style={{
+                          width: "100%", // Asegura que el slider ocupe todo el ancho del contenedor
+                          overflow: "hidden", // Evita que el contenido desborde
+                          // margin: "0", //
+                        }}
+                      >
+                        {newDetail.multimedia.map((url, index) => (
+                          <SwiperSlide key={index}>
+                            <a href={url} target="_blank">
+                              <img
+                                src={url}
+                                alt={`Multimedia ${index + 1}`}
+                                style={{
+                                  width: "100%",
+                                  borderRadius: "8px",
+                                  objectFit: "cover",
+                                }}
+                              />
+                            </a>
+                          </SwiperSlide>
+                        ))}
+                      </Swiper>
+                    </Box>
+                  )}
+                {/* </Grid> */}
       <Publicidades />
     </Box>
   );
