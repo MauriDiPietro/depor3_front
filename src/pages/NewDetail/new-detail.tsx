@@ -160,7 +160,7 @@ export const NewsDetail = () => {
                       <img
                         src={newDetail.image}
                         alt={""}
-                        style={{ width: "60%", borderRadius: "8px" }}
+                        style={{ width: "100%", borderRadius: "8px" }}
                       />
                     </Box>
                   </Grid>
