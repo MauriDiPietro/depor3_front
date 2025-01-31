@@ -202,7 +202,6 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
           }
         `}</style>
       )}
-      {/* <Grid item xs={6} sm={6} md={12} lg={12}> */}
                   {newDetail.multimedia.length > 0 && !newDetail.isOld && (
                     <Box
                       sx={{
@@ -242,7 +241,6 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
                       </Swiper>
                     </Box>
                   )}
-                {/* </Grid> */}
       <Publicidades />
     </Box>
   );
