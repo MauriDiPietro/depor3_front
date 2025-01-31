@@ -189,7 +189,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
             
           img {
             width: auto;
-            max-width: 60%;
+            max-width: 100%;
             height: auto;
             margin: 0 auto;
           }
@@ -199,6 +199,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
             color: grey;
             text-align: center;
             margin-top: 8px;
+            font-size: 12px;
           }
         `}</style>
       )}
@@ -241,6 +242,24 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
                       </Swiper>
                     </Box>
                   )}
+                  {/* {newDetail.multimedia.length > 0 &&
+                    newDetail.category === "Patio del deportista" &&
+                    newDetail.multimedia.map((media, index) => {
+                      return (
+                        <Box sx={{ mb: 2 }}>
+                          <img
+                            key={index}
+                            src={media}
+                            alt={""}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              borderRadius: "8px",
+                            }}
+                          />
+                        </Box>
+                      );
+                    })} */}
       <Publicidades />
     </Box>
   );
