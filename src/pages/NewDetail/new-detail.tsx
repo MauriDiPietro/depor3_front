@@ -152,7 +152,7 @@ export const NewsDetail = () => {
                   </Grid>
                 )}
 
-                {!newDetail.isOld || newDetail.category === "Patio del deportista" && (
+                {!newDetail.isOld && newDetail.category === "Patio del deportista" && (
                   <Grid item xs={12} md={12} lg={12}>
                     <Box sx={{ mb: 2 }}>
                       <img
