@@ -77,13 +77,19 @@ export const NewsGrid = () => {
   }
 
   // Filtrar y ordenar noticias
-  const filteredNews = news
-    ?.filter(
-      (noticia: New) =>
-        noticia.active &&
-        noticia.category !== "Patio del deportista" &&
-        query ? noticia.title.toLowerCase().includes(query.toLowerCase()) : true // Filtrar por texto de búsqueda
-    )
+  // const filteredNews = news
+  //   ?.filter(
+  //     (noticia: New) =>
+  //       noticia.active &&
+  //       noticia.category !== "Patio del deportista" &&
+  //       query ? noticia.title.toLowerCase().includes(query.toLowerCase()) : true // Filtrar por texto de búsqueda
+  //   )
+  const filteredNews = news?.filter((noticia: New) =>
+    noticia.active &&
+    noticia.category !== "Patio del deportista" &&
+    (query ? noticia.title.toLowerCase().includes(query.toLowerCase()) : true)
+  );
+  
     // .sort((a: New, b: New) => {
     //   const dateA = parseDateToSort(a.date);
     //   const dateB = parseDateToSort(b.date);
