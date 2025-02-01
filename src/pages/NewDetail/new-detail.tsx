@@ -57,7 +57,7 @@ export const NewsDetail = () => {
   return (
     <Container sx={{ mt: { xs: 6, md: 9 } }}>
     <Helmet>
-    {/* <title>{newDetail.title}</title> */}
+    <title>{newDetail.title}</title>
     <meta property="og:title" content={newDetail.title} />
     <meta property="og:description" content={newDetail.description} />
     <meta property="og:image" content={newDetail.image} />

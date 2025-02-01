@@ -1,11 +1,23 @@
 import React from "react";
 import { Box, Grid, Divider } from "@mui/material";
 import { NewsGrid } from "./components/news-grid";
+import { Helmet } from "react-helmet-async";
 // import { HistoriasGrid } from "./components/historias-grid";
 
 export const Home: React.FC<{}> = () => {
   return (
     <Box sx={{ overflowX: "hidden", width: "100%" }}>
+      <Helmet>
+        <title>
+          Depor3 Río Tercero | Web de la Capital Nacional del Deportista
+        </title>
+        <meta
+          property="og:title"
+          content={
+            "Depor3 Río Tercero | Web de la Capital Nacional del Deportista"
+          }
+        />
+      </Helmet>
       <Grid container spacing={1} sx={{ mt: 7 }}>
         <Grid item xs={12} md={4}>
           <Box>
@@ -44,8 +56,11 @@ export const Home: React.FC<{}> = () => {
           <NewsGrid />
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
-
-        <Divider sx={{borderColor:'divider'}} orientation="horizontal" flexItem/>
+          <Divider
+            sx={{ borderColor: "divider" }}
+            orientation="horizontal"
+            flexItem
+          />
         </Grid>
         {/* <Grid item xs={12} sm={12} md={12} lg={12}>
           <CardContent>
