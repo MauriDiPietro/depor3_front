@@ -15,6 +15,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { PublicidadesDerecha } from "../../shared/Publicidades-derecha";
 import { formatDate } from "../../lib/services/utils/fechas";
+import { Helmet } from "react-helmet-async";
 
 export const NewsDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -55,6 +56,16 @@ export const NewsDetail = () => {
 
   return (
     <Container sx={{ mt: { xs: 6, md: 9 } }}>
+    <Helmet>
+    {/* <title>{newDetail.title}</title> */}
+    <meta property="og:title" content={newDetail.title} />
+    <meta property="og:description" content={newDetail.description} />
+    <meta property="og:image" content={newDetail.image} />
+    <meta property="og:url" content={`https://www.depor3.com/news/${newDetail._id}`} />
+    <meta property="og:type" content="article" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={newDetail.image} />
+  </Helmet>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Grid container>
@@ -152,7 +163,7 @@ export const NewsDetail = () => {
                   </Grid>
                 )}
 
-                {!newDetail.isOld && newDetail.category === "Patio del deportista" && (
+                {!newDetail.isOld && (
                   <Grid item xs={12} md={12} lg={12}>
                     <Box sx={{ mb: 2 }}>
                       <img
