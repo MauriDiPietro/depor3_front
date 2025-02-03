@@ -21,35 +21,81 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
   const sanitizedContent = DOMPurify.sanitize(htmlContent);
 
   // Función para detectar enlaces de YouTube y reemplazarlos con iframes
-  const replaceYouTubeLinksWithIframes = (htmlString: string) => {
+  // const replaceYouTubeLinksWithIframes = (htmlString: string) => {
+  //   const parser = new DOMParser();
+  //   const doc = parser.parseFromString(htmlString, "text/html");
+
+  //   // Buscar todos los enlaces <a> en el contenido
+  //   const links = doc.querySelectorAll("a");
+
+  //   links.forEach((link) => {
+  //     const href = link.getAttribute("href");
+
+  //     if (href) {
+  //       let videoId: string | null = null;
+
+  //       // Detectar enlaces tipo youtube.com/watch?v=
+  //       if (href.includes("youtube.com/watch?v=")) {
+  //         videoId = new URL(href).searchParams.get("v");
+  //       }
+
+  //       // Detectar enlaces tipo youtu.be/
+  //       else if (href.includes("youtu.be/")) {
+  //         videoId = href.split("youtu.be/")[1]?.split("?")[0] || null;
+  //       }
+
+  //       if (videoId) {
+  //         // Crear un contenedor centrado con el iframe del video
+  //         const iframeContainer = document.createElement("div");
+  //         iframeContainer.style.textAlign = "center";
+  //         iframeContainer.style.margin = "20px 0";
+
+  //         iframeContainer.innerHTML = `
+  //           <iframe
+  //             width="560"
+  //             height="315"
+  //             src="https://www.youtube.com/embed/${videoId}"
+  //             title="YouTube video player"
+  //             frameborder="0"
+  //             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  //             allowfullscreen
+  //             style="max-width: 100%;"
+  //           ></iframe>
+  //         `;
+
+  //         // Reemplazar el enlace <a> con el iframe
+  //         link.replaceWith(iframeContainer);
+  //       }
+  //     }
+  //   });
+
+  //   return doc.body.innerHTML;
+  // };
+
+  const replaceYouTubeLinksAndModifyAnchors = (htmlString: string) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, "text/html");
-
-    // Buscar todos los enlaces <a> en el contenido
+  
     const links = doc.querySelectorAll("a");
-
+  
     links.forEach((link) => {
       const href = link.getAttribute("href");
-
+  
       if (href) {
         let videoId: string | null = null;
-
-        // Detectar enlaces tipo youtube.com/watch?v=
+  
+        // Detectar enlaces de YouTube y reemplazar con iframes
         if (href.includes("youtube.com/watch?v=")) {
           videoId = new URL(href).searchParams.get("v");
-        }
-
-        // Detectar enlaces tipo youtu.be/
-        else if (href.includes("youtu.be/")) {
+        } else if (href.includes("youtu.be/")) {
           videoId = href.split("youtu.be/")[1]?.split("?")[0] || null;
         }
-
+  
         if (videoId) {
-          // Crear un contenedor centrado con el iframe del video
           const iframeContainer = document.createElement("div");
           iframeContainer.style.textAlign = "center";
           iframeContainer.style.margin = "20px 0";
-
+  
           iframeContainer.innerHTML = `
             <iframe
               width="560"
@@ -62,18 +108,22 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
               style="max-width: 100%;"
             ></iframe>
           `;
-
-          // Reemplazar el enlace <a> con el iframe
+  
           link.replaceWith(iframeContainer);
+        } else {
+          // Modificar el enlace para abrir en una nueva pestaña
+          link.setAttribute("target", "_blank");
+          link.setAttribute("rel", "noopener noreferrer");
         }
       }
     });
-
+  
     return doc.body.innerHTML;
   };
+  
 
   // Modificar el contenido para insertar videos de YouTube como iframes
-  const contentWithVideos = replaceYouTubeLinksWithIframes(sanitizedContent);
+  const contentWithVideos = replaceYouTubeLinksAndModifyAnchors(sanitizedContent);
 
   const injectCardAfterThirdParagraph = (htmlString: string) => {
     const parser = new DOMParser();
