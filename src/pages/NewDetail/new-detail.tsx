@@ -16,6 +16,7 @@ import "swiper/css/pagination";
 import { PublicidadesDerecha } from "../../shared/Publicidades-derecha";
 import { formatDate } from "../../lib/services/utils/fechas";
 import { Helmet } from "react-helmet-async";
+import ShareButtons from "../../shared/ShareButtons";
 
 export const NewsDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -59,7 +60,7 @@ export const NewsDetail = () => {
     <Helmet>
     <title>{newDetail.title}</title>
     <meta property="og:title" content={newDetail.title} />
-    <meta property="og:description" content={newDetail.description} />
+    <meta property="og:description" content={'depor3.com'} />
     <meta property="og:image" content={newDetail.image} />
     <meta property="og:url" content={`https://www.depor3.com/news/${newDetail._id}`} />
     <meta property="og:type" content="article" />
@@ -255,6 +256,7 @@ export const NewsDetail = () => {
           </Grid>
         </Grid>
       </Grid>
+      <ShareButtons id={newDetail._id} />
     </Container>
   );
 };
