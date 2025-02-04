@@ -15,6 +15,8 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({ id }) => {
   const [copied, setCopied] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
   // Acortar el enlace al montar el componente
   useEffect(() => {
     const shortenUrl = async () => {
@@ -44,18 +46,57 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({ id }) => {
     shortenUrl();
   }, [originalUrl]);
 
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(shortUrl).then(() => {
+//   const handleCopyLink = () => {
+//     navigator.clipboard.writeText(shortUrl).then(() => {
+//       setCopied(true);
+//       setTimeout(() => setCopied(false), 5000);
+//     });
+//   };
+
+const handleCopyLink = async () => {
+    let urlToCopy = shortUrl;
+  
+    // Si el shortUrl es el original, acortar primero antes de copiar
+    if (shortUrl === originalUrl) {
+      try {
+        const response = await fetch("https://api-ssl.bitly.com/v4/shorten", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${BITLY_TOKEN}`,
+          },
+          body: JSON.stringify({ long_url: originalUrl }),
+        });
+  
+        if (!response.ok) throw new Error("Error al acortar la URL");
+  
+        const data = await response.json();
+        urlToCopy = data.link; // Guardamos la URL acortada
+        setShortUrl(data.link); // La actualizamos en el estado
+      } catch (error) {
+        console.error("Error acortando URL:", error);
+        return; // Evitar copiar si hay error
+      }
+    }
+  
+    // Copiar la URL al portapapeles
+    try {
+      await navigator.clipboard.writeText(urlToCopy);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    });
+    } catch (error) {
+      console.error("Error al copiar el enlace:", error);
+    }
   };
 
   const handleWhatsAppClick = () => {
     navigator.clipboard.writeText(shortUrl).then(() => {
-      const whatsappUrl = `https://web.whatsapp.com/send?text=${encodeURIComponent(
-        shortUrl
-      )}`;
+        const whatsappUrl = isMobile
+    ? `https://wa.me/?text=${encodeURIComponent(shortUrl)}`
+    : `https://web.whatsapp.com/send?text=${encodeURIComponent(shortUrl)}`;
+    //   const whatsappUrl = `https://web.whatsapp.com/send?text=${encodeURIComponent(
+    //     shortUrl
+    //   )}`;
       window.open(whatsappUrl, "_blank");
     });
   };
