@@ -63,7 +63,7 @@ import {
     const filteredNews = news
       ?.filter(
         (noticia: New) =>
-          noticia.active && noticia.category == "Historias" || noticia.category == "historias"
+          noticia.active && noticia.category.startsWith("Historias") || noticia.category == "historias"
       )
       // .sort((a: New, b: New) => {
       //   const dateA = new Date(a.date.split("/").reverse().join("/"));
