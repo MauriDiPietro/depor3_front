@@ -9,6 +9,7 @@ import { Patio } from "./pages/Patio";
 import { Historias } from "./pages/Historias";
 import { HelmetProvider } from "react-helmet-async";
 import { DraftsDetail } from "./pages/DraftDetail/draft-detail";
+import { PatioDetail } from "./pages/PatioDetail/patio-detail";
 
 export const AppRouter: React.FC<{}> = () => {
   return (
@@ -44,6 +45,7 @@ export const AppRouter: React.FC<{}> = () => {
           />
           <Route path="/news/:id" element={<NewsDetail />} />
           <Route path="/draft/:id" element={<DraftsDetail />} />
+          <Route path="/patio/:id" element={<PatioDetail />} />
           <Route path="/entrevistas" element={<Entrevistas />} />
           <Route path="/patio-del-deportista" element={<Patio />} />
           <Route path="/historias-gen-dominante" element={<Historias />} />

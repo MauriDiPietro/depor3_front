@@ -25,7 +25,7 @@ export const PatioGrid = () => {
   }, []);
 
   const handleCardClick = (id: string) => {
-    navigate(`/news/${id}`);
+    navigate(`/patio/${id}`);
   };
 
   if (loadingNews) {
@@ -45,48 +45,6 @@ export const PatioGrid = () => {
   }
 
   return (
-    // <Container sx={{ mt: 2 }} maxWidth="xl">
-    //   <Grid container spacing={2}>
-    //     {news &&
-    //       news
-    //         .filter(
-    //           (noticia: New) =>
-    //             noticia.active && noticia.category == "Patio del deportista"
-    //         )
-    //         .sort((a: New, b: New) => {
-    //           // Convertir "dd/mm/aaaa" a Date para ordenar
-    //           const dateA = new Date(a.date.split("/").reverse().join("/"));
-    //           const dateB = new Date(b.date.split("/").reverse().join("/"));
-    //           return dateB.getTime() - dateA.getTime(); // Orden descendente
-    //         })
-    //         .map((noticia: New, index: any) => (
-    //           <>
-    //             <Grid item xs={12} sm={6} md={4} key={index}>
-    //               <Card
-    //                 onClick={() => handleCardClick(noticia._id)}
-    //                 sx={{ cursor: "pointer" }}
-    //               >
-    //                 <CardMedia
-    //                   component="img"
-    //                   height="140"
-    //                   image={
-    //                     noticia.image ||
-    //                     noticia.multimedia[0] ||
-    //                     "https://res.cloudinary.com/dsooxiydo/image/upload/v1735216082/sgbynryaedq7k6mo5tug.jpg"
-    //                   }
-    //                   alt={noticia.title || "Imagen de la noticia"}
-    //                 />
-    //                 <CardContent>
-    //                   <Typography variant="h5" component="div" gutterBottom>
-    //                     {noticia.title}
-    //                   </Typography>
-    //                 </CardContent>
-    //               </Card>
-    //             </Grid>
-    //           </>
-    //         ))}
-    //   </Grid>
-    // </Container>
       <Grid container spacing={2} sx={{ overflowX: "hidden" }}>
       {newsPatio &&
         newsPatio
