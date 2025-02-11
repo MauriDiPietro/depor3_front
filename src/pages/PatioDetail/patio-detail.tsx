@@ -194,7 +194,7 @@ export const PatioDetail = () => {
           </Grid>
         </Grid>
       </Grid>
-      <ShareButtons id={newPatio._id} />
+      <ShareButtons id={newPatio._id} isPatio={true}/>
     </Container>
   );
 };

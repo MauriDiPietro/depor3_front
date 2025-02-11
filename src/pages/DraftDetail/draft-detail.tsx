@@ -16,7 +16,7 @@ import "swiper/css/pagination";
 import { PublicidadesDerecha } from "../../shared/Publicidades-derecha";
 import { formatDate } from "../../lib/services/utils/fechas";
 import { Helmet } from "react-helmet-async";
-import ShareButtons from "../../shared/ShareButtons";
+// import ShareButtons from "../../shared/ShareButtons";
 
 export const DraftsDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -193,7 +193,7 @@ export const DraftsDetail = () => {
           </Grid>
         </Grid>
       </Grid>
-      <ShareButtons id={draftDetail._id} />
+      {/* <ShareButtons id={draftDetail._id} /> */}
     </Container>
   );
 };

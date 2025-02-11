@@ -5,10 +5,16 @@ import { Fab, Box, Tooltip, Zoom } from "@mui/material";
 
 interface ShareButtonsProps {
   id: string;
+  isPatio: boolean;
 }
 
-const ShareButtons: React.FC<ShareButtonsProps> = ({ id }) => {
-  const originalUrl = `https://depor3-api.vercel.app/api/news/${id}/meta`;
+const ShareButtons: React.FC<ShareButtonsProps> = ({ id, isPatio }) => {
+  let originalUrl = '';
+  if(isPatio) {
+    originalUrl = `https://depor3-api.vercel.app/api/news/patio/${id}/meta`;
+  } else {
+    originalUrl = `https://depor3-api.vercel.app/api/news/${id}/meta`;
+  }
   const BITLY_TOKEN = import.meta.env.VITE_BITLY_TOKEN; // Mejor usar .env
 
   const [shortUrl, setShortUrl] = useState(originalUrl);

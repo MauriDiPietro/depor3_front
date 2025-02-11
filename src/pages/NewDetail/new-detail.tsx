@@ -256,7 +256,7 @@ export const NewsDetail = () => {
           </Grid>
         </Grid>
       </Grid>
-      <ShareButtons id={newDetail._id} />
+      <ShareButtons id={newDetail._id} isPatio={false} />
     </Container>
   );
 };
