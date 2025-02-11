@@ -14,14 +14,14 @@ import { useEffect } from "react";
 // import { parseDateToSort } from "../../../lib/services/utils/ordenamiento";
 
 export const PatioGrid = () => {
-  const news = useGlobalStore((state) => state.news);
-  const getAllNews = useGlobalStore((state) => state.getAllNews);
+  const newsPatio = useGlobalStore((state) => state.newsPatio);
+  const getAllNewsPatio = useGlobalStore((state) => state.getAllNewsPatio);
   const loadingNews = useGlobalStore((state) => state.loadingNews);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAllNews(1, 20, "", "Patio del deportista");
+    getAllNewsPatio(1, 20, "");
   }, []);
 
   const handleCardClick = (id: string) => {
@@ -88,12 +88,12 @@ export const PatioGrid = () => {
     //   </Grid>
     // </Container>
       <Grid container spacing={2} sx={{ overflowX: "hidden" }}>
-      {news &&
-        news
-          .filter(
-            (noticia: New) =>
-              noticia.active && noticia.category == "Patio del deportista"
-          )
+      {newsPatio &&
+        newsPatio
+          // .filter(
+          //   (noticia: New) =>
+          //     noticia.active && noticia.category == "Patio del deportista"
+          // )
           // .sort((a: New, b: New) => {
           //   const dateA = parseDateToSort(a.date);
           //   const dateB = parseDateToSort(b.date);

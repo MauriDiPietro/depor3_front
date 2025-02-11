@@ -4,9 +4,15 @@ import NewsService from "../../lib/services/news.sevice";
 
 export interface NewsState {
   news: New[] | [];
+  newsPatio: New[] | [];
   newDetail: New | null;
+  newPatio: New | null;
+  draftDetail: New | null;
   loadingNews: boolean;
+  loadingDrafts: boolean;
   newsLoaded: boolean;
+  newsPatioLoaded: boolean;
+  draftLoaded: boolean;
   errorNews: boolean;
   totalPages: number;
   currentPage: number;
@@ -16,7 +22,10 @@ export interface NewsActions {
   resetCargaDatosState: () => void;
   getAllNews: (page?: number, limit?: number, title?: string, category?: string) => void;
   getNewById: (id: string) => void;
+  getDraftById: (id: string) => void;
   setCurrentPage: (page: number) => void;
+  getAllNewsPatio: (page: number, limit: number, title?: string) => void;
+  getNewPatioById: (id: string) => void;
 }
 
 export type NewsSlice = NewsState & NewsActions;
@@ -127,8 +136,14 @@ const initialState: NewsState = {
     //     },
   ],
   newDetail: null,
+  newsPatio: [],
+  newPatio: null,
   loadingNews: false,
+  draftDetail: null,
+  loadingDrafts: false,
+  draftLoaded: false,
   newsLoaded: false,
+  newsPatioLoaded: false,
   errorNews: false,
   totalPages: 1,
   currentPage: 1,
@@ -149,6 +164,23 @@ export const createNewsSlice: StateCreator<NewsSlice> = (set) => ({
       set({ loadingNews: false });
     }
   },
+  getAllNewsPatio: async (page: number, limit: number, title?: string) => {
+    set({ loadingNews: true });
+    try {
+      const response = await NewsService.getAllNewsPatio(page, limit, title);
+      if (!response) throw new Error("No se encontraron las noticias");
+      set({
+        newsPatio: response.data,
+        newsLoaded: true,
+        totalPages: response.info.totalPages,
+        // count: response.info.count,
+      });
+    } catch (error) {
+      set({ errorNews: true });
+    } finally {
+      set({ loadingNews: false });
+    }
+  },
   getNewById: async (id) => {
     set({ loadingNews: true });
     try {
@@ -159,6 +191,30 @@ export const createNewsSlice: StateCreator<NewsSlice> = (set) => ({
       set({ errorNews: true });
     } finally {
       set({ loadingNews: false });
+    }
+  },
+  getNewPatioById: async (id) => {
+    set({ loadingNews: true });
+    try {
+      const response = await NewsService.getNewPatioById(id);
+      if (!response) throw new Error("No se encontró la noticia");
+      set({ newPatio: response.data, newsPatioLoaded: true });
+    } catch (error) {
+      set({ errorNews: true });
+    } finally {
+      set({ loadingNews: false });
+    }
+  },
+  getDraftById: async (id: string) => {
+    set({ loadingDrafts: true });
+    try {
+      const response = await NewsService.getDraftById(id);
+      if (!response) throw new Error("No se encontraron las noticias");
+      set({ draftDetail: response.data, draftLoaded: true });
+    } catch (error) {
+      set({ errorNews: true });
+    } finally {
+      set({ loadingDrafts: false });
     }
   },
   setCurrentPage: (val: number) => set({ currentPage: val })
