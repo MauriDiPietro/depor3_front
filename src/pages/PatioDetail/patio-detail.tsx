@@ -152,7 +152,7 @@ export const PatioDetail = () => {
                   </Grid>
                 )}
 
-                {newPatio.isOld && !newPatio.multimedia.length && (
+                {/* {newPatio.isOld && !newPatio.multimedia.length && (
                   <Grid item xs={12} md={12} lg={12}>
                     <Box sx={{ mb: 2 }}>
                       <img
@@ -162,9 +162,9 @@ export const PatioDetail = () => {
                       />
                     </Box>
                   </Grid>
-                )}
+                )} */}
 
-                {!newPatio.isOld && (
+                {/* {!newPatio.isOld && ( */}
                   <Grid item xs={12} md={12} lg={12}>
                     <Box sx={{ mb: 2 }}>
                       <img
@@ -174,7 +174,7 @@ export const PatioDetail = () => {
                       />
                     </Box>
                   </Grid>
-                )}
+                {/* )} */}
 
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                   <SanitizedHtml
