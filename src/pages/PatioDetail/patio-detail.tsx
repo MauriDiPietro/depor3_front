@@ -62,7 +62,7 @@ export const PatioDetail = () => {
     <meta property="og:title" content={newPatio.title} />
     <meta property="og:description" content={'depor3.com'} />
     <meta property="og:image" content={newPatio.image} />
-    <meta property="og:url" content={`https://www.depor3.com/news/${newPatio._id}`} />
+    <meta property="og:url" content={`https://www.depor3.com/patio/${newPatio._id}`} />
     <meta property="og:type" content="article" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={newPatio.image} />

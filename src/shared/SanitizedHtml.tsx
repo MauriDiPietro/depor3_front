@@ -244,6 +244,9 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
             margin: 0 auto;
           }
 
+          * {
+          color: white !important; 
+          }
 
           figcaption {
             color: grey;
