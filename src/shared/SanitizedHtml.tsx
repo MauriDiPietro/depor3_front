@@ -221,6 +221,11 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
         * {
           color: white !important; 
           }
+          em {
+            color: grey;
+            text-align: center;
+            font-size: 12px;
+          }
         `}</style>
       ) : (
         <style>{`
@@ -252,6 +257,12 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
             color: grey;
             text-align: center;
             margin-top: 8px;
+            font-size: 12px;
+          }
+
+          em {
+            color: grey;
+            text-align: center;
             font-size: 12px;
           }
         `}</style>
