@@ -273,6 +273,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
                         slidesPerView={1}
                         style={{
                           width: "100%", // Asegura que el slider ocupe todo el ancho del contenedor
+                          maxHeight: "400px",
                           overflow: "hidden", // Evita que el contenido desborde
                           // margin: "0", //
                         }}
@@ -284,7 +285,8 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
                                 src={url}
                                 alt={`Multimedia ${index + 1}`}
                                 style={{
-                                  width: "100%",
+                                  width: "80%",
+                                  height: "80%",
                                   borderRadius: "8px",
                                   objectFit: "cover",
                                 }}
