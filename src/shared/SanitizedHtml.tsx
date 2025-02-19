@@ -262,7 +262,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
                         padding: "0",
                         margin: "0 auto",
                         marginBottom: "8px",
-                        maxWidth: { xs: "400px", md: "800px" },
+                        maxWidth: { xs: "300px", md: "800px" },
                       }}
                     >
                       <Swiper
