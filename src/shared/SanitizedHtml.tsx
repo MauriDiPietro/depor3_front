@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material";
 import { Publicidades } from "./Publicidades";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-
+import { Tweet } from "react-tweet";
 
 interface SanitizedHtmlProps {
   htmlContent: string;
@@ -15,7 +15,7 @@ interface SanitizedHtmlProps {
 export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
   htmlContent,
   category,
-  newDetail
+  newDetail,
 }) => {
   // Sanitize the HTML string
   const sanitizedContent = DOMPurify.sanitize(htmlContent);
@@ -72,58 +72,71 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
   //   return doc.body.innerHTML;
   // };
 
-  const replaceYouTubeLinksAndModifyAnchors = (htmlString: string) => {
+  const extractMedia = (htmlString: string) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, "text/html");
-  
-    const links = doc.querySelectorAll("a");
-  
-    links.forEach((link) => {
+
+    const tweetIds: string[] = [];
+    const mediaMap: { [key: string]: JSX.Element } = {};
+
+    doc.querySelectorAll("a").forEach((link) => {
       const href = link.getAttribute("href");
-  
-      if (href) {
-        let videoId: string | null = null;
-  
-        // Detectar enlaces de YouTube y reemplazar con iframes
-        if (href.includes("youtube.com/watch?v=")) {
-          videoId = new URL(href).searchParams.get("v");
-        } else if (href.includes("youtu.be/")) {
-          videoId = href.split("youtu.be/")[1]?.split("?")[0] || null;
-        }
-  
-        if (videoId) {
-          const iframeContainer = document.createElement("div");
-          iframeContainer.style.textAlign = "center";
-          iframeContainer.style.margin = "20px 0";
-  
-          iframeContainer.innerHTML = `
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube.com/embed/${videoId}"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              style="max-width: 100%;"
-            ></iframe>
-          `;
-  
-          link.replaceWith(iframeContainer);
-        } else {
-          // Modificar el enlace para abrir en una nueva pestaña
-          link.setAttribute("target", "_blank");
-          link.setAttribute("rel", "noopener noreferrer");
+      if (!href) return;
+
+      /*** 🔹 Detectar Twitter ***/
+      if (href.includes("x.com/") || href.includes("twitter.com/")) {
+        const tweetIdMatch = href.match(/status\/(\d+)/);
+        if (tweetIdMatch) {
+          const tweetId = tweetIdMatch[1];
+          tweetIds.push(tweetId);
+          mediaMap[tweetId] = <Tweet key={tweetId} id={tweetId} />;
+          link.outerHTML = `<!--TWEET_${tweetId}-->`; // Marcador para reemplazo
         }
       }
+
+      /*** 🔹 Detectar YouTube ***/
+      let videoId: string | null = null;
+      if (href.includes("youtube.com/watch?v=")) {
+        videoId = new URL(href).searchParams.get("v");
+      } else if (href.includes("youtu.be/")) {
+        videoId = href.split("youtu.be/")[1]?.split("?")[0] || null;
+      }
+
+      if (videoId) {
+        const iframe = `
+          <div style="text-align: center; margin: 20px 0;">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}"
+              frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen style="max-width: 100%;">
+            </iframe>
+          </div>
+        `;
+        link.outerHTML = iframe;
+      }
     });
-  
-    return doc.body.innerHTML;
+
+    return { modifiedHtml: doc.body.innerHTML, mediaMap };
   };
-  
+  //@ts-ignore
+  const { modifiedHtml, mediaMap } = extractMedia(sanitizedContent);
+
+  const renderContent = (html: string) => {
+    return html.split(/<!--TWEET_(\d+)-->/).map((part, index) => {
+      if (/^\d+$/.test(part)) {
+        return mediaMap[part]; // Insertar `<Tweet />`
+      }
+      return (
+        <Typography
+          key={index}
+          component="div"
+          dangerouslySetInnerHTML={{ __html: part }}
+        />
+      );
+    });
+  };
 
   // Modificar el contenido para insertar videos de YouTube como iframes
-  const contentWithVideos = replaceYouTubeLinksAndModifyAnchors(sanitizedContent);
+  // const contentWithVideos = replaceSocialMediaLinks(sanitizedContent);
 
   const injectCardAfterThirdParagraph = (htmlString: string) => {
     const parser = new DOMParser();
@@ -187,19 +200,17 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
       fifthParagraph.insertAdjacentElement("afterend", cardElement);
     }
 
-
     // Retornar el HTML modificado
     return doc.body.innerHTML;
   };
 
   // Insertar el contenido modificado
-  const modifiedContent = injectCardAfterThirdParagraph(contentWithVideos);
+  const modifiedContent = injectCardAfterThirdParagraph(modifiedHtml);
 
   return (
     <Box sx={{ mt: 2 }}>
       <Typography
         component="div"
-        dangerouslySetInnerHTML={{ __html: modifiedContent }}
         style={{
           overflowX: "hidden",
           textAlign: "left",
@@ -267,48 +278,49 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
           }
         `}</style>
       )}
-                  {newDetail.multimedia.length > 0 && !newDetail.isOld && (
-                    <Box
-                      sx={{
-                        padding: "0",
-                        margin: "0 auto",
-                        marginBottom: "8px",
-                        maxWidth: { xs: "300px", md: "800px" },
-                      }}
-                    >
-                      <Swiper
-                        navigation
-                        pagination={{ clickable: true }}
-                        modules={[Navigation, Pagination]}
-                        spaceBetween={30}
-                        slidesPerView={1}
-                        style={{
-                          width: "100%", // Asegura que el slider ocupe todo el ancho del contenedor
-                          maxHeight: "400px",
-                          overflow: "hidden", // Evita que el contenido desborde
-                          // margin: "0", //
-                        }}
-                      >
-                        {newDetail.multimedia.map((url, index) => (
-                          <SwiperSlide key={index}>
-                            <a href={url} target="_blank">
-                              <img
-                                src={url}
-                                alt={`Multimedia ${index + 1}`}
-                                style={{
-                                  width: "80%",
-                                  height: "80%",
-                                  borderRadius: "8px",
-                                  objectFit: "cover",
-                                }}
-                              />
-                            </a>
-                          </SwiperSlide>
-                        ))}
-                      </Swiper>
-                    </Box>
-                  )}
-                  {/* {newDetail.multimedia.length > 0 &&
+      <Box sx={{ mt: 2 }}>{renderContent(modifiedContent)}</Box>
+      {newDetail.multimedia.length > 0 && !newDetail.isOld && (
+        <Box
+          sx={{
+            padding: "0",
+            margin: "0 auto",
+            marginBottom: "8px",
+            maxWidth: { xs: "300px", md: "800px" },
+          }}
+        >
+          <Swiper
+            navigation
+            pagination={{ clickable: true }}
+            modules={[Navigation, Pagination]}
+            spaceBetween={30}
+            slidesPerView={1}
+            style={{
+              width: "100%", // Asegura que el slider ocupe todo el ancho del contenedor
+              maxHeight: "400px",
+              overflow: "hidden", // Evita que el contenido desborde
+              // margin: "0", //
+            }}
+          >
+            {newDetail.multimedia.map((url, index) => (
+              <SwiperSlide key={index}>
+                <a href={url} target="_blank">
+                  <img
+                    src={url}
+                    alt={`Multimedia ${index + 1}`}
+                    style={{
+                      width: "80%",
+                      height: "80%",
+                      borderRadius: "8px",
+                      objectFit: "cover",
+                    }}
+                  />
+                </a>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </Box>
+      )}
+      {/* {newDetail.multimedia.length > 0 &&
                     newDetail.category === "Patio del deportista" &&
                     newDetail.multimedia.map((media, index) => {
                       return (

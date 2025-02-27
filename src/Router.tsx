@@ -10,6 +10,7 @@ import { Historias } from "./pages/Historias";
 import { HelmetProvider } from "react-helmet-async";
 import { DraftsDetail } from "./pages/DraftDetail/draft-detail";
 import { PatioDetail } from "./pages/PatioDetail/patio-detail";
+import { About } from "./pages/QuienesSomos";
 
 export const AppRouter: React.FC<{}> = () => {
   return (
@@ -89,6 +90,7 @@ export const AppRouter: React.FC<{}> = () => {
           <Route path="/entrevistas" element={<Entrevistas />} />
           <Route path="/patio-del-deportista" element={<Patio />} />
           <Route path="/historias-gen-dominante" element={<Historias />} />
+          <Route path="/about" element={<About />} />
         </Route>
         {/* - */}
         <Route path="/login" element={<Login />} />
