@@ -129,6 +129,11 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
         <Typography
           key={index}
           component="div"
+          style={{
+            overflowX: "hidden",
+            textAlign: "left",
+            color: "white",
+          }}
           dangerouslySetInnerHTML={{ __html: part }}
         />
       );
