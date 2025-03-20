@@ -215,7 +215,7 @@ export const NewsGrid = () => {
                   </Card>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
-                  {/* PUBLICIDAD */}
+                  {/* PUBLICIDAD MUNI */}
                   <Card>
                     <CardMedia
                       component="img"
@@ -225,7 +225,7 @@ export const NewsGrid = () => {
                         maxWidth: "100%",
                         objectFit: "contain",
                       }}
-                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735910641/pm0cn0it3g9xp8vkxand.jpg"
+                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1742467374/m6hsm6r6wvyoupugwolf.jpg"
                       alt="Publicidad"
                     />
                   </Card>
