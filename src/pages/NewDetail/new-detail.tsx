@@ -5,8 +5,10 @@ import {
   Box,
   CircularProgress,
   Grid,
+  TextField,
+  Button,
 } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useGlobalStore } from "../../stores/global";
 import { SanitizedHtml } from "../../shared/SanitizedHtml";
 import { CalendarToday, Person } from "@mui/icons-material";
@@ -17,6 +19,7 @@ import { PublicidadesDerecha } from "../../shared/Publicidades-derecha";
 import { formatDate } from "../../lib/services/utils/fechas";
 import { Helmet } from "react-helmet-async";
 import ShareButtons from "../../shared/ShareButtons";
+import CommentsService from "../../lib/services/comments.service";
 
 export const NewsDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -24,11 +27,57 @@ export const NewsDetail = () => {
   const loadingNews = useGlobalStore((state) => state.loadingNews);
   const newDetail = useGlobalStore((state) => state.newDetail);
 
+  const [comments, setComments] = useState<{ author: string; text: string }[]>(
+    []
+  );
+  const [author, setAuthor] = useState("");
+  const [text, setText] = useState("");
+
+  useEffect(() => {
+    if (id) {
+      getNewById(id);
+      fetchComments();
+    }
+  }, [id]);
+
   useEffect(() => {
     if (id) {
       getNewById(id);
     }
   }, [id]);
+
+  const fetchComments = async () => {
+    try {
+      const response = await CommentsService.getAllComments('news', id as string);
+      setComments(response.data);
+    } catch (error) {
+      console.error("Error al obtener comentarios", error);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!author.trim() || !text.trim()) {
+      alert("Todos los campos son obligatorios.");
+      return;
+    }
+
+    try {
+      const body = {
+        postId: newDetail?._id as string,
+        postType: "news",
+        author,
+        text,
+      };
+
+      const response = await CommentsService.createComment(body);
+
+      setComments([...comments, response.data]);
+      setAuthor("");
+      setText("");
+    } catch (error) {
+      console.error("Error al enviar el comentario", error);
+    }
+  };
 
   if (loadingNews) {
     return (
@@ -57,16 +106,20 @@ export const NewsDetail = () => {
 
   return (
     <Container sx={{ mt: { xs: 6, md: 9 } }}>
-    <Helmet>
-    <title>{newDetail.title}</title>
-    <meta property="og:title" content={newDetail.title} />
-    <meta property="og:description" content={'depor3.com'} />
-    <meta property="og:image" content={newDetail.image} />
-    <meta property="og:url" content={`https://www.depor3.com/news/${newDetail._id}`} />
-    <meta property="og:type" content="article" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content={newDetail.image} />
-  </Helmet>
+      <Helmet>
+        <title>{newDetail.title}</title>
+        <meta property="og:title" content={newDetail.title} />
+        <meta property="og:description" content={"depor3.com"} />
+        <meta property="og:image" content={newDetail.image} />
+        <meta
+          property="og:url"
+          content={`https://www.depor3.com/news/${newDetail._id}`}
+        />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={newDetail.image} />
+      </Helmet>
+
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Grid container>
@@ -76,8 +129,6 @@ export const NewsDetail = () => {
               sm={12}
               md={newDetail.category !== "Patio del deportista" ? 8 : 12}
               lg={newDetail.category !== "Patio del deportista" ? 8 : 12}
-              // md={12}
-              // lg={12}
             >
               <Grid container>
                 <Grid item xs={12} md={12} lg={12} sx={{ mb: 2 }}>
@@ -138,7 +189,6 @@ export const NewsDetail = () => {
                           color="textSecondary"
                           gutterBottom
                           sx={{
-                            // backgroundColor: "orange",
                             color: "white",
                             display: "inline-block",
                             padding: "4px 6px",
@@ -152,31 +202,7 @@ export const NewsDetail = () => {
                   </Grid>
                 )}
 
-                {newDetail.isOld && !newDetail.multimedia.length && (
-                  <Grid item xs={12} md={12} lg={12}>
-                    <Box sx={{ mb: 2 }}>
-                      <img
-                        src={newDetail.image}
-                        alt={""}
-                        style={{ width: "100%", borderRadius: "8px" }}
-                      />
-                    </Box>
-                  </Grid>
-                )}
-
-                {!newDetail.isOld && (
-                  <Grid item xs={12} md={12} lg={12}>
-                    <Box sx={{ mb: 2 }}>
-                      <img
-                        src={newDetail.image}
-                        alt={""}
-                        style={{ width: "100%", borderRadius: "8px" }}
-                      />
-                    </Box>
-                  </Grid>
-                )}
-
-                <Grid item xs={12} sm={12} md={12} lg={12}>
+                <Grid item xs={12}>
                   <SanitizedHtml
                     htmlContent={newDetail.body}
                     category={newDetail.category}
@@ -184,68 +210,72 @@ export const NewsDetail = () => {
                   />
                 </Grid>
 
-                {/* Slider de imágenes */}
-                {/* <Grid item xs={6} sm={6} md={12} lg={12}>
-                  {newDetail.multimedia.length > 0 && !newDetail.isOld && (
-                    <Box
-                      sx={{
-                        padding: "0",
-                        margin: "0 auto",
-                        maxWidth: { xs: "400px", md: "800px" },
-                      }}
-                    >
-                      <Swiper
-                        navigation
-                        pagination={{ clickable: true }}
-                        modules={[Navigation, Pagination]}
-                        spaceBetween={30}
-                        slidesPerView={1}
-                        style={{
-                          width: "100%", // Asegura que el slider ocupe todo el ancho del contenedor
-                          overflow: "hidden", // Evita que el contenido desborde
-                          // margin: "0", //
+                {/* 🔹 Formulario de comentarios */}
+                <Grid item xs={12} sx={{ mt: 4 }}>
+                  <Typography variant="h5" sx={{ mb: 2, color: "white" }}>
+                    Deja tu comentario
+                  </Typography>
+                  <TextField
+                    label="Nombre"
+                    placeholder="Nombre"
+                    variant="outlined"
+                    fullWidth
+                    value={author}
+                    onChange={(e) => setAuthor(e.target.value)}
+                    sx={{ mb: 2 }}
+                  />
+                  <TextField
+                    label="Comentario"
+                    variant="outlined"
+                    fullWidth
+                    multiline
+                    rows={4}
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    sx={{ mb: 2 }}
+                  />
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmit}
+                  >
+                    Enviar comentario
+                  </Button>
+                </Grid>
+
+                {/* 🔹 Lista de comentarios */}
+                <Grid item xs={12} sx={{ mt: 4, textAlign: "left" }}>
+                  <Typography variant="h5" sx={{ mb: 2, color: "white" }}>
+                    Comentarios
+                  </Typography>
+                  {!comments.length ? (
+                    <Typography sx={{ color: "white" }}>
+                      No hay comentarios aún.
+                    </Typography>
+                  ) : (
+                    comments.map((comment, index) => (
+                      <Box
+                        key={index}
+                        sx={{
+                          mb: 2,
+                          p: 2,
+                          borderRadius: "8px",
+                          backgroundColor: "#333",
+                          textAlign: "left",
                         }}
                       >
-                        {newDetail.multimedia.map((url, index) => (
-                          <SwiperSlide key={index}>
-                            <a href={url} target="_blank">
-                              <img
-                                src={url}
-                                alt={`Multimedia ${index + 1}`}
-                                style={{
-                                  width: "100%",
-                                  borderRadius: "8px",
-                                  objectFit: "cover",
-                                }}
-                              />
-                            </a>
-                          </SwiperSlide>
-                        ))}
-                      </Swiper>
-                    </Box>
+                        <Typography
+                          sx={{ fontWeight: "bold", color: "orange" }}
+                        >
+                          {comment.author}
+                        </Typography>
+                        <Typography sx={{ color: "black" }}>
+                          {comment.text}
+                        </Typography>
+                      </Box>
+                    ))
                   )}
-                </Grid> */}
-
-                {/* <Grid item xs={12} md={12} lg={12}>
-                  {newDetail.multimedia.length > 0 &&
-                    !newDetail.isOld &&
-                    newDetail.multimedia.map((media, index) => {
-                      return (
-                        <Box sx={{ mb: 2 }}>
-                          <img
-                            key={index}
-                            src={media}
-                            alt={""}
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              borderRadius: "8px",
-                            }}
-                          />
-                        </Box>
-                      );
-                    })}
-                </Grid> */}
+                </Grid>
               </Grid>
             </Grid>
             {newDetail.category !== "Patio del deportista" && (
@@ -256,6 +286,7 @@ export const NewsDetail = () => {
           </Grid>
         </Grid>
       </Grid>
+
       <ShareButtons id={newDetail._id} isPatio={false} />
     </Container>
   );
