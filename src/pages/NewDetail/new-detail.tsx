@@ -48,7 +48,10 @@ export const NewsDetail = () => {
 
   const fetchComments = async () => {
     try {
-      const response = await CommentsService.getAllComments('news', id as string);
+      const response = await CommentsService.getAllComments(
+        "news",
+        id as string
+      );
       setComments(response.data);
     } catch (error) {
       console.error("Error al obtener comentarios", error);
@@ -199,6 +202,30 @@ export const NewsDetail = () => {
                         </Typography>
                       </Grid>
                     </Grid>
+                  </Grid>
+                )}
+
+                {newDetail.isOld && !newDetail.multimedia.length && (
+                  <Grid item xs={12} md={12} lg={12}>
+                    <Box>
+                      <img
+                        src={newDetail.image}
+                        alt={""}
+                        style={{ width: "100%", borderRadius: "8px" }}
+                      />
+                    </Box>
+                  </Grid>
+                )}
+
+                {!newDetail.isOld && (
+                  <Grid item xs={12} md={12} lg={12}>
+                    <Box>
+                      <img
+                        src={newDetail.image}
+                        alt={""}
+                        style={{ width: "100%", borderRadius: "8px" }}
+                      />
+                    </Box>
                   </Grid>
                 )}
 
