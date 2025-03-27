@@ -15,7 +15,7 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({ id, isPatio }) => {
   } else {
     originalUrl = `https://depor3-api.vercel.app/api/news/${id}/meta`;
   }
-  const BITLY_TOKEN = import.meta.env.VITE_BITLY_TOKEN; // Mejor usar .env
+  // const BITLY_TOKEN = import.meta.env.VITE_BITLY_TOKEN; 
 
   const [shortUrl, setShortUrl] = useState(originalUrl);
   const [copied, setCopied] = useState(false);
@@ -23,34 +23,34 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({ id, isPatio }) => {
 
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-  // Acortar el enlace al montar el componente
-  useEffect(() => {
-    const shortenUrl = async () => {
-      if (!BITLY_TOKEN) {
-        console.error("Falta el token de Bitly en las variables de entorno.");
-        return;
-      }
-      try {
-        const response = await fetch("https://api-ssl.bitly.com/v4/shorten", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${BITLY_TOKEN}`,
-          },
-          body: JSON.stringify({ long_url: originalUrl }),
-        });
+  // Acortar el enlace 
+  // useEffect(() => {
+  //   const shortenUrl = async () => {
+  //     if (!BITLY_TOKEN) {
+  //       console.error("Falta el token de Bitly en las variables de entorno.");
+  //       return;
+  //     }
+  //     try {
+  //       const response = await fetch("https://api-ssl.bitly.com/v4/shorten", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${BITLY_TOKEN}`,
+  //         },
+  //         body: JSON.stringify({ long_url: originalUrl }),
+  //       });
 
-        if (!response.ok) throw new Error("Error al acortar la URL");
+  //       if (!response.ok) throw new Error("Error al acortar la URL");
 
-        const data = await response.json();
-        setShortUrl(data.link);
-      } catch (error) {
-        console.error("Error acortando URL:", error);
-      }
-    };
+  //       const data = await response.json();
+  //       setShortUrl(data.link);
+  //     } catch (error) {
+  //       console.error("Error acortando URL:", error);
+  //     }
+  //   };
 
-    shortenUrl();
-  }, [originalUrl]);
+  //   shortenUrl();
+  // }, [originalUrl]);
 
 //   const handleCopyLink = () => {
 //     navigator.clipboard.writeText(shortUrl).then(() => {
@@ -63,27 +63,27 @@ const handleCopyLink = async () => {
     let urlToCopy = shortUrl;
   
     // Si el shortUrl es el original, acortar primero antes de copiar
-    if (shortUrl === originalUrl) {
-      try {
-        const response = await fetch("https://api-ssl.bitly.com/v4/shorten", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${BITLY_TOKEN}`,
-          },
-          body: JSON.stringify({ long_url: originalUrl }),
-        });
+    // if (shortUrl === originalUrl) {
+    //   try {
+    //     const response = await fetch("https://api-ssl.bitly.com/v4/shorten", {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: `Bearer ${BITLY_TOKEN}`,
+    //       },
+    //       body: JSON.stringify({ long_url: originalUrl }),
+    //     });
   
-        if (!response.ok) throw new Error("Error al acortar la URL");
+    //     if (!response.ok) throw new Error("Error al acortar la URL");
   
-        const data = await response.json();
-        urlToCopy = data.link; // Guardamos la URL acortada
-        setShortUrl(data.link); // La actualizamos en el estado
-      } catch (error) {
-        console.error("Error acortando URL:", error);
-        return; // Evitar copiar si hay error
-      }
-    }
+    //     const data = await response.json();
+    //     urlToCopy = data.link; // Guardamos la URL acortada
+    //     setShortUrl(data.link); // La actualizamos en el estado
+    //   } catch (error) {
+    //     console.error("Error acortando URL:", error);
+    //     return; // Evitar copiar si hay error
+    //   }
+    // }
   
     // Copiar la URL al portapapeles
     try {
