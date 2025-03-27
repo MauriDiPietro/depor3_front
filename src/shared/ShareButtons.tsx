@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { FaFacebook, FaLink, FaShareAlt, FaTwitter, FaWhatsapp } from "react-icons/fa";
 import { Fab, Box, Tooltip, Zoom } from "@mui/material";
@@ -17,7 +17,7 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({ id, isPatio }) => {
   }
   // const BITLY_TOKEN = import.meta.env.VITE_BITLY_TOKEN; 
 
-  const [shortUrl, setShortUrl] = useState(originalUrl);
+  const [shortUrl] = useState(originalUrl);
   const [copied, setCopied] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
