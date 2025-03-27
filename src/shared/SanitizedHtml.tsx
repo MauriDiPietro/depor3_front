@@ -23,6 +23,17 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, "text/html");
 
+      // Buscar imágenes y ajustar epígrafes
+      doc.querySelectorAll("p em").forEach((caption) => {
+        const parent = caption.closest("p");
+        if (parent) {
+          parent.style.marginTop = "2px"; // Reducir espacio entre imagen y epígrafe
+          parent.style.marginBottom = "0"; // Evitar espacio extra debajo del epígrafe
+        }
+      });
+
+      doc.querySelectorAll("br").forEach((br) => br.remove());
+
     const tweetIds: string[] = [];
     const mediaMap: { [key: string]: JSX.Element } = {};
 
@@ -170,11 +181,29 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
     // Seleccionar todos los párrafos
     const paragraphs = doc.querySelectorAll("p");
   
-    // Función para insertar publicidad considerando imágenes
-    const insertAdConsideringImage = (paragraph, imageUrl) => {
+    // Función para insertar publicidad después de la imagen y su epígrafe (si existe)
+    const insertAdAfterImageAndCaption = (paragraph, imageUrl) => {
       if (!paragraph) return;
   
       let nextElement = paragraph.nextElementSibling;
+      let targetElement = paragraph; // Elemento donde se insertará la publicidad
+  
+      // Buscar la imagen y su epígrafe
+      while (nextElement) {
+        if (nextElement.tagName.toLowerCase() === "p" && nextElement.querySelector("img")) {
+          let imageElement = nextElement;
+          let captionElement = imageElement.nextElementSibling;
+  
+          // Si el siguiente elemento después de la imagen es un epígrafe (<p><em></em></p>)
+          if (captionElement && captionElement.tagName.toLowerCase() === "p" && captionElement.querySelector("em")) {
+            targetElement = captionElement; // Insertar después del epígrafe
+          } else {
+            targetElement = imageElement; // Insertar después de la imagen
+          }
+          break;
+        }
+        nextElement = nextElement.nextElementSibling;
+      }
   
       // Crear el contenedor de publicidad
       const adElement = document.createElement("div");
@@ -184,26 +213,24 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
         </div>
       `;
   
-      // Si el siguiente elemento es una imagen, insertar la publicidad antes de la imagen
-      if (nextElement && nextElement.tagName.toLowerCase() === "img") {
-        nextElement.insertAdjacentElement("beforebegin", adElement);
-      } else {
-        paragraph.insertAdjacentElement("afterend", adElement);
-      }
+      // Insertar la publicidad en la posición correcta
+      targetElement.insertAdjacentElement("afterend", adElement);
     };
   
-    // Insertar la primera publicidad después del tercer párrafo (o antes de la imagen si es necesario)
+    // Insertar la primera publicidad después del tercer párrafo
     if (paragraphs.length > 2) {
-      insertAdConsideringImage(paragraphs[2], shuffledImages[0]);
+      insertAdAfterImageAndCaption(paragraphs[2], shuffledImages[0]);
     }
   
-    // Insertar la segunda publicidad después del cuarto párrafo (o antes de la imagen si es necesario)
-    if (paragraphs.length > 4) {
-      insertAdConsideringImage(paragraphs[3], shuffledImages[1]);
+    // Insertar la segunda publicidad después del cuarto párrafo
+    if (paragraphs.length > 3) {
+      insertAdAfterImageAndCaption(paragraphs[3], shuffledImages[1]);
     }
   
     return doc.body.innerHTML;
   };
+  
+  
   
 
   // Insertar el contenido modificado
@@ -230,6 +257,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
             height: auto;
             display: block;
             margin: 0 auto;
+            margin-bottom: 4px;
           }
         * {
           color: white !important; 
@@ -238,6 +266,10 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
             color: grey;
             text-align: center;
             font-size: 12px;
+          }
+          p em, figcaption {
+              display: block;
+              margin-top: 2px; 
           }
         `}</style>
       ) : (
@@ -260,6 +292,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
             max-width: 100%;
             height: auto;
             margin: 0 auto;
+            margin-bottom: 4px;
           }
 
           * {
@@ -277,6 +310,11 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
             color: grey;
             text-align: center;
             font-size: 12px;
+          }
+
+          p em, figcaption {
+              display: block;
+              margin-top: 2px; 
           }
         `}</style>
       )}

@@ -14,7 +14,7 @@ export const Publicidades: React.FC<{}> = () => {
   const shuffledImages = [...imageUrls].sort(() => Math.random() - 0.5);
 
   return (
-    <Grid container>
+    <Grid container sx={{marginTop: 2}}>
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <Box
           sx={{
