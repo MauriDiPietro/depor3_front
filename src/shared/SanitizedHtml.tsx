@@ -269,7 +269,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
           }
           p em, figcaption {
               display: block;
-              margin-top: 2px; 
+              margin-top: 1px; 
           }
         `}</style>
       ) : (
@@ -318,7 +318,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
           }
         `}</style>
       )}
-      <Box sx={{ mt: 2 }}>{renderContent(modifiedContent)}</Box>
+      <Box sx={{ mt: -2 }}>{renderContent(modifiedContent)}</Box>
       {newDetail.multimedia.length > 0 && !newDetail.isOld && (
         <Box
           sx={{
