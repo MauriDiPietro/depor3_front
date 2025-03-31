@@ -223,8 +223,8 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
     }
   
     // Insertar la segunda publicidad después del cuarto párrafo
-    if (paragraphs.length > 3) {
-      insertAdAfterImageAndCaption(paragraphs[3], shuffledImages[1]);
+    if (paragraphs.length > 4) {
+      insertAdAfterImageAndCaption(paragraphs[4], shuffledImages[1]);
     }
   
     return doc.body.innerHTML;
