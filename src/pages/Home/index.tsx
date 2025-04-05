@@ -36,12 +36,12 @@ export const Home: React.FC<{}> = () => {
         <Grid item xs={12} md={8}>
           <Box>
             <a
-              href="https://www.cba.gov.ar/dengue/"
+              href="https://youtu.be/h2J_ZdbxYVc"
               target="_blank"
               rel="noopener noreferrer"
             >
               <img
-                src="https://res.cloudinary.com/dsooxiydo/image/upload/v1735297127/marca/yqz7uedh8fffraxqbjgl.gif"
+                src="https://res.cloudinary.com/dsooxiydo/image/upload/v1743853097/gob-cba-04-2025.gif"
                 alt="Publicidad"
                 style={{
                   width: "100%", // Ajuste responsivo
