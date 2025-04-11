@@ -284,6 +284,9 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
         `}</style>
       ) : (
         <style>{`
+         p {
+              margin-bottom: 0px;
+          }
           figure {
             display: flex;
             flex-direction: column;
@@ -302,7 +305,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
             max-width: 100%;
             height: auto;
             margin: 0 auto;
-            margin-bottom: 4px;
+            margin-bottom: 0px;
           }
 
           * {
@@ -320,11 +323,12 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
             color: grey;
             text-align: center;
             font-size: 12px;
+            margin-top: 0px;
           }
 
           p em, figcaption {
               display: block;
-              margin-top: 2px; 
+              margin-top: 0px; 
           }
         `}</style>
       )}
