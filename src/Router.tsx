@@ -88,6 +88,18 @@ export const AppRouter: React.FC<{}> = () => {
             path="/deportistas_pablo-prigioni"
             element={<Navigate to="/patio/67a7ef77597cc850b2aac840" replace />}
           />
+          <Route
+            path="/deportistas_futbolistas-destacados"
+            element={<Navigate to="/patio/67e9402cd3e8ae5dede37bc1" replace />}
+          />
+          <Route
+            path="/deportistas_basquetbolistas-destacados"
+            element={<Navigate to="/patio/67e9c0d8bead8796afee2aac" replace />}
+          />
+          <Route
+            path="/deportistas_destacados-varios"
+            element={<Navigate to="/patio/67e9c5421bf3105c2a245173" replace />}
+          />
           <Route path="/news/:id" element={<NewsDetail />} />
           <Route path="/draft/:id" element={<DraftsDetail />} />
           <Route path="/patio/:id" element={<PatioDetail />} />
