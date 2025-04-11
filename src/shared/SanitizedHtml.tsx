@@ -169,43 +169,53 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, "text/html");
   
-    // URLs de las imágenes publicitarias
     const imageUrls = [
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg",
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/centro-civico.jpg",
     ];
   
-    // Mezclar aleatoriamente las imágenes publicitarias
     const shuffledImages = [...imageUrls].sort(() => Math.random() - 0.5);
   
-    // Seleccionar todos los párrafos
-    const paragraphs = doc.querySelectorAll("p");
+    // Solo selecciona párrafos que NO contengan imágenes
+    const validParagraphs = Array.from(doc.querySelectorAll("p")).filter(
+      (p) => !p.querySelector("img")
+    );
   
-    // Función para insertar publicidad después de la imagen y su epígrafe (si existe)
+    // Identifica si un elemento puede ser un epígrafe
+    const isPossibleCaption = (element: Element): boolean => {
+      if (element.tagName.toLowerCase() !== "p") return false;
+      const hasEm = element.querySelector("em") !== null;
+      const textContent = element.textContent?.trim() || "";
+      const shortText = textContent.length > 0 && textContent.length <= 50;
+      return hasEm || shortText;
+    };
+  
     const insertAdAfterImageAndCaption = (paragraph, imageUrl) => {
       if (!paragraph) return;
   
       let nextElement = paragraph.nextElementSibling;
-      let targetElement = paragraph; // Elemento donde se insertará la publicidad
+      let targetElement = paragraph;
   
-      // Buscar la imagen y su epígrafe
       while (nextElement) {
-        if (nextElement.tagName.toLowerCase() === "p" && nextElement.querySelector("img")) {
-          let imageElement = nextElement;
-          let captionElement = imageElement.nextElementSibling;
+        if (
+          nextElement.tagName.toLowerCase() === "p" &&
+          nextElement.querySelector("img")
+        ) {
+          const imageElement = nextElement;
+          const captionElement = imageElement.nextElementSibling;
   
-          // Si el siguiente elemento después de la imagen es un epígrafe (<p><em></em></p>)
-          if (captionElement && captionElement.tagName.toLowerCase() === "p" && captionElement.querySelector("em")) {
-            targetElement = captionElement; // Insertar después del epígrafe
+          if (captionElement && isPossibleCaption(captionElement)) {
+            targetElement = captionElement;
           } else {
-            targetElement = imageElement; // Insertar después de la imagen
+            targetElement = imageElement;
           }
           break;
         }
+  
+        if (nextElement.tagName.toLowerCase() === "p") break;
         nextElement = nextElement.nextElementSibling;
       }
   
-      // Crear el contenedor de publicidad
       const adElement = document.createElement("div");
       adElement.innerHTML = `
         <div style="margin-top: 16px; text-align: center;">
@@ -213,26 +223,23 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
         </div>
       `;
   
-      // Insertar la publicidad en la posición correcta
       targetElement.insertAdjacentElement("afterend", adElement);
     };
   
-    // Insertar la primera publicidad después del tercer párrafo
-    if (paragraphs.length > 2) {
-      insertAdAfterImageAndCaption(paragraphs[2], shuffledImages[0]);
+    const thirdParagraph = validParagraphs[2];
+    const fifthParagraph = validParagraphs[4];
+  
+    if (validParagraphs.length > 4) {
+      insertAdAfterImageAndCaption(fifthParagraph, shuffledImages[1]);
     }
   
-    // Insertar la segunda publicidad después del cuarto párrafo
-    if (paragraphs.length > 4) {
-      insertAdAfterImageAndCaption(paragraphs[4], shuffledImages[1]);
+    if (validParagraphs.length > 2) {
+      insertAdAfterImageAndCaption(thirdParagraph, shuffledImages[0]);
     }
   
     return doc.body.innerHTML;
   };
   
-  
-  
-
   // Insertar el contenido modificado
   const modifiedContent = injectCardAfterThirdParagraph(modifiedHtml);
 
