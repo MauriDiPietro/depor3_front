@@ -255,6 +255,9 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
       />
       {category !== "Patio del deportista" ? (
         <style>{`
+          p {
+              margin-bottom: 0px;
+          }
           .publi {
             margin-top: 8px;
             margin-bottom: 8px;
