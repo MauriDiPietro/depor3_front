@@ -43,6 +43,9 @@ export const NewsGrid = () => {
   const [searchText, setSearchText] = useState(""); // Estado para manejar el texto de búsqueda
   const [query, setQuery] = useState<string>(); // Texto para ejecutar la búsqueda
 
+  const [author, setAuthor] = useState("");
+  const [text, setText] = useState("");
+
   const handleSearchClick = () => {
     setQuery(searchText); // Actualiza el query para ejecutar la búsqueda
     setCurrentPage(1); // Reinicia la página a la primera
@@ -83,9 +86,6 @@ export const NewsGrid = () => {
     noticia.category !== "Patio del deportista" &&
     (query ? noticia.title.toLowerCase().includes(query.toLowerCase()) : true)
   );
-
-    const [author, setAuthor] = useState("");
-    const [text, setText] = useState("");
 
     const handleSubmit = async () => {
       if (!author.trim() || !text.trim()) {
