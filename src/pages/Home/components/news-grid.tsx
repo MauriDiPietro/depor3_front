@@ -12,6 +12,7 @@ import {
   TextField,
   InputAdornment,
   IconButton,
+  Button,
 } from "@mui/material";
 import { New } from "../../../types/new.type";
 import { useGlobalStore } from "../../../stores/global";
@@ -19,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CalendarToday, Search } from "@mui/icons-material";
 import { formatDate } from "../../../lib/services/utils/fechas";
+import CommentsService from "../../../lib/services/comments.service";
 // import { parseDateToSort } from "../../../lib/services/utils/ordenamiento";
 
 export const NewsGrid = () => {
@@ -76,32 +78,71 @@ export const NewsGrid = () => {
     );
   }
 
-  // Filtrar y ordenar noticias
-  // const filteredNews = news
-  //   ?.filter(
-  //     (noticia: New) =>
-  //       noticia.active &&
-  //       noticia.category !== "Patio del deportista" &&
-  //       query ? noticia.title.toLowerCase().includes(query.toLowerCase()) : true // Filtrar por texto de búsqueda
-  //   )
   const filteredNews = news?.filter((noticia: New) =>
     noticia.active &&
     noticia.category !== "Patio del deportista" &&
     (query ? noticia.title.toLowerCase().includes(query.toLowerCase()) : true)
   );
+
+    const [author, setAuthor] = useState("");
+    const [text, setText] = useState("");
+
+    const handleSubmit = async () => {
+      if (!author.trim() || !text.trim()) {
+        alert("Todos los campos son obligatorios.");
+        return;
+      }
   
-    // .sort((a: New, b: New) => {
-    //   const dateA = parseDateToSort(a.date);
-    //   const dateB = parseDateToSort(b.date);
-
-    //   if (!dateA || !dateB) return 0;
-
-    //   return dateB.getTime() - dateA.getTime();
-    // });
+      try {
+        const body = {
+          postId: "1",
+          postType: "patios",
+          author,
+          text,
+        };
+  
+        const response = await CommentsService.createComment(body);
+        if(response) alert("Gracias por enviar tu comentario.");
+        setAuthor("");
+        setText("");
+      } catch (error) {
+        console.error("Error al enviar el comentario", error);
+      }
+    };
 
   return (
     <Box>
       <Grid container spacing={2} sx={{ overflowX: "hidden" }}>
+              {/* 🔹 Formulario de comentarios */}
+              <Grid item xs={12} sx={{ mt: 0 }}>
+                <Typography variant="h6" sx={{ mb: 2, color: "white" }}>
+                  ¿Visitaste el Patio del deportista? ¡Dejanos tu comentario!
+                </Typography>
+                <TextField
+                  label="Nombre"
+                  placeholder="Nombre"
+                  variant="outlined"
+                  fullWidth
+                  value={author}
+                  onChange={(e) => setAuthor(e.target.value)}
+                  sx={{ mb: 1 }}
+                />
+                <TextField
+                  label="Comentario"
+                  variant="outlined"
+                  fullWidth
+                  multiline
+                  rows={2}
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  sx={{ mb: 1 }}
+                />
+                <Button variant="contained" color="primary" fullWidth
+                onClick={handleSubmit}
+                >
+                  Enviar comentario
+                </Button>
+              </Grid>
         {filteredNews.map((noticia: New, index: number) => (
           <>
             {index === 0 ? (
