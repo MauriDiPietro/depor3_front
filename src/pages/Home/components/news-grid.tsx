@@ -13,6 +13,7 @@ import {
   InputAdornment,
   IconButton,
   Button,
+  Divider,
 } from "@mui/material";
 import { New } from "../../../types/new.type";
 import { useGlobalStore } from "../../../stores/global";
@@ -29,7 +30,6 @@ export const NewsGrid = () => {
   const totalPages = useGlobalStore((state) => state.totalPages);
   const currentPage = useGlobalStore((state) => state.currentPage);
   const setCurrentPage = useGlobalStore((state) => state.setCurrentPage);
-
 
   const loadingNews = useGlobalStore((state) => state.loadingNews);
 
@@ -81,68 +81,72 @@ export const NewsGrid = () => {
     );
   }
 
-  const filteredNews = news?.filter((noticia: New) =>
-    noticia.active &&
-    noticia.category !== "Patio del deportista" &&
-    (query ? noticia.title.toLowerCase().includes(query.toLowerCase()) : true)
+  const filteredNews = news?.filter(
+    (noticia: New) =>
+      noticia.active &&
+      noticia.category !== "Patio del deportista" &&
+      (query ? noticia.title.toLowerCase().includes(query.toLowerCase()) : true)
   );
 
-    const handleSubmit = async () => {
-      if (!author.trim() || !text.trim()) {
-        alert("Todos los campos son obligatorios.");
-        return;
-      }
-  
-      try {
-        const body = {
-          postId: "1",
-          postType: "patios",
-          author,
-          text,
-        };
-  
-        const response = await CommentsService.createComment(body);
-        if(response) alert("Gracias por enviar tu comentario.");
-        setAuthor("");
-        setText("");
-      } catch (error) {
-        console.error("Error al enviar el comentario", error);
-      }
-    };
+  const handleSubmit = async () => {
+    if (!author.trim() || !text.trim()) {
+      alert("Todos los campos son obligatorios.");
+      return;
+    }
+
+    try {
+      const body = {
+        postId: "1",
+        postType: "patios",
+        author,
+        text,
+      };
+
+      const response = await CommentsService.createComment(body);
+      if (response) alert("Gracias por enviar tu comentario.");
+      setAuthor("");
+      setText("");
+    } catch (error) {
+      console.error("Error al enviar el comentario", error);
+    }
+  };
 
   return (
     <Box>
       <Grid container spacing={2} sx={{ overflowX: "hidden" }}>
-              {/* 🔹 Formulario de comentarios */}
-              <Grid item xs={12} sx={{ mt: 0 }}>
-                <Typography variant="h6" sx={{ mb: 2, color: "white" }}>
-                  ¿Visitaste el Patio del deportista? ¡Dejanos tu comentario!
-                </Typography>
-                <TextField
-                  label="Nombre"
-                  placeholder="Nombre"
-                  variant="outlined"
-                  fullWidth
-                  value={author}
-                  onChange={(e) => setAuthor(e.target.value)}
-                  sx={{ mb: 1 }}
-                />
-                <TextField
-                  label="Comentario"
-                  variant="outlined"
-                  fullWidth
-                  multiline
-                  rows={2}
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
-                  sx={{ mb: 1 }}
-                />
-                <Button variant="contained" color="primary" fullWidth
-                onClick={handleSubmit}
-                >
-                  Enviar comentario
-                </Button>
-              </Grid>
+        {/* 🔹 Formulario de comentarios */}
+        <Grid item xs={12} sx={{ mt: 0 }}>
+          <Typography variant="h6" sx={{ mb: 2, color: "white" }}>
+            ¿Visitaste el Patio del deportista? ¡Dejanos tu comentario!
+          </Typography>
+          <TextField
+            label="Nombre"
+            placeholder="Nombre"
+            variant="outlined"
+            fullWidth
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
+            sx={{ mb: 1 }}
+          />
+          <TextField
+            label="Comentario"
+            variant="outlined"
+            fullWidth
+            multiline
+            rows={2}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            sx={{ mb: 1 }}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={handleSubmit}
+          >
+            Enviar comentario
+          </Button>
+        </Grid>
         {filteredNews.map((noticia: New, index: number) => (
           <>
             {index === 0 ? (
@@ -346,6 +350,28 @@ export const NewsGrid = () => {
           onChange={handlePageChange}
           color="primary"
         />
+      </Box>
+      {/* Footer */}
+      <Box
+        sx={{
+          mt: 4,
+          py: 2,
+          textAlign: "center",
+          color: "#abb2b9",
+        }}
+      >
+        <Divider />
+        <Typography variant="body2" sx={{ marginTop: "20px" }}>
+          Di Pietro Desarrollo Web - dipietro.jm@gmail.com -
+          <a
+            href="https://wa.me/3571542964"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#abb2b9", textDecoration: "none" }}
+          >
+            3571542964
+          </a>
+        </Typography>
       </Box>
     </Box>
   );
