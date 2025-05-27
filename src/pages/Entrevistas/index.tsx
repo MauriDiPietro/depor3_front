@@ -7,7 +7,7 @@ const Entrevistas = () => {
     { name: "Lito Oviedo", pdf: "oviedo.pdf", thumb: "oviedo.jpg" },
     { name: "Tadeo Gaggiofatto", pdf: "gaggiofatto.pdf", thumb: "gaggiofatto.JPG" },
     { name: "Agustina Sanchez Pignatta", pdf: "pignatta.pdf", thumb: "pignatta.jpeg" },
-    { name: "Facundo Mascafroni", pdf: "mascanfroni.pdf", thumb: "mascanfroni.jpeg" },
+    { name: "Facundo Mascanfroni", pdf: "mascanfroni.pdf", thumb: "mascanfroni.jpeg" },
     { name: "Nito Rodríguez", pdf: "rodriguez.pdf", thumb: "rodriguez.jpeg" },
     { name: "Gastón Giraudo", pdf: "giraudo.pdf", thumb: "giraudo.jpeg" },
     { name: "Fernando Vazquez", pdf: "vazquez.pdf", thumb: "vazquez.jpg" },
