@@ -1,34 +1,84 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography, Box } from "@mui/material";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 const Entrevistas = () => {
-  const links = [
-    "https://heyzine.com/flip-book/7900c8ed6c.html",
-    "https://heyzine.com/flip-book/3943bf4b69.html",
-    "https://heyzine.com/flip-book/c653a4b5a9.html",
-    "https://heyzine.com/flip-book/855ab8bf83.html",
-    "https://heyzine.com/flip-book/1b3dbaa2cc.html",
-    "https://heyzine.com/flip-book/1b584a383b.html",
-    "https://heyzine.com/flip-book/517d4adce8.html",
-    "https://heyzine.com/flip-book/07e5e55368.html",
+  const entrevistas = [
+    { name: "Juan Manuel Fernandez", pdf: "fernandez.pdf", thumb: "fernandez.jpg" },
+    { name: "Lito Oviedo", pdf: "oviedo.pdf", thumb: "oviedo.jpg" },
+    { name: "Tadeo Gaggiofatto", pdf: "gaggiofatto.pdf", thumb: "gaggiofatto.JPG" },
+    { name: "Agustina Sanchez Pignatta", pdf: "pignatta.pdf", thumb: "pignatta.jpeg" },
+    { name: "Facundo Mascafroni", pdf: "mascanfroni.pdf", thumb: "mascanfroni.jpeg" },
+    { name: "Nito Rodríguez", pdf: "rodriguez.pdf", thumb: "rodriguez.jpeg" },
+    { name: "Gastón Giraudo", pdf: "giraudo.pdf", thumb: "giraudo.jpeg" },
+    { name: "Fernando Vazquez", pdf: "vazquez.pdf", thumb: "vazquez.jpg" },
+    { name: "Juan Manuel López", pdf: "lopez.pdf", thumb: "lopez.jpeg" },
+    { name: "Ramón Alberto Benavidez", pdf: "benavidez.pdf", thumb: "benavidez.jpeg" },
+    { name: "Ferando Cantarini", pdf: "cantarini.pdf", thumb: "cantarini.jpeg" },
   ];
+
   return (
-    <Grid container>
-      {links.map((link) => {
-        return (
-          <Grid item xs={12} sm={12} md={6} lg={6} sx={{ padding: 5 }}>
-            <iframe
-              allowFullScreen
-              className="fp-iframe"
+    <Grid container sx={{ marginTop: 5 }}>
+      {entrevistas.map(({ name, pdf, thumb }, index) => (
+        <Grid item xs={12} sm={12} md={4} lg={4} sx={{ padding: 5 }} key={index}>
+          <Box
+            component="a"
+            href={`/entrevistas/${pdf}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              position: "relative",
+              display: "block",
+              width: "50%",
+              margin: "0 auto",
+              "&:hover .hover-overlay": {
+                opacity: 1,
+              },
+            }}
+          >
+            <img
+              src={`/entrevistas/thumbnails/${thumb}`}
+              alt={`Entrevista ${index + 1}`}
               style={{
-                border: "1px solid lightgray;",
                 width: "100%",
-                height: "400px",
+                height: "250px",
+                objectFit: "cover",
+                border: "1px solid lightgray",
+                borderRadius: 8,
+                display: "block",
               }}
-              src={link}
-            ></iframe>
-          </Grid>
-        );
-      })}
+            />
+            <Box
+              className="hover-overlay"
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(0,0,0,0.5)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 2,
+                opacity: 0,
+                transition: "opacity 0.3s ease-in-out",
+              }}
+            >
+              <Typography variant="h6" sx={{ color: "white", display: "flex", alignItems: "center", gap: 1 }}>
+                Abrir <OpenInNewIcon fontSize="small" />
+              </Typography>
+            </Box>
+          </Box>
+
+          <Typography
+            variant="subtitle1"
+            align="center"
+            sx={{ fontWeight: 500, color: "white", marginTop: 1 }}
+          >
+            {name}
+          </Typography>
+        </Grid>
+      ))}
     </Grid>
   );
 };
