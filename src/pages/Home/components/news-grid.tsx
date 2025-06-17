@@ -254,7 +254,7 @@ export const NewsGrid = () => {
                         maxWidth: "100%",
                         objectFit: "contain",
                       }}
-                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1735907187/ocpmyjczavpe2olpnqtk.png"
+                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1750181595/COOP-JUNIO-25.jpg"
                       alt="Publicidad"
                     />
                   </Card>
