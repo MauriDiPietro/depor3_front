@@ -1,7 +1,7 @@
 import React from "react";
 import DOMPurify from "dompurify";
 import { Box, Typography } from "@mui/material";
-import { Publicidades } from "./Publicidades";
+// import { Publicidades } from "./Publicidades";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { Tweet } from "react-tweet";
@@ -23,16 +23,16 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, "text/html");
 
-      // Buscar imágenes y ajustar epígrafes
-      doc.querySelectorAll("p em").forEach((caption) => {
-        const parent = caption.closest("p");
-        if (parent) {
-          parent.style.marginTop = "2px"; // Reducir espacio entre imagen y epígrafe
-          parent.style.marginBottom = "0"; // Evitar espacio extra debajo del epígrafe
-        }
-      });
+    // Buscar imágenes y ajustar epígrafes
+    doc.querySelectorAll("p em").forEach((caption) => {
+      const parent = caption.closest("p");
+      if (parent) {
+        parent.style.marginTop = "2px"; // Reducir espacio entre imagen y epígrafe
+        parent.style.marginBottom = "0"; // Evitar espacio extra debajo del epígrafe
+      }
+    });
 
-      doc.querySelectorAll("br").forEach((br) => br.remove());
+    doc.querySelectorAll("br").forEach((br) => br.remove());
 
     const tweetIds: string[] = [];
     const mediaMap: { [key: string]: JSX.Element } = {};
@@ -98,150 +98,145 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
     });
   };
 
-
   // const injectCardAfterThirdParagraph = (htmlString: string) => {
   //   const parser = new DOMParser();
   //   const doc = parser.parseFromString(htmlString, "text/html");
 
-  //   // URLs de las imágenes
   //   const imageUrls = [
+  //     "https://res.cloudinary.com/dsooxiydo/image/upload/v1751469404/ferretti.jpg",
   //     "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg",
   //     "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/centro-civico.jpg",
   //   ];
 
-  //   // Mezclar las URLs aleatoriamente
-  //   const shuffledImages = [...imageUrls].sort(() => Math.random() - 0.5);
+  //   // const shuffledImages = [...imageUrls].sort(() => Math.random() - 0.5);
 
-  //   // Seleccionar todos los párrafos
-  //   const paragraphs = doc.querySelectorAll("p");
+  //   // Solo selecciona párrafos que NO contengan imágenes
+  //   const validParagraphs = Array.from(doc.querySelectorAll("p")).filter(
+  //     (p) => !p.querySelector("img")
+  //   );
 
-  //   // Verificar si hay al menos tres párrafos
-  //   if (paragraphs.length === 3) {
-  //     const thirdParagraph = paragraphs[2]; // El tercer párrafo (índice 2)
+  //   // Identifica si un elemento puede ser un epígrafe
+  //   const isPossibleCaption = (element: Element): boolean => {
+  //     if (element.tagName.toLowerCase() !== "p") return false;
+  //     const hasEm = element.querySelector("em") !== null;
+  //     const textContent = element.textContent?.trim() || "";
+  //     const shortText = textContent.length > 0 && textContent.length <= 50;
+  //     return hasEm || shortText;
+  //   };
 
-  //     // Crear el componente con la primera imagen aleatoria
-  //     const cardElement = document.createElement("div");
-  //     cardElement.innerHTML = `
-  //     <div>
-  //       <img class="publi" src="${shuffledImages[0]}" alt="Publicidad 1" />
-  //       <img class="publi" src="${shuffledImages[1]}" alt="Publicidad 2" />
-  //     </div>
-  //   `;
+  //   const insertAdAfterImageAndCaption = (paragraph, imageUrl) => {
+  //     if (!paragraph) return;
 
-  //     // Insertar después del tercer párrafo
-  //     thirdParagraph.insertAdjacentElement("afterend", cardElement);
+  //     let nextElement = paragraph.nextElementSibling;
+  //     let targetElement = paragraph;
+
+  //     while (nextElement) {
+  //       if (
+  //         nextElement.tagName.toLowerCase() === "p" &&
+  //         nextElement.querySelector("img")
+  //       ) {
+  //         const imageElement = nextElement;
+  //         const captionElement = imageElement.nextElementSibling;
+
+  //         if (captionElement && isPossibleCaption(captionElement)) {
+  //           targetElement = captionElement;
+  //         } else {
+  //           targetElement = imageElement;
+  //         }
+  //         break;
+  //       }
+
+  //       if (nextElement.tagName.toLowerCase() === "p") break;
+  //       nextElement = nextElement.nextElementSibling;
+  //     }
+
+  //     const adElement = document.createElement("div");
+  //     adElement.innerHTML = `
+  //       <div style="margin-top: 16px; text-align: center;">
+  //         <img class="publi" src="${imageUrl}" alt="Publicidad" style="max-width: 100%; border-radius: 8px;" />
+  //       </div>
+  //     `;
+
+  //     targetElement.insertAdjacentElement("afterend", adElement);
+  //   };
+
+  //   const thirdParagraph = validParagraphs[2];
+  //   const fifthParagraph = validParagraphs[4];
+
+  //   if (validParagraphs.length > 4) {
+  //     insertAdAfterImageAndCaption(fifthParagraph, imageUrls[0]);
   //   }
-  //   if (paragraphs.length > 3) {
-  //     const thirdParagraph = paragraphs[2]; // El tercer párrafo (índice 2)
 
-  //     // Crear el componente con la primera imagen aleatoria
-  //     const cardElement = document.createElement("div");
-  //     cardElement.innerHTML = `
-  //     <div>
-  //       <img class="publi" src="${shuffledImages[0]}" alt="Publicidad 1" />
-  //     </div>
-  //   `;
-
-  //     // Insertar después del tercer párrafo
-  //     thirdParagraph.insertAdjacentElement("afterend", cardElement);
-  //   }
-  //   // Verificar si hay al menos cinco párrafos
-  //   if (paragraphs.length >= 5) {
-  //     const fifthParagraph = paragraphs[4]; // El quinto párrafo (índice 4)
-
-  //     // Crear el componente con la segunda imagen aleatoria
-  //     const cardElement = document.createElement("div");
-  //     cardElement.innerHTML = `
-  //     <div>
-  //       <img class="publi" src="${shuffledImages[1]}" alt="Publicidad 2" />
-  //     </div>
-  //   `;
-
-  //     // Insertar después del quinto párrafo
-  //     fifthParagraph.insertAdjacentElement("afterend", cardElement);
+  //   if (validParagraphs.length > 2) {
+  //     insertAdAfterImageAndCaption(thirdParagraph, imageUrls[1]);
   //   }
 
-  //   // Retornar el HTML modificado
   //   return doc.body.innerHTML;
   // };
 
-  const injectCardAfterThirdParagraph = (htmlString: string) => {
+  // Insertar el contenido modificado
+
+  const injectAdsEveryThreeParagraphs = (htmlString: string, category: string) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, "text/html");
-  
+
     const imageUrls = [
+      "https://res.cloudinary.com/dsooxiydo/image/upload/v1751469404/ferretti.jpg",
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg",
+      "https://res.cloudinary.com/dsooxiydo/image/upload/v1751470853/HRT_tzoqml.png",
+      "https://res.cloudinary.com/dsooxiydo/image/upload/v1751470853/MG_el54z1.png",
+      "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/aceros-rio.jpg",
+      "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/garbo.jpg",
+      "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/rino.jpg",
+      "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143686/toalson.jpg",
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/centro-civico.jpg",
     ];
-  
-    const shuffledImages = [...imageUrls].sort(() => Math.random() - 0.5);
-  
-    // Solo selecciona párrafos que NO contengan imágenes
+
     const validParagraphs = Array.from(doc.querySelectorAll("p")).filter(
       (p) => !p.querySelector("img")
     );
-  
-    // Identifica si un elemento puede ser un epígrafe
-    const isPossibleCaption = (element: Element): boolean => {
-      if (element.tagName.toLowerCase() !== "p") return false;
-      const hasEm = element.querySelector("em") !== null;
-      const textContent = element.textContent?.trim() || "";
-      const shortText = textContent.length > 0 && textContent.length <= 50;
-      return hasEm || shortText;
-    };
-  
-    const insertAdAfterImageAndCaption = (paragraph, imageUrl) => {
-      if (!paragraph) return;
-  
-      let nextElement = paragraph.nextElementSibling;
-      let targetElement = paragraph;
-  
-      while (nextElement) {
-        if (
-          nextElement.tagName.toLowerCase() === "p" &&
-          nextElement.querySelector("img")
-        ) {
-          const imageElement = nextElement;
-          const captionElement = imageElement.nextElementSibling;
-  
-          if (captionElement && isPossibleCaption(captionElement)) {
-            targetElement = captionElement;
-          } else {
-            targetElement = imageElement;
-          }
-          break;
-        }
-  
-        if (nextElement.tagName.toLowerCase() === "p") break;
-        nextElement = nextElement.nextElementSibling;
-      }
-  
+
+    // Función para crear una publicidad
+    const createAdElement = (imageUrl: string) => {
       const adElement = document.createElement("div");
       adElement.innerHTML = `
-        <div style="margin-top: 16px; text-align: center;">
-          <img class="publi" src="${imageUrl}" alt="Publicidad" style="max-width: 100%; border-radius: 8px;" />
-        </div>
-      `;
-  
-      targetElement.insertAdjacentElement("afterend", adElement);
+      <div style="margin-top: 16px; text-align: center;">
+        <img class="publi" src="${imageUrl}" alt="Publicidad" style="max-width: 100%; border-radius: 8px;" />
+      </div>
+    `;
+      return adElement;
     };
-  
-    const thirdParagraph = validParagraphs[2];
-    const fifthParagraph = validParagraphs[4];
-  
-    if (validParagraphs.length > 4) {
-      insertAdAfterImageAndCaption(fifthParagraph, shuffledImages[1]);
+
+    if (validParagraphs.length >= 3) {
+      const quantity = category !== "Patio del deportista" ? 2 : 5
+      let adIndex = 0;
+      for (let i = quantity; i < validParagraphs.length; i += category !== "Patio del deportista" ? 3 : 4) {
+        if (adIndex >= imageUrls.length) break;
+
+        const targetParagraph = validParagraphs[i];
+        const adElement = createAdElement(imageUrls[adIndex]);
+        targetParagraph.insertAdjacentElement("afterend", adElement);
+        adIndex++;
+      }
+
+      // Si quedan imágenes de publicidad sin usar, agrégalas todas al final
+      while (adIndex < imageUrls.length) {
+        const adElement = createAdElement(imageUrls[adIndex]);
+        doc.body.appendChild(adElement);
+        adIndex++;
+      }
+    } else {
+      // Si hay pocos párrafos, lista todas las publicidades al final
+      imageUrls.forEach((url) => {
+        const adElement = createAdElement(url);
+        doc.body.appendChild(adElement);
+      });
     }
-  
-    if (validParagraphs.length > 2) {
-      insertAdAfterImageAndCaption(thirdParagraph, shuffledImages[0]);
-    }
-  
+
     return doc.body.innerHTML;
   };
-  
-  // Insertar el contenido modificado
-  const modifiedContent = injectCardAfterThirdParagraph(modifiedHtml);
+
+  const modifiedContent = injectAdsEveryThreeParagraphs(modifiedHtml, category);
 
   return (
     <Box sx={{ mt: 2 }}>
@@ -374,25 +369,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
           </Swiper>
         </Box>
       )}
-      {/* {newDetail.multimedia.length > 0 &&
-                    newDetail.category === "Patio del deportista" &&
-                    newDetail.multimedia.map((media, index) => {
-                      return (
-                        <Box sx={{ mb: 2 }}>
-                          <img
-                            key={index}
-                            src={media}
-                            alt={""}
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              borderRadius: "8px",
-                            }}
-                          />
-                        </Box>
-                      );
-                    })} */}
-      <Publicidades />
+      {/* <Publicidades /> */}
     </Box>
   );
 };
