@@ -36,7 +36,7 @@ export const Home: React.FC<{}> = () => {
         <Grid item xs={12} md={8}>
           <Box>
             <a
-              href="https://conferenciaclimatica.cba.gov.ar/?utm_source=GOOGLE&utm_medium=SEARCH&utm_campaign=CCI25&utm_id=CCI25"
+              href="https://youtu.be/h2J_ZdbxYVc"
               target="_blank"
               rel="noopener noreferrer"
             >
