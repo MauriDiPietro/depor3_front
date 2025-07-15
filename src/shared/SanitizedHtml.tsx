@@ -176,13 +176,30 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
 
   // Insertar el contenido modificado
 
-  const injectAdsEveryThreeParagraphs = (htmlString: string, category: string) => {
+  const injectAdsEveryThreeParagraphs = (
+    htmlString: string,
+    category: string
+  ) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, "text/html");
+
+    const publiCoopRotativa = [
+      "https://res.cloudinary.com/dsooxiydo/image/upload/v1752581147/Evolucionando_92A_DepoR3_F_Negro_wk6nmo.jpg",
+      "https://res.cloudinary.com/dsooxiydo/image/upload/v1752581100/Evolucionando_92A_DepoR3_F_Blanco_ltbufg.jpg",
+    ];
+
+    let publiCoopIndex = 0; 
+
+    const rotarPubliCoop = () => {
+      const url = publiCoopRotativa[publiCoopIndex];
+      publiCoopIndex = (publiCoopIndex + 1) % publiCoopRotativa.length;
+      return url;
+    };
 
     const imageUrls = [
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1751469404/ferretti.jpg",
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg",
+      rotarPubliCoop(),
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1751470853/HRT_tzoqml.png",
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1751470853/MG_el54z1.png",
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/aceros-rio.jpg",
@@ -208,9 +225,13 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
     };
 
     if (validParagraphs.length >= 3) {
-      const quantity = category !== "Patio del deportista" ? 2 : 5
+      const quantity = category !== "Patio del deportista" ? 2 : 5;
       let adIndex = 0;
-      for (let i = quantity; i < validParagraphs.length; i += category !== "Patio del deportista" ? 3 : 4) {
+      for (
+        let i = quantity;
+        i < validParagraphs.length;
+        i += category !== "Patio del deportista" ? 3 : 4
+      ) {
         if (adIndex >= imageUrls.length) break;
 
         const targetParagraph = validParagraphs[i];
