@@ -188,7 +188,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1752581100/Evolucionando_92A_DepoR3_F_Blanco_ltbufg.jpg",
     ];
 
-    let publiCoopIndex = 0; 
+    let publiCoopIndex = 0;
 
     const rotarPubliCoop = () => {
       const url = publiCoopRotativa[publiCoopIndex];
@@ -214,13 +214,31 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
     );
 
     // Función para crear una publicidad
+    // const createAdElement = (imageUrl: string) => {
+    //   const adElement = document.createElement("div");
+    //   adElement.innerHTML = `
+    //   <div style="margin-top: 16px; text-align: center;">
+    //     <img class="publi" src="${imageUrl}" alt="Publicidad" style="max-width: 100%; border-radius: 8px;" />
+    //   </div>
+    // `;
+    //   return adElement;
+    // };
     const createAdElement = (imageUrl: string) => {
       const adElement = document.createElement("div");
+      const isPubliCoop = publiCoopRotativa.includes(imageUrl);
+
       adElement.innerHTML = `
-      <div style="margin-top: 16px; text-align: center;">
-        <img class="publi" src="${imageUrl}" alt="Publicidad" style="max-width: 100%; border-radius: 8px;" />
-      </div>
-    `;
+    <div style="margin-top: 16px; text-align: center;">
+      ${
+        isPubliCoop
+          ? `<a href="https://riotel.com.ar/" target="_blank" rel="noopener noreferrer">
+               <img class="publi" src="${imageUrl}" alt="Publicidad" style="max-width: 100%; border-radius: 8px;" />
+             </a>`
+          : `<img class="publi" src="${imageUrl}" alt="Publicidad" style="max-width: 100%; border-radius: 8px;" />`
+      }
+    </div>
+  `;
+
       return adElement;
     };
 
