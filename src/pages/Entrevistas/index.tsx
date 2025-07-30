@@ -3,6 +3,7 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 const Entrevistas = () => {
   const entrevistas = [
+        { name: "Assum y Reinaudi", pdf: "assum-reinaudi.pdf", thumb: "assum-reinaudi.jpg" },
     { name: "Juan Manuel Fernandez", pdf: "fernandez.pdf", thumb: "fernandez.jpg" },
     { name: "Lito Oviedo", pdf: "oviedo.pdf", thumb: "oviedo.jpg" },
     { name: "Tadeo Gaggiofatto", pdf: "gaggiofatto.pdf", thumb: "gaggiofatto.JPG" },
