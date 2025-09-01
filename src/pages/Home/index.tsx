@@ -36,7 +36,7 @@ export const Home: React.FC<{}> = () => {
         <Grid item xs={12} md={8}>
           <Box>
             <a
-              href="https://deportes.cba.gov.ar/"
+              href="https://youtu.be/h2J_ZdbxYVc"
               target="_blank"
               rel="noopener noreferrer"
             >
