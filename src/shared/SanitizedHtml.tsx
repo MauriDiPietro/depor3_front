@@ -180,7 +180,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
     htmlString: string,
     category: string
   ) => {
-    const parser = new DOMParser();
+    const parser = new DOMParser(); 
     const doc = parser.parseFromString(htmlString, "text/html");
 
     const publiCoopRotativa = [
@@ -258,24 +258,25 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
         adIndex++;
       }
 
+      const remainingAdsContainer = document.createElement('div');
       // Si quedan imágenes de publicidad sin usar, agrégalas todas al final
       while (adIndex < imageUrls.length) {
         const adElement = createAdElement(imageUrls[adIndex]);
-        doc.body.appendChild(adElement);
+        remainingAdsContainer.appendChild(adElement);
         adIndex++;
       }
+      return { htmlWithInjectedAds: doc.body.innerHTML, remainingAdsHtml: remainingAdsContainer.innerHTML };
     } else {
       // Si hay pocos párrafos, lista todas las publicidades al final
       imageUrls.forEach((url) => {
         const adElement = createAdElement(url);
         doc.body.appendChild(adElement);
       });
+      return { htmlWithInjectedAds: doc.body.innerHTML, remainingAdsHtml: '' };
     }
-
-    return doc.body.innerHTML;
   };
 
-  const modifiedContent = injectAdsEveryThreeParagraphs(modifiedHtml, category);
+  const { htmlWithInjectedAds, remainingAdsHtml } = injectAdsEveryThreeParagraphs(modifiedHtml, category);
 
   return (
     <Box sx={{ mt: 2 }}>
@@ -366,7 +367,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
           }
         `}</style>
       )}
-      <Box sx={{ mt: -2 }}>{renderContent(modifiedContent)}</Box>
+      <Box sx={{ mt: -2 }}>{renderContent(htmlWithInjectedAds)}</Box>
       {newDetail.multimedia.length > 0 && !newDetail.isOld && (
         <Box
           sx={{
@@ -374,6 +375,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
             margin: "0 auto",
             marginBottom: "8px",
             maxWidth: { xs: "300px", md: "800px" },
+            mt: 4, // Agregamos un margen superior para separar del texto
           }}
         >
           <Swiper
@@ -408,7 +410,11 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
           </Swiper>
         </Box>
       )}
-      {/* <Publicidades /> */}
+      {/* Renderiza las publicidades restantes */}
+      <Box
+        sx={{ mt: 2 }}
+        dangerouslySetInnerHTML={{ __html: remainingAdsHtml }}
+      />
     </Box>
   );
 };
