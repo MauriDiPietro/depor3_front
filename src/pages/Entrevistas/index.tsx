@@ -3,24 +3,61 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 const Entrevistas = () => {
   const entrevistas = [
-        { name: "Assum y Reinaudi", pdf: "assum-reinaudi.pdf", thumb: "assum-reinaudi.jpg" },
-    { name: "Juan Manuel Fernandez", pdf: "fernandez.pdf", thumb: "fernandez.jpg" },
+    { name: "David Barrera", pdf: "barrera.pdf", thumb: "barrera.jpg" },
+    {
+      name: "Assum y Reinaudi",
+      pdf: "assum-reinaudi.pdf",
+      thumb: "assum-reinaudi.jpg",
+    },
+    {
+      name: "Juan Manuel Fernandez",
+      pdf: "fernandez.pdf",
+      thumb: "fernandez.jpg",
+    },
     { name: "Lito Oviedo", pdf: "oviedo.pdf", thumb: "oviedo.jpg" },
-    { name: "Tadeo Gaggiofatto", pdf: "gaggiofatto.pdf", thumb: "gaggiofatto.JPG" },
-    { name: "Agustina Sanchez Pignatta", pdf: "pignatta.pdf", thumb: "pignatta.jpeg" },
-    { name: "Facundo Mascanfroni", pdf: "mascanfroni.pdf", thumb: "mascanfroni.jpeg" },
+    {
+      name: "Tadeo Gaggiofatto",
+      pdf: "gaggiofatto.pdf",
+      thumb: "gaggiofatto.JPG",
+    },
+    {
+      name: "Agustina Sanchez Pignatta",
+      pdf: "pignatta.pdf",
+      thumb: "pignatta.jpeg",
+    },
+    {
+      name: "Facundo Mascanfroni",
+      pdf: "mascanfroni.pdf",
+      thumb: "mascanfroni.jpeg",
+    },
     { name: "Nito Rodríguez", pdf: "rodriguez.pdf", thumb: "rodriguez.jpeg" },
     { name: "Gastón Giraudo", pdf: "giraudo.pdf", thumb: "giraudo.jpeg" },
     { name: "Fernando Vazquez", pdf: "vazquez.pdf", thumb: "vazquez.jpg" },
     { name: "Juan Manuel López", pdf: "lopez.pdf", thumb: "lopez.jpeg" },
-    { name: "Ramón Alberto Benavidez", pdf: "benavidez.pdf", thumb: "benavidez.jpeg" },
-    { name: "Ferando Cantarini", pdf: "cantarini.pdf", thumb: "cantarini.jpeg" },
+    {
+      name: "Ramón Alberto Benavidez",
+      pdf: "benavidez.pdf",
+      thumb: "benavidez.jpeg",
+    },
+    {
+      name: "Ferando Cantarini",
+      pdf: "cantarini.pdf",
+      thumb: "cantarini.jpeg",
+    },
   ];
 
   return (
     <Grid container sx={{ marginTop: 5 }}>
       {entrevistas.map(({ name, pdf, thumb }, index) => (
-        <Grid item xs={12} sm={12} md={4} lg={4} sx={{ padding: 5 }} key={index}>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={4}
+          lg={4}
+          sx={{ padding: 5 }}
+          key={index}
+        >
           <Box
             component="a"
             href={`/entrevistas/${pdf}`}
@@ -65,7 +102,15 @@ const Entrevistas = () => {
                 transition: "opacity 0.3s ease-in-out",
               }}
             >
-              <Typography variant="h6" sx={{ color: "white", display: "flex", alignItems: "center", gap: 1 }}>
+              <Typography
+                variant="h6"
+                sx={{
+                  color: "white",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                }}
+              >
                 Abrir <OpenInNewIcon fontSize="small" />
               </Typography>
             </Box>
