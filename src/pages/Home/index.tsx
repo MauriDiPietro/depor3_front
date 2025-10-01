@@ -34,23 +34,25 @@ export const Home: React.FC<{}> = () => {
           </Box>
         </Grid>
         <Grid item xs={12} md={8}>
-          <Box>
-            <a
-              href="https://youtu.be/h2J_ZdbxYVc"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="https://res.cloudinary.com/dsooxiydo/image/upload/v1743853097/gob-cba-04-2025.gif"
-                alt="Publicidad"
-                style={{
-                  width: "100%", 
-                  maxWidth: "700px",
-                  height: "auto",
-                }}
-              />
-            </a>
-          </Box>
+          {/*
+            <Box>
+              <a
+                href="https://youtu.be/h2J_ZdbxYVc"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src="https://res.cloudinary.com/dsooxiydo/image/upload/v1743853097/gob-cba-04-2025.gif"
+                  alt="Publicidad"
+                  style={{
+                    width: "100%",
+                    maxWidth: "700px",
+                    height: "auto",
+                  }}
+                />
+              </a>
+            </Box>
+          */}
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <NewsGrid />
