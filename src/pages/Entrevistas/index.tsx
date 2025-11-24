@@ -3,6 +3,7 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 const Entrevistas = () => {
   const entrevistas = [
+    { name: "Imanol González", pdf: "imanol.pdf", thumb: "imanol.jpeg" },
     { name: "David Barrera", pdf: "barrera.pdf", thumb: "barrera.jpg" },
     {
       name: "Assum y Reinaudi",
