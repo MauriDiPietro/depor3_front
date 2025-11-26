@@ -41,7 +41,7 @@ export const Home: React.FC<{}> = () => {
               rel="noopener noreferrer"
             >
               <img
-                src="https://res.cloudinary.com/dsooxiydo/image/upload/v1743853097/gob-cba-04-2025.gif"
+                src="https://res.cloudinary.com/dsooxiydo/image/upload/v1743853097/gob-cba.gif"
                 alt="Publicidad"
                 style={{
                   width: "100%",
