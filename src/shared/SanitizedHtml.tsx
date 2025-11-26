@@ -198,7 +198,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
 
     const imageUrls = [
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1751469404/ferretti.jpg",
-      "https://res.cloudinary.com/dsooxiydo/image/upload/v1760616151/FIESTA_CND_1200_x_150_px_oszqh9.png",
+      "https://res.cloudinary.com/dsooxiydo/image/upload/v1764162815/muni_rio3.png",
       // "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg",
       rotarPubliCoop(),
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1751470853/HRT_tzoqml.png",
