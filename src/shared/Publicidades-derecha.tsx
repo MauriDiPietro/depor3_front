@@ -5,7 +5,7 @@ export const PublicidadesDerecha: React.FC<{}> = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const imageUrls = [
-    "https://res.cloudinary.com/dsooxiydo/image/upload/v1735988671/fc16ju4gqnm0cyxtms8u.jpg",
+    // "https://res.cloudinary.com/dsooxiydo/image/upload/v1735988671/fc16ju4gqnm0cyxtms8u.jpg",
     "https://res.cloudinary.com/dsooxiydo/image/upload/v1735988672/ywiyilcqqdxh3bcy64ws.jpg",
   ];
 

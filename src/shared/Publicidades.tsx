@@ -3,6 +3,7 @@ import { Box, Card, CardMedia, Grid } from "@mui/material";
 export const Publicidades: React.FC<{}> = () => {
 
   const imageUrls = [
+    "https://res.cloudinary.com/dsooxiydo/image/upload/v1767369200/muni_almafuerte.jpg",
     "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/aceros-rio.jpg",
     "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/garbo.jpg",
     "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/rino.jpg",
