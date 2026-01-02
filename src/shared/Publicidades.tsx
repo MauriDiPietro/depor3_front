@@ -1,18 +1,22 @@
-import { Box, Card, CardMedia, Grid } from "@mui/material";
+import { 
+  Box, 
+  // Card, 
+  // CardMedia, 
+  Grid } from "@mui/material";
 
 export const Publicidades: React.FC<{}> = () => {
 
-  const imageUrls = [
-    "https://res.cloudinary.com/dsooxiydo/image/upload/v1767369200/muni_almafuerte.jpg",
-    "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/aceros-rio.jpg",
-    "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/garbo.jpg",
-    "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/rino.jpg",
-    // "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143686/toalson.jpg",
-    "https://res.cloudinary.com/dsooxiydo/image/upload/v1735988672/zbpjwnbpd8hiorvk9rai.jpg",
-  ];
+  // const imageUrls = [
+  //   "https://res.cloudinary.com/dsooxiydo/image/upload/v1767369200/muni_almafuerte.jpg",
+  //   "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/aceros-rio.jpg",
+  //   "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/garbo.jpg",
+  //   "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/rino.jpg",
+  //   // "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143686/toalson.jpg",
+  //   "https://res.cloudinary.com/dsooxiydo/image/upload/v1735988672/zbpjwnbpd8hiorvk9rai.jpg",
+  // ];
 
   // Mezclar las URLs aleatoriamente
-  const shuffledImages = [...imageUrls].sort(() => Math.random() - 0.5);
+  // const shuffledImages = [...imageUrls].sort(() => Math.random() - 0.5);
 
   return (
     <Grid container sx={{marginTop: 2}}>
@@ -25,7 +29,7 @@ export const Publicidades: React.FC<{}> = () => {
             gap: 2,
           }}
         >
-          {shuffledImages.map((image, index) => (
+          {/* {shuffledImages.map((image, index) => (
             <Card key={index} sx={{ width: "100%" }}>
               <CardMedia
                 component="img"
@@ -38,7 +42,7 @@ export const Publicidades: React.FC<{}> = () => {
                 }}
               />
             </Card>
-          ))}
+          ))} */}
         </Box>
       </Grid>
     </Grid>
