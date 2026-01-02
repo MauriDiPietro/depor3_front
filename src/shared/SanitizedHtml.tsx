@@ -208,7 +208,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/garbo.jpg",
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/rino.jpg",
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143686/toalson.jpg",
-      "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/centro-civico.jpg",
+      // "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/centro-civico.jpg",
     ];
 
     const validParagraphs = Array.from(doc.querySelectorAll("p")).filter(
