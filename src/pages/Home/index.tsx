@@ -36,7 +36,7 @@ export const Home: React.FC<{}> = () => {
         <Grid item xs={12} md={8}>
           <Box>
             <a
-              href="https://www.cba.gov.ar/plan-de-reduccion-de-impuestos/?utm_source=DIGITAL&utm_medium=RRSS&utm_campaign=Impuestos26xSdC&utm_id=PRI"
+              href="https://youtu.be/HobirLe6SmA"
               target="_blank"
               rel="noopener noreferrer"
             >
