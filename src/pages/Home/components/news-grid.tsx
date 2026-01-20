@@ -270,7 +270,7 @@ export const NewsGrid = () => {
                         maxWidth: "100%",
                         objectFit: "contain",
                       }}
-                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1764162815/muni_rio3.png"
+                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1768215972/muni_rio3_01_2026.jpg"
                       alt="Publicidad"
                     />
                   </Card>
