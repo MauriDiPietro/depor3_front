@@ -36,12 +36,12 @@ export const Home: React.FC<{}> = () => {
         <Grid item xs={12} md={8}>
           <Box>
             <a
-              href="https://youtu.be/HobirLe6SmA"
+              href="https://youtu.be/D-ddTxQeBmI"
               target="_blank"
               rel="noopener noreferrer"
             >
               <img
-                src="https://res.cloudinary.com/dsooxiydo/image/upload/v1743853097/gob-cba.gif"
+                src="https://res.cloudinary.com/dsooxiydo/image/upload/v1769105553/728x90_6_pwvhwc.gif"
                 alt="Publicidad"
                 style={{
                   width: "100%",
