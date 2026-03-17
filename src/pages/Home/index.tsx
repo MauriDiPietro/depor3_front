@@ -36,7 +36,7 @@ export const Home: React.FC<{}> = () => {
         <Grid item xs={12} md={8}>
           <Box>
             <a
-              href="https://www.youtube.com/watch?v=-gfkE8Vhl50"
+              href="https://youtu.be/QtG20yA0g7w"
               target="_blank"
               rel="noopener noreferrer"
             >
