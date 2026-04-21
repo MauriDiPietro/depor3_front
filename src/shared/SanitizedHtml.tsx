@@ -197,9 +197,9 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
     };
 
     const imageUrls = [
-      "https://res.cloudinary.com/dsooxiydo/image/upload/v1767369200/muni_almafuerte_01_2026.jpg",
+      "https://res.cloudinary.com/dsooxiydo/image/upload/v1767369200/muni_almafuerte_01_2026.jpg",  //MUNI-ALMA
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1751469404/ferretti.jpg",
-      "https://res.cloudinary.com/dsooxiydo/image/upload/v1773759551/muni_rio3_03-2026_k95tjs.png",
+      "https://res.cloudinary.com/dsooxiydo/image/upload/v1776773351/GR%C3%81FICA_WEB_1200_x_150_px_omv0ij.png", //MUNI-RIO-3
       // "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg",
       rotarPubliCoop(),
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1751470853/HRT_tzoqml.png",
