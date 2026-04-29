@@ -20,7 +20,7 @@ export const Home: React.FC<{}> = () => {
       </Helmet>
       <Grid container spacing={1} sx={{ mt: 7 }}>
         <Grid item xs={12} md={4}>
-          <Box>
+          {/* <Box>
             <audio
               style={{ background: "orange" }}
               autoFocus
@@ -31,7 +31,7 @@ export const Home: React.FC<{}> = () => {
               Your browser does not support the audio element.
             </audio>
             <p>Depor3 Radio FM 89.1 - Río Tercero</p>
-          </Box>
+          </Box> */}
         </Grid>
         <Grid item xs={12} md={8}>
           <Box>
