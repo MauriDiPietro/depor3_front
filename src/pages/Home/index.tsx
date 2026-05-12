@@ -33,6 +33,7 @@ export const Home: React.FC<{}> = () => {
             <p>Depor3 Radio FM 89.1 - Río Tercero</p>
           </Box>
         </Grid>
+        {/* ----------------------- Publi Gobierno de Córdoba ----------------------- */}
         <Grid item xs={12} md={8}>
           <Box>
             <a
@@ -41,7 +42,7 @@ export const Home: React.FC<{}> = () => {
               rel="noopener noreferrer"
             >
               <img
-                src="https://res.cloudinary.com/dsooxiydo/image/upload/v1773760484/800x90_q7qgs7.gif"
+                src="https://res.cloudinary.com/dsooxiydo/image/upload/v1778615810/mira%CC%81_ri%CC%81o-tercero_800x90_zishxo.gif"
                 alt="Publicidad"
                 style={{
                   width: "100%",
@@ -52,6 +53,7 @@ export const Home: React.FC<{}> = () => {
             </a>
           </Box>
         </Grid>
+        {/** */}
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <NewsGrid />
         </Grid>
