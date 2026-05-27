@@ -10,19 +10,27 @@ import {
   useMediaQuery,
   Pagination,
   TextField,
-  InputAdornment,
-  IconButton,
   Button,
   Divider,
+  Alert,
 } from "@mui/material";
 import { New } from "../../../types/new.type";
 import { useGlobalStore } from "../../../stores/global";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { CalendarToday, Search } from "@mui/icons-material";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { CalendarToday } from "@mui/icons-material";
 import { formatDate } from "../../../lib/services/utils/fechas";
 import CommentsService from "../../../lib/services/comments.service";
+import { NewsFilters } from "../../../lib/services/news.sevice";
 // import { parseDateToSort } from "../../../lib/services/utils/ordenamiento";
+
+const emptyFilters: NewsFilters = {
+  title: "",
+  category: "",
+  author: "",
+  dateFrom: "",
+  dateTo: "",
+};
 
 export const NewsGrid = () => {
   const news = useGlobalStore((state) => state.news);
@@ -40,16 +48,41 @@ export const NewsGrid = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const [searchText, setSearchText] = useState(""); // Estado para manejar el texto de búsqueda
-  const [query, setQuery] = useState<string>(); // Texto para ejecutar la búsqueda
+  const [filters, setFilters] = useState<NewsFilters>(emptyFilters);
+  const [appliedFilters, setAppliedFilters] =
+    useState<NewsFilters>(emptyFilters);
 
   const [author, setAuthor] = useState("");
   const [text, setText] = useState("");
 
-  const handleSearchClick = () => {
-    setQuery(searchText); // Actualiza el query para ejecutar la búsqueda
+  const cleanFilters = (values: NewsFilters) =>
+    Object.fromEntries(
+      Object.entries(values).filter(([, value]) => value?.trim())
+    ) as NewsFilters;
+
+  const handleFilterChange =
+    (field: keyof NewsFilters) =>
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [field]: event.target.value,
+      }));
+    };
+
+  const handleFilterSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const nextFilters = cleanFilters(filters);
+
+    setAppliedFilters(nextFilters);
     setCurrentPage(1); // Reinicia la página a la primera
-    getAllNews(1, itemsPerPage, searchText); // Ejecuta la búsqueda con el texto actual
+    getAllNews(1, itemsPerPage, nextFilters);
+  };
+
+  const handleClearFilters = () => {
+    setFilters(emptyFilters);
+    setAppliedFilters(emptyFilters);
+    setCurrentPage(1);
+    getAllNews(1, itemsPerPage);
   };
 
   useEffect(() => {
@@ -62,7 +95,7 @@ export const NewsGrid = () => {
 
   const handlePageChange = (_event, value) => {
     setCurrentPage(value);
-    getAllNews(value, itemsPerPage, query);
+    getAllNews(value, itemsPerPage, appliedFilters);
   };
 
   if (loadingNews) {
@@ -83,9 +116,7 @@ export const NewsGrid = () => {
 
   const filteredNews = news?.filter(
     (noticia: New) =>
-      noticia.active &&
-      noticia.category !== "Patio del deportista" &&
-      (query ? noticia.title.toLowerCase().includes(query.toLowerCase()) : true)
+      noticia.active && noticia.category !== "Patio del deportista"
   );
 
   const handleSubmit = async () => {
@@ -147,6 +178,41 @@ export const NewsGrid = () => {
             Enviar comentario
           </Button>
         </Grid>
+        {filteredNews.length === 0 && (
+          <Grid item xs={12}>
+            <Alert
+              severity="warning"
+              sx={{
+                alignItems: "center",
+                fontSize: "1rem",
+                fontWeight: 500,
+              }}
+            >
+              <Typography component="span" sx={{ fontSize: "inherit" }}>
+                No se encontraron resultados, intentá con otros parámetros de
+                búsqueda o hace click en{" "}
+                <Button
+                  variant="contained"
+                  color="warning"
+                  onClick={handleClearFilters}
+                  sx={{
+                    mx: 0.5,
+                    my: 0.5,
+                    px: 1.5,
+                    py: 0.5,
+                    verticalAlign: "middle",
+                    fontWeight: "bold",
+                    color: "warning.contrastText",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Limpiar Filtros
+                </Button>{" "}
+                para ver todo
+              </Typography>
+            </Alert>
+          </Grid>
+        )}
         {filteredNews.map((noticia: New, index: number) => (
           <>
             {index === 0 ? (
@@ -221,26 +287,84 @@ export const NewsGrid = () => {
                       </Typography>
                     </CardContent>
                   </Card>
-                  {/* Barra de búsqueda */}
-                  <Box
-                    sx={{ mt: 2, display: "flex", justifyContent: "center" }}
-                  >
-                    <TextField
-                      variant="outlined"
-                      placeholder="Buscar noticias..."
-                      value={searchText}
-                      onChange={(event) => setSearchText(event.target.value)}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton onClick={handleSearchClick}>
-                              <Search />
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                      sx={{ width: isMobile ? "100%" : "100%" }}
-                    />
+                  {/* Filtros de noticias */}
+                  <Box component="form" onSubmit={handleFilterSubmit} sx={{ mt: 2 }}>
+                    <Grid container spacing={1.5}>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          label="Título"
+                          placeholder="Título"
+                          variant="outlined"
+                          fullWidth
+                          value={filters.title}
+                          onChange={handleFilterChange("title")}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          label="Categoría"
+                          placeholder="Categoría"
+                          variant="outlined"
+                          fullWidth
+                          value={filters.category}
+                          onChange={handleFilterChange("category")}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={4}>
+                        <TextField
+                          label="Autor"
+                          placeholder="Autor"
+                          variant="outlined"
+                          fullWidth
+                          value={filters.author}
+                          onChange={handleFilterChange("author")}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={4}>
+                        <TextField
+                          label="Desde"
+                          type="date"
+                          variant="outlined"
+                          fullWidth
+                          value={filters.dateFrom}
+                          onChange={handleFilterChange("dateFrom")}
+                          InputLabelProps={{ shrink: true }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={4}>
+                        <TextField
+                          label="Hasta"
+                          type="date"
+                          variant="outlined"
+                          fullWidth
+                          value={filters.dateTo}
+                          onChange={handleFilterChange("dateTo")}
+                          InputLabelProps={{ shrink: true }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            gap: 1,
+                            justifyContent: "flex-end",
+                            flexDirection: isMobile ? "column" : "row",
+                          }}
+                        >
+                          <Button
+                            type="button"
+                            variant="outlined"
+                            color="inherit"
+                            onClick={handleClearFilters}
+                          >
+                            Limpiar Filtros
+                          </Button>
+                          <Button type="submit" variant="contained" color="primary">
+                            Buscar
+                          </Button>
+                        </Box>
+                      </Grid>
+                    </Grid>
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={12} md={4} lg={4}>
