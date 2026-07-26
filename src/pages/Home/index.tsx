@@ -37,12 +37,12 @@ export const Home: React.FC<{}> = () => {
         <Grid item xs={12} md={8}>
           <Box>
             <a
-              href="https://youtu.be/5flj9SFtuJI"
+              href="https://www.cba.gov.ar/"
               target="_blank"
               rel="noopener noreferrer"
             >
               <img
-                src="https://res.cloudinary.com/dsooxiydo/image/upload/v1781896187/gob-cba-junio-2026_qxa9o1.gif"
+                src="https://res.cloudinary.com/dsooxiydo/image/upload/v1785108854/adaptaciones-tercero-arriba_780x90_c0bvuf.gif"
                 alt="Publicidad"
                 style={{
                   width: "100%",
