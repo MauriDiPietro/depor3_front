@@ -43,7 +43,7 @@ export const Home: React.FC<{}> = () => {
             >
               <img
                 src="https://res.cloudinary.com/dsooxiydo/image/upload/v1785108854/adaptaciones-tercero-arriba_780x90_c0bvuf.gif"
-                alt="Publicidad"
+                alt="Publicidad Gobierno de Córdoba"
                 style={{
                   width: "100%",
                   maxWidth: "700px",
