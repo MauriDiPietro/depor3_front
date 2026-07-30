@@ -368,7 +368,7 @@ export const NewsGrid = () => {
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={12} md={4} lg={4}>
-                  {/* PUBLICIDAD */}
+                  {/* PUBLICIDAD MUNI DE PIE DERECHA */}
                   <Card>
                     <CardMedia
                       component="img"
@@ -378,13 +378,13 @@ export const NewsGrid = () => {
                         maxWidth: "100%",
                         objectFit: "contain",
                       }}
-                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1750181595/COOP-JUNIO-25.jpg"
+                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1785390632/muni-r3-07-2026.jpg_alnrs1.jpg"
                       alt="Publicidad"
                     />
                   </Card>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
-                  {/* PUBLICIDAD MUNI */}
+                  {/* PUBLICIDAD MUNI BANNER ALARGADO */}
                   <Card>
                     <CardMedia
                       component="img"
