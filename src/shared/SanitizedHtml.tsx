@@ -228,17 +228,10 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
     // };
     const createAdElement = (imageUrl: string) => {
       const adElement = document.createElement("div");
-      const isPubliCoop = publiCoopRotativa.includes(imageUrl);
 
       adElement.innerHTML = `
     <div style="margin-top: 16px; text-align: center;">
-      ${
-        isPubliCoop
-          ? `<a href="https://riotel.com.ar/" target="_blank" rel="noopener noreferrer">
-               <img class="publi" src="${imageUrl}" alt="Publicidad" style="max-width: 100%; border-radius: 8px;" />
-             </a>`
-          : `<img class="publi" src="${imageUrl}" alt="Publicidad" style="max-width: 100%; border-radius: 8px;" />`
-      }
+        <img class="publi" src="${imageUrl}" alt="Publicidad" style="max-width: 100%; border-radius: 8px;" />
     </div>
   `;
 
