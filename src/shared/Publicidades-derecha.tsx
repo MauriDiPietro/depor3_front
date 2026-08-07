@@ -6,7 +6,7 @@ export const PublicidadesDerecha: React.FC<{}> = () => {
 
   const imageUrls = [
     // "https://res.cloudinary.com/dsooxiydo/image/upload/v1735988671/fc16ju4gqnm0cyxtms8u.jpg",
-    "https://res.cloudinary.com/dsooxiydo/image/upload/v1776773512/GR%C3%81FICA_WEB_300_x_500_px_fktnpi.png",
+    "https://res.cloudinary.com/dsooxiydo/image/upload/v1786130671/GR%C3%81FICA_WEB_300_x_500_px_1_1_nayg8r.png", //MUNI DE PIE DERECHA
   ];
 
   const shuffledImages = [...imageUrls].sort(() => Math.random() - 0.5);
