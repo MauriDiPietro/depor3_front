@@ -37,12 +37,12 @@ export const Home: React.FC<{}> = () => {
         <Grid item xs={12} md={8}>
           <Box>
             <a
-              href="https://www.cba.gov.ar/"
+              href="https://youtu.be/zzf6C0clLTs"
               target="_blank"
               rel="noopener noreferrer"
             >
               <img
-                src="https://res.cloudinary.com/dsooxiydo/image/upload/v1785108854/adaptaciones-tercero-arriba_780x90_c0bvuf.gif"
+                src="https://res.cloudinary.com/dsooxiydo/image/upload/v1788456950/RIO_3RO_TERCERO_ARRIBA_800X90_q7epqw.gif"
                 alt="Publicidad Gobierno de Córdoba"
                 style={{
                   width: "100%",
