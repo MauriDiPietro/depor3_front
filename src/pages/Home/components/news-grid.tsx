@@ -394,7 +394,7 @@ export const NewsGrid = () => {
                         maxWidth: "100%",
                         objectFit: "contain",
                       }}
-                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1786130473/EXPO_360%C2%BA_GR%C3%81FICA_WEB_1200_x_150_px_oefea5.png"
+                      image="https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg"
                       alt="Publicidad"
                     />
                   </Card>
