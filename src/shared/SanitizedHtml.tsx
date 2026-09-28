@@ -198,7 +198,7 @@ export const SanitizedHtml: React.FC<SanitizedHtmlProps> = ({
 
     const imageUrls = [
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1785496956/Construyendo_Futuro_Juntos.jpg_muyqos.jpg", //COOP RIO 3
-      "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg", //MUNI-RIO-3
+      "https://res.cloudinary.com/dsooxiydo/image/upload/v1790605592/1_1200_x_150_uepyg7.png", //MUNI BANNER ALARGADO
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1767369200/muni_almafuerte_01_2026.jpg",  //MUNI-ALMA
       "https://res.cloudinary.com/dsooxiydo/image/upload/v1751469404/ferretti.jpg",
       // "https://res.cloudinary.com/dsooxiydo/image/upload/v1737143687/capital-deportista.jpg",
